@@ -24,7 +24,7 @@ export default function Home() {
         <div className="section-label"><span>01</span><span>THE IDEA</span></div>
         <div><p className="manifesto-heading">Good design starts with a <em>better question.</em></p><div className="manifesto-bottom"><p>Why replace the entire filter when it&apos;s the carbon inside that needs refreshing? Chimera takes a familiar household object and redesigns it around glass, ceramic, and reuse.</p><p>Developed by industrial designer Scott Keeley over six years and 32 prototypes, Chimera is an everyday object with a more thoughtful purpose.</p></div></div>
       </section>
-      <section className="image-story" aria-label="Chimera water pouring"><div className="image-story-picture"><img src="/images/Water_Image-02.jpg" alt="Water pouring from a glass carafe" loading="lazy" /></div><div className="image-story-caption"><span>AN EVERYDAY RITUAL, RETHOUGHT.</span><span>IMAGE 01 / WATER</span></div></section>
+      <section className="image-story" aria-label="Chimera black ceramic filter photography"><div className="image-story-picture"><img src="/images/Water_Image-02.jpg" alt="Chimera glass carafe with black ceramic filtration chamber" loading="lazy" /></div><div className="image-story-caption"><span>THE OBJECT, IN BLACK.</span><span>IMAGE 01 / CERAMIC</span></div></section>
       <section id="film" className="film-block">
         <div className="page-shell film-head"><div className="section-label"><span>02</span><span>IN MOTION</span></div><div><h2>See the idea<br /><em>come to life.</em></h2><p>From the ceramic chamber to the final pour. See how Chimera works in the original product film.</p></div></div>
         <div className="page-shell film-container"><iframe src={film} title="Chimera: The First Plastic-Free Water Filter & Coffee Maker — product film" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div>
@@ -39,7 +39,7 @@ export default function Home() {
         </div></div>
       </section>
       <section className="coffee-story">
-        <div className="coffee-story-photo"><img src="/images/Coffe_Poured_2.jpg" alt="Pour-over coffee being prepared in the glass carafe" loading="lazy" /></div>
+        <div className="coffee-story-photo"><img src="/images/Coffe_Poured_2.jpg" alt="Pour-over coffee being brewed into a glass carafe" loading="lazy" /></div>
         <div className="coffee-story-copy"><span className="eyeline">A SECOND RITUAL</span><h2>Water first.<br /><em>Coffee next.</em></h2><p>Remove the ceramic filter insert and use the compatible carafe for a slow pour-over coffee. A little more function, without another appliance on the counter.</p><Link className="link-line" href="/care">How to use Chimera <span>↗</span></Link></div>
       </section>
       <section id="collection" className="collection page-shell"><div className="section-label"><span>04</span><span>THE COLLECTION</span></div><div className="collection-heading"><h2>Find your <em>Chimera.</em></h2><p>Thoughtful essentials, made for everyday use. Please confirm exact contents and pricing on the seller listing.</p></div>
