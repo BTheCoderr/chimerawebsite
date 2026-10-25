@@ -18,7 +18,7 @@ export default function Home() {
           <p>A reusable ceramic filter. A glass carafe. A more considered way to make the everyday extraordinary.</p>
           <a href="#film" className="link-line">Discover the story <span aria-hidden="true">↘</span></a>
         </div>
-        <div className="masthead-foot"><span>CHIMERA / OBJECTS FOR DAILY LIFE</span><span>SCROLL TO EXPLORE ↓</span></div>
+        <div className="masthead-foot"><span>CHIMERA / OBJECTS FOR DAILY LIFE</span><span>SCROLL TO EXPLORE</span></div>
       </section>
       <section id="philosophy" className="manifesto page-shell">
         <div className="section-label"><span>01</span><span>THE IDEA</span></div>
@@ -30,7 +30,7 @@ export default function Home() {
         <div className="page-shell film-container"><iframe src={film} title="Chimera: The First Plastic-Free Water Filter & Coffee Maker — product film" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div>
         <div className="page-shell film-credit"><span>CHIMERA / PRODUCT FILM</span><a href="https://www.youtube.com/watch?v=rAhQM2hbx14" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
       </section>
-      <section className="materials page-shell">
+      <section className="detail-gallery page-shell" aria-label="Chimera product photography"><figure><img src="/images/Chimera-2.jpg" alt="Chimera water-filter system, product photograph" loading="lazy" /><figcaption>CHIMERA / THE COMPLETE SYSTEM</figcaption></figure><figure><img src="/images/Chimera-3.jpg" alt="Chimera reusable ceramic filter, product photograph" loading="lazy" /><figcaption>CHIMERA / REUSABLE CERAMIC</figcaption></figure></section><section className="materials page-shell">
         <div className="section-label"><span>03</span><span>MATERIAL INTELLIGENCE</span></div>
         <div className="materials-body"><h2>Nothing extra.<br /><em>Nothing disposable.</em></h2><div className="materials-list">
           <div><span>01 /</span><div><h3>Ceramic</h3><p>A durable, reusable housing crafted in Ohio to hold the activated carbon.</p></div></div>
@@ -46,7 +46,7 @@ export default function Home() {
         <div className="collection-list">
           <article className="collection-product"><div className="collection-picture"><img src="/images/Chimera-2.jpg" alt="Chimera ceramic filter and glass carafe" loading="lazy" /></div><div className="collection-detail"><span>01 / THE SYSTEM</span><h3>Chimera system</h3><p>The complete water ritual. Check your chosen seller listing for included carafe, filter, and color.</p><a href={shop} target="_blank" rel="noopener noreferrer">View seller options ↗</a></div></article>
           <article className="collection-product"><div className="collection-picture"><img src="/images/Chimera-3.jpg" alt="Chimera reusable ceramic filter component" loading="lazy" /></div><div className="collection-detail"><span>02 / THE CORE</span><h3>Ceramic filter</h3><p>The ceramic chamber for compatible cone-top carafes. Confirm fit and what is included before purchasing.</p><a href={shop} target="_blank" rel="noopener noreferrer">View seller options ↗</a></div></article>
-          <article className="collection-product"><div className="collection-picture"><img src="/images/Inventory Product3.jpeg" alt="Chimera product detail" loading="lazy" /></div><div className="collection-detail"><span>03 / KEEP IT GOING</span><h3>Carbon refills</h3><p>Activated carbon in 2 oz and 12 oz sizes. Individual photos and purchase links are being finalized.</p><span className="coming-soon">REFILL LINKS COMING SOON</span></div></article>
+          <article className="collection-product"><div className="collection-picture refill-photo"><img src="/images/Bottles.jpg" alt="Chimera water bottles and glassware lifestyle photograph" loading="lazy" /><span className="refill-photo-note">Refill package photographs pending</span></div><div className="collection-detail"><span>03 / KEEP IT GOING</span><h3>Carbon refills</h3><p>Activated carbon in 2 oz and 12 oz sizes. Individual photos and purchase links are being finalized.</p><span className="coming-soon">REFILL LINKS COMING SOON</span></div></article>
         </div>
       </section>
       <section className="press-band"><div className="page-shell press-inner"><span>IN THE PRESS</span><p>“This Plastic-Free Water Filter Wants to Replace Your Brita for Good”</p><a href="https://www.yankodesign.com/2025/09/02/this-plastic-free-water-filter-wants-to-replace-your-brita-for-good/" target="_blank" rel="noopener noreferrer">Read the Yanko Design story ↗</a></div></section>
