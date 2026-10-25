@@ -1,13 +1,5 @@
 # Chimera Website
 
-## Official project credits
-
-- **Product invented and developed by:** Scott Keeley
-- **Website developed by:** Baheem Ferrell
-
-These credits must be retained in website footers, project documentation, and future redesigns. Product ownership and website-development credit are separate. See [CREDITS.md](CREDITS.md).
-
-
 Official development repository for the Chimera plastic-free water filtration product website.
 
 ## Current website package
