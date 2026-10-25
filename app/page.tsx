@@ -7,11 +7,12 @@ export default function Home() {
     <header className="site-nav"><div className="nav-inner">
       <Link href="/" className="logotype" aria-label="Chimera home"><img src="/images/Logo-Lines.svg" alt="Chimera" /></Link>
       <nav aria-label="Main navigation"><a href="#philosophy">The idea</a><a href="#film">The film</a><a href="#collection">Collection</a><Link href="/care">Care</Link></nav>
+      <details className="mobile-menu"><summary>Menu</summary><div className="mobile-menu-links"><a href="#philosophy">The idea</a><a href="#film">The film</a><a href="#collection">Collection</a><Link href="/care">Setup & care</Link></div></details>
       <a className="shop-link" href={shop} target="_blank" rel="noopener noreferrer">Explore shop <span aria-hidden="true">↗</span></a>
     </div></header>
     <main>
       <section className="masthead" aria-labelledby="hero-title">
-        <div className="masthead-photo"><img src="/images/KS Image-02-RS.jpg" alt="Chimera reusable ceramic filter and glass carafe" fetchPriority="high" /></div>
+        <div className="masthead-photo"><img src="/images/KS Image-02-RS.jpg" alt="Chimera glass carafe being used to pour water into a drinking glass in a home kitchen" fetchPriority="high" /></div>
         <div className="masthead-copy">
           <span className="eyeline">A DIFFERENT KIND OF WATER FILTER <span> / </span> 001</span>
           <h1 id="hero-title">Water, without<br />the <i>throwaway.</i></h1>
@@ -24,7 +25,7 @@ export default function Home() {
         <div className="section-label"><span>01</span><span>THE IDEA</span></div>
         <div><p className="manifesto-heading">Good design starts with a <em>better question.</em></p><div className="manifesto-bottom"><p>Why replace the entire filter when it&apos;s the carbon inside that needs refreshing? Chimera takes a familiar household object and redesigns it around glass, ceramic, and reuse.</p><p>Developed by industrial designer Scott Keeley over six years and 32 prototypes, Chimera is an everyday object with a more thoughtful purpose.</p></div></div>
       </section>
-      <section className="image-story" aria-label="Chimera black ceramic filter photography"><div className="image-story-picture"><img src="/images/Water_Image-02.jpg" alt="Chimera glass carafe with black ceramic filtration chamber" loading="lazy" /></div><div className="image-story-caption"><span>THE OBJECT, IN BLACK.</span><span>IMAGE 01 / CERAMIC</span></div></section>
+      <section className="object-story" aria-labelledby="object-title"><div className="object-story-media"><img src="/images/Water_Image-02.jpg" alt="Black ceramic Chimera filter in a clear glass carafe beneath leafy branches" loading="lazy" /></div><div className="object-story-copy"><span className="eyeline">THE MATERIALS / BLACK CERAMIC</span><h2 id="object-title">Considered<br/><em>from every angle.</em></h2><p>Black ceramic. Clear glass. A removable filter chamber designed for years of daily use.</p><p className="object-photo-credit">AN ACTUAL CHIMERA PRODUCT PHOTOGRAPH</p></div></section>
       <section id="film" className="film-block">
         <div className="page-shell film-head"><div className="section-label"><span>02</span><span>IN MOTION</span></div><div><h2>See the idea<br /><em>come to life.</em></h2><p>From the ceramic chamber to the final pour. See how Chimera works in the original product film.</p></div></div>
         <div className="page-shell film-container"><iframe src={film} title="Chimera: The First Plastic-Free Water Filter & Coffee Maker — product film" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div>
@@ -39,14 +40,19 @@ export default function Home() {
         </div></div>
       </section>
       <section className="coffee-story">
-        <div className="coffee-story-photo"><img src="/images/Coffe_Poured_2.jpg" alt="Pour-over coffee being brewed into a glass carafe" loading="lazy" /></div>
+        <div className="coffee-story-photo"><img src="/images/Coffe_Poured_2.jpg" alt="Hot water poured from a copper kettle over coffee grounds into a glass pour-over carafe" loading="lazy" /></div>
         <div className="coffee-story-copy"><span className="eyeline">A SECOND RITUAL</span><h2>Water first.<br /><em>Coffee next.</em></h2><p>Remove the ceramic filter insert and use the compatible carafe for a slow pour-over coffee. A little more function, without another appliance on the counter.</p><Link className="link-line" href="/care">How to use Chimera <span>↗</span></Link></div>
       </section>
-      <section id="collection" className="collection page-shell"><div className="section-label"><span>04</span><span>THE COLLECTION</span></div><div className="collection-heading"><h2>Find your <em>Chimera.</em></h2><p>Thoughtful essentials, made for everyday use. Please confirm exact contents and pricing on the seller listing.</p></div>
-        <div className="collection-list">
-          <article className="collection-product"><div className="collection-picture"><img src="/images/Inventory Product3.jpeg" alt="Chimera glass carafe fitted with ceramic filter, photographed from above" loading="lazy" /></div><div className="collection-detail"><span>01 / THE SYSTEM</span><h3>Chimera system</h3><p>The complete water ritual. Check your chosen seller listing for included carafe, filter, and color.</p><a href={shop} target="_blank" rel="noopener noreferrer">View seller options ↗</a></div></article>
-          <article className="collection-product"><div className="collection-picture"><img src="/images/Chimera-3.jpg" alt="Chimera reusable ceramic filter component" loading="lazy" /></div><div className="collection-detail"><span>02 / THE CORE</span><h3>Ceramic filter</h3><p>The ceramic chamber for compatible cone-top carafes. Confirm fit and what is included before purchasing.</p><a href={shop} target="_blank" rel="noopener noreferrer">View seller options ↗</a></div></article>
-          <article className="collection-product"><div className="collection-picture refill-placeholder"><div className="refill-placeholder-inner"><span>CHIMERA / REFILLS</span><strong>Carbon,<br />renewed.</strong><p>2 oz / 12 oz</p><small>Product photography to come</small></div></div><div className="collection-detail"><span>03 / KEEP IT GOING</span><h3>Carbon refills</h3><p>Activated carbon in 2 oz and 12 oz sizes. Individual photos and purchase links are being finalized.</p><span className="coming-soon">REFILL LINKS COMING SOON</span></div></article>
+      <section id="collection" className="collection page-shell">
+        <div className="section-label"><span>04</span><span>THE COLLECTION</span></div>
+        <div className="collection-heading"><h2>The things that<br/><em>make it work.</em></h2><p>One ceramic filtration system. The component that does the work. The carbon that keeps it going.</p></div>
+        <div className="collection-editorial">
+          <figure className="collection-primary-photo"><img src="/images/Inventory Product3.jpeg" alt="A real white ceramic Chimera filter installed in a clear glass carafe" loading="lazy" /><figcaption>CHIMERA / CERAMIC AND GLASS</figcaption></figure>
+          <div className="collection-options">
+            <article className="collection-option"><span className="collection-number">01 / COMPLETE SETUP</span><h3>Chimera system</h3><p>For starting from scratch. A reusable ceramic filtration system with a glass carafe. Confirm the color, carbon and exact contents of your chosen seller listing before ordering.</p><a href={shop} target="_blank" rel="noopener noreferrer">See available seller options <span aria-hidden="true">↗</span></a></article>
+            <article className="collection-option"><span className="collection-number">02 / FILTER ONLY</span><h3>Ceramic insert</h3><p>Already have a compatible cone-top carafe? This is the reusable ceramic filter component, not a second carafe. Confirm compatibility and whether the insert is sold separately.</p><span className="collection-note">Check the seller for insert-only availability</span></article>
+            <article className="collection-option"><span className="collection-number">03 / REPLACEMENT CARBON</span><h3>Carbon refills</h3><p>Granulated activated carbon offered in 2 oz and 12 oz bags. Actual package photos, prices and individual checkout links are still to be confirmed.</p><span className="collection-note">Refill purchase links coming soon</span></article>
+          </div>
         </div>
       </section>
       <section className="press-band"><div className="page-shell press-inner"><span>IN THE PRESS</span><p>“This Plastic-Free Water Filter Wants to Replace Your Brita for Good”</p><a href="https://www.yankodesign.com/2025/09/02/this-plastic-free-water-filter-wants-to-replace-your-brita-for-good/" target="_blank" rel="noopener noreferrer">Read the Yanko Design story ↗</a></div></section>
