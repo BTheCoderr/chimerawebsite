@@ -1,14 +1,12 @@
 import Link from 'next/link';
 
-type Page = 'home' | 'care' | 'help' | 'privacy';
-
-const SHOP_URL = 'https://shop.tiktok.com/us/pdp/1732555288933666944';
+type Page = 'home' | 'care' | 'help' | 'privacy' | 'shop';
 
 export function SiteHeader({ page = 'home' }: { page?: Page }) {
   const links = [
     { href: '/#philosophy', label: 'The design' },
     { href: '/#film', label: 'The film' },
-    { href: '/#collection', label: 'Collection' },
+    { href: '/shop/', label: 'Shop' },
     { href: '/care/', label: 'Care' },
     { href: '/help/', label: 'Help' },
   ];
@@ -23,7 +21,7 @@ export function SiteHeader({ page = 'home' }: { page?: Page }) {
         <nav aria-label="Primary navigation">
           {links.map(({href,label}) => <Link
             key={href} href={href}
-            aria-current={page === 'care' && label === 'Care' || page === 'help' && label === 'Help' ? 'page' : undefined}
+            aria-current={page === 'care' && label === 'Care' || page === 'help' && label === 'Help' || page === 'shop' && label === 'Shop' ? 'page' : undefined}
           >{label}</Link>)}
         </nav>
         <details className="mobile-menu">
@@ -32,9 +30,9 @@ export function SiteHeader({ page = 'home' }: { page?: Page }) {
             {links.map(({href,label}) => <Link key={href} href={href}>{label}</Link>)}
           </div>
         </details>
-        <a className="shop-link" href={SHOP_URL} target="_blank" rel="noopener noreferrer">
-          TikTok Shop <span aria-hidden="true">↗</span>
-        </a>
+        <Link className="shop-link" href="/shop/">
+          View the shop <span aria-hidden="true">↗</span>
+        </Link>
       </div>
     </header>
   </>;

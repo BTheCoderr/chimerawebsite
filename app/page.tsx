@@ -3,7 +3,6 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ProductFilm } from '@/components/ProductFilm';
 
-const shop = 'https://shop.tiktok.com/us/pdp/1732555288933666944';
 export default function Home() {
   return <div className="chimera">
     <SiteHeader page="home" />
@@ -14,7 +13,7 @@ export default function Home() {
           <span className="eyeline">A DIFFERENT KIND OF WATER FILTER <span> / </span> 001</span>
           <h1 id="hero-title">Water, without<br />the <i>throwaway.</i></h1>
           <p>A reusable ceramic filter. A glass carafe. A more considered way to make the everyday extraordinary.</p>
-          <a href="#film" className="link-line">Discover the story <span aria-hidden="true">↘</span></a>
+          <Link href="/shop/" className="link-line">Explore the Chimera shop <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="masthead-foot"><span>CHIMERA / OBJECTS FOR DAILY LIFE</span><span>SCROLL TO EXPLORE</span></div>
       </section>
@@ -42,15 +41,21 @@ export default function Home() {
       </section>
       <section id="collection" className="collection page-shell">
         <div className="section-label"><span>04</span><span>THE COLLECTION</span></div>
-        <div className="collection-heading"><h2>The things that<br/><em>make it work.</em></h2><p>One reusable filter design, with buying options for the complete setup, insert, and replacement carbon. Check each listing before ordering.</p></div>
-        <p className="collection-seller-note">Purchases and order questions are handled by the linked TikTok Shop seller. Prices, stock, shipping and returns are set by that seller.</p><div className="collection-editorial">
-          <figure className="collection-primary-photo"><img src="/images/Inventory Product3.jpeg" alt="A real white ceramic Chimera filter installed in a clear glass carafe" loading="lazy" /><figcaption>CHIMERA / CERAMIC AND GLASS</figcaption></figure>
-          <div className="collection-options">
-            <article className="collection-option"><span className="collection-number">01 / COMPLETE SETUP</span><h3>Chimera system</h3><p>For a complete setup, including a glass carafe and reusable ceramic chamber. Confirm the exact components, color, and included carbon in the seller listing before ordering.</p><a href={shop} target="_blank" rel="noopener noreferrer">See available seller options <span aria-hidden="true">↗</span></a></article>
-            <article className="collection-option"><span className="collection-number">02 / FILTER ONLY</span><h3>Ceramic insert</h3><p>The reusable ceramic chamber is intended for a compatible cone-top carafe; it is not itself a glass carafe. Confirm measurements, fit, and insert-only availability before purchasing.</p><a href={shop} target="_blank" rel="noopener noreferrer">Ask the seller about insert-only availability <span aria-hidden="true">↗</span></a></article>
-            <article className="collection-option"><span className="collection-number">03 / REPLACEMENT CARBON</span><h3>Carbon refills</h3><p>Replacement activated carbon is offered in 2 oz and 12 oz bags. Package photographs, prices, and individual order links have not yet been confirmed.</p><a href={shop} target="_blank" rel="noopener noreferrer">Ask the seller about carbon refills <span aria-hidden="true">↗</span></a></article>
-          </div>
+        <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>Five products. A glass carafe, a filter in black or white, two charcoal sizes, and one complete kit.</p></div>
+        <div className="home-shop-index">
+          {[
+            ['01', 'Glass carafe', 'By itself', 'glass-carafe'],
+            ['02', 'Ceramic filter', 'Black / White', 'ceramic-filter'],
+            ['03', 'Activated charcoal', '2 oz', 'charcoal-2oz'],
+            ['04', 'Activated charcoal', '12 oz', 'charcoal-12oz'],
+            ['05', 'The Chimera kit', 'Carafe + filter + 2 oz charcoal', 'chimera-kit'],
+          ].map(([number, name, option, slug]) =>
+            <Link key={slug} href={'/shop/' + slug + '/'} className="home-shop-row">
+              <span>{number}</span><strong>{name}</strong><small>{option}</small><span aria-hidden="true">↗</span>
+            </Link>
+          )}
         </div>
+        <Link className="home-shop-all" href="/shop/">Explore the entire collection <span aria-hidden="true">↗</span></Link>
       </section>
       <section className="press-band"><div className="page-shell press-inner"><span>IN THE PRESS</span><p>“This Plastic-Free Water Filter Wants to Replace Your Brita for Good”</p><a href="https://www.yankodesign.com/2025/09/02/this-plastic-free-water-filter-wants-to-replace-your-brita-for-good/" target="_blank" rel="noopener noreferrer">Read the Yanko Design story ↗</a></div></section>
       <section className="last-word page-shell"><span className="eyeline">LOOKING AFTER THE OBJECT</span><h2>Made to be used.<br /><em>And used again.</em></h2><Link className="link-line" href="/care">Setup, carbon replacement & care <span>↗</span></Link><p>Always follow the instructions included with your product. Chimera is not presented as a way to make microbiologically unsafe water safe to drink.</p></section>

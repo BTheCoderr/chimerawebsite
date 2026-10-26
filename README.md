@@ -52,3 +52,35 @@ Additional routes:
 - `/privacy/`: current hosting, embedded video and external-shop data practices
 
 Prices, retailer SKUs, replacement interval, verified performance claims, warranty, and shipping terms require Scott's approval before publication. Current checkout remains external.
+
+## Confirmed October 2026 product catalog
+
+Scott's intended online store has five product listings and six explicit standalone options:
+- Glass carafe alone
+- Ceramic filter alone, with black and white selections
+- 2 oz activated charcoal
+- 12 oz activated charcoal
+- Kit: carafe + ceramic filter + 2 oz activated charcoal
+
+The kit's ceramic-filter color has not been confirmed. Do not invent color selections for the kit.
+
+Source of truth: `lib/catalog.ts`. Shop routes: `/shop/` and `/shop/[slug]/`. All pages are statically exported.
+
+### Shopify checkout setup (prepared, not yet connected)
+
+These public build-time Netlify environment variables must be supplied by the merchant, or from their Shopify Admin:
+- `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN` — merchant's actual `your-shop.myshopify.com` domain
+- `NEXT_PUBLIC_SHOPIFY_VARIANT_CARAFE`
+- `NEXT_PUBLIC_SHOPIFY_VARIANT_FILTER_BLACK`
+- `NEXT_PUBLIC_SHOPIFY_VARIANT_FILTER_WHITE`
+- `NEXT_PUBLIC_SHOPIFY_VARIANT_CARBON_2OZ`
+- `NEXT_PUBLIC_SHOPIFY_VARIANT_CARBON_12OZ`
+- `NEXT_PUBLIC_SHOPIFY_VARIANT_KIT`
+
+Only the Shopify domain and *numeric variant IDs* are accepted. The storefront uses native Shopify cart permalinks, so payment, taxes, shipping and order management occur on Shopify's authorized checkout, not the static website. Do not add Shopify Admin tokens or secret keys to NEXT_PUBLIC variables.
+
+Each product page only displays the checkout link when both a valid merchant domain and that product variant ID are supplied. Until that happens it clearly displays the non-checkout state and offers a link to browse the existing TikTok listing, without implying every product is sold there. No product prices or stock numbers are guessed.
+
+Reference: https://help.shopify.com/en/manual/checkout-settings/cart-permalink
+
+Product page shopping cart/multiple-item checkout could be added with Shopify's Storefront Cart API after credentials are granted, but isn't necessary for the initial single-product checkout.

@@ -1,9 +1,9 @@
 name: Validate Chimera website
 on:
   push:
-    branches: [main, feature/final-storefront-hardening]
+    branches: [main, feature/chimera-product-catalog]
   pull_request:
-    branches: [main, feature/final-storefront-hardening]
+    branches: [main, feature/chimera-product-catalog]
   workflow_dispatch:
 
 jobs:
@@ -28,6 +28,12 @@ jobs:
           test -f out/care/index.html
           test -f out/help/index.html
           test -f out/privacy/index.html
+          test -f out/shop/index.html
+          test -f out/shop/glass-carafe/index.html
+          test -f out/shop/ceramic-filter/index.html
+          test -f out/shop/charcoal-2oz/index.html
+          test -f out/shop/charcoal-12oz/index.html
+          test -f out/shop/chimera-kit/index.html
           test -f out/robots.txt
           test -f out/sitemap.xml
           test -f out/icon.svg
