@@ -252,3 +252,9 @@
 .home-shop-row>span:last-child{grid-column:3;grid-row:1}
 }
 @media(max-width:450px){.shop-item-media{height:310px}.product-spec-columns{grid-template-columns:1fr;gap:35px}.product-related-links b{font-size:24px}.product-related-links a>span:first-child{font-size:9px}}
+
+/* Scott's product copy: a measured editorial heading at desktop and mobile widths. */
+.masthead .scott-headline{font-size:clamp(47px,4.65vw,72px);line-height:1.07;letter-spacing:-.065em;max-width:100%;overflow-wrap:normal}
+.masthead .scott-headline i{font-style:italic}
+@media(max-width:760px){.masthead .scott-headline{font-size:clamp(46px,9vw,69px)}}
+@media(max-width:390px){.masthead .scott-headline{font-size:44px}}

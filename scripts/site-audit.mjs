@@ -5,6 +5,7 @@ const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 const home = read('app/page.tsx');
 const care = read('app/care/page.tsx');
+const metadata = read('app/layout.tsx');
 const header = read('components/SiteHeader.tsx');
 const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
@@ -46,6 +47,11 @@ for (const route of ['/care/', '/help/', '/privacy/', '/shop/', '/shop/glass-car
   if (!sitemap.includes(route)) errors.push('Missing sitemap route: ' + route);
 }
 const catalog = read('lib/catalog.ts');
+for (const approvedLine of ['Carbon Filtered', 'Plastic Free', 'high-fired, taste-neutral ceramic', 'thermally shock-resistant borosilicate', 'wool insulated grip', 'Better tasting coffee comes from better tasting water.', 'A borosilicate carafe holds your filtered water and makes great coffee.']) {
+  if (!home.includes(approvedLine)) errors.push('Missing Scott copy: ' + approvedLine);
+}
+if (!home.includes('Good design starts with a <em>better question.</em>')) errors.push('Original philosophy section changed');
+if (!metadata.includes('Carbon Filtered Water, Plastic Free')) errors.push('Homepage metadata not updated');
 const items = ['glass-carafe', 'ceramic-filter', 'charcoal-2oz', 'charcoal-12oz', 'chimera-kit'];
 for (const item of items) {
   if (!catalog.includes("slug: '" + item + "'")) errors.push('Missing catalog product: ' + item);

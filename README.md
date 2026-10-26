@@ -84,3 +84,9 @@ Each product page only displays the checkout link when both a valid merchant dom
 Reference: https://help.shopify.com/en/manual/checkout-settings/cart-permalink
 
 Product page shopping cart/multiple-item checkout could be added with Shopify's Storefront Cart API after credentials are granted, but isn't necessary for the initial single-product checkout.
+
+## Scott's requested wording (October 26, 2026)
+
+Homepage language follows Scott's supplied product wording: “Carbon Filtered Water, Plastic Free,” a description of the high-fired ceramic and activated-carbon core in a thermally shock-resistant borosilicate glass carafe, black/white ceramic choice, wool insulated grip, pour-over coffee use, and the updated Glass materials line. The existing “Good design starts with a better question” section is intentionally unchanged.
+
+These are inventor-provided product descriptions, not independently verified filtration tests. Keep contaminant-reduction and certification claims out of the website until supported by appropriate documentation.

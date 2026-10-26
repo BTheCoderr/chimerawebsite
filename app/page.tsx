@@ -11,8 +11,8 @@ export default function Home() {
         <div className="masthead-photo"><img src="/images/KS Image-02-RS.jpg" alt="Chimera glass carafe being used to pour water into a drinking glass in a home kitchen" fetchPriority="high" /></div>
         <div className="masthead-copy">
           <span className="eyeline">A DIFFERENT KIND OF WATER FILTER <span> / </span> 001</span>
-          <h1 id="hero-title">Water, without<br />the <i>throwaway.</i></h1>
-          <p>A reusable ceramic filter. A glass carafe. A more considered way to make the everyday extraordinary.</p>
+          <h1 id="hero-title" className="scott-headline">Carbon Filtered<br />Water, <i>Plastic Free</i></h1>
+          <p>Chimera replaces the traditional plastic pitcher and disposable shell with a high-fired, taste-neutral ceramic housing paired with activated carbon. This core is set inside a durable, thermally shock-resistant borosilicate glass carafe.</p>
           <Link href="/shop/" className="link-line">Explore the Chimera shop <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="masthead-foot"><span>CHIMERA / OBJECTS FOR DAILY LIFE</span><span>SCROLL TO EXPLORE</span></div>
@@ -21,7 +21,7 @@ export default function Home() {
         <div className="section-label"><span>01</span><span>THE IDEA</span></div>
         <div><p className="manifesto-heading">Good design starts with a <em>better question.</em></p><div className="manifesto-bottom"><p>Why replace the entire filter when it&apos;s the carbon inside that needs refreshing? Chimera takes a familiar household object and redesigns it around glass, ceramic, and reuse.</p><p>Developed by industrial designer Scott Keeley over six years and 32 prototypes, Chimera is an everyday object with a more thoughtful purpose.</p></div></div>
       </section>
-      <section className="object-story" aria-labelledby="object-title"><div className="object-story-media"><img src="/images/Water_Image-02.jpg" alt="Black ceramic Chimera filter in a clear glass carafe beneath leafy branches" loading="lazy" /></div><div className="object-story-copy"><span className="eyeline">THE MATERIALS / BLACK CERAMIC</span><h2 id="object-title">Considered<br/><em>from every angle.</em></h2><p>Black ceramic. Clear glass. A removable filter chamber designed for repeated everyday use.</p><p className="object-photo-credit">AN ACTUAL CHIMERA PRODUCT PHOTOGRAPH</p></div></section>
+      <section className="object-story" aria-labelledby="object-title"><div className="object-story-media"><img src="/images/Water_Image-02.jpg" alt="Black ceramic Chimera filter in a clear glass carafe beneath leafy branches" loading="lazy" /></div><div className="object-story-copy"><span className="eyeline">THE MATERIALS / BLACK OR WHITE CERAMIC FILTER</span><h2 id="object-title">Considered<br/><em>from every angle.</em></h2><p>Your choice of black or white ceramic filter paired with a clear borosilicate carafe with a wool insulated grip. The carafe is also a pour-over coffee carafe. Better tasting coffee comes from better tasting water.</p><p className="object-photo-credit">CHIMERA / BLACK CERAMIC SHOWN</p></div></section>
       <section id="film" className="film-block">
         <div className="page-shell film-head"><div className="section-label"><span>02</span><span>IN MOTION</span></div><div><h2>See the idea<br /><em>come to life.</em></h2><p>From the ceramic chamber to the final pour. See how Chimera works in the original product film.</p></div></div>
         <div className="page-shell"><ProductFilm /></div>
@@ -32,7 +32,7 @@ export default function Home() {
         <div className="materials-body"><h2>Nothing extra.<br /><em>Nothing disposable.</em></h2><div className="materials-list">
           <div><span>01 /</span><div><h3>Ceramic</h3><p>A durable, reusable housing crafted in Ohio to hold the activated carbon.</p></div></div>
           <div><span>02 /</span><div><h3>Activated carbon</h3><p>Replace the carbon inside the chamber, rather than discarding the housing.</p></div></div>
-          <div><span>03 /</span><div><h3>Glass</h3><p>A simple, transparent vessel designed to sit comfortably on the countertop.</p></div></div>
+          <div><span>03 /</span><div><h3>Glass</h3><p>A borosilicate carafe holds your filtered water and makes great coffee.</p></div></div>
         </div></div>
       </section>
       <section className="coffee-story">
