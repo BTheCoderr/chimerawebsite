@@ -1,9 +1,9 @@
 name: Validate Chimera website
 on:
   push:
-    branches: [main, feature/chimera-product-catalog]
+    branches: [main, 'feature/**']
   pull_request:
-    branches: [main, feature/chimera-product-catalog]
+    branches: [main, 'feature/**']
   workflow_dispatch:
 
 jobs:
