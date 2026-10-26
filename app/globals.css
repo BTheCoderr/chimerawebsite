@@ -75,3 +75,57 @@
 .care-faq details p{font-size:14px;color:var(--quiet);line-height:1.8;max-width:680px;margin:18px 0 4px}
 .care-faq details p a{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:760px){.care-faq{grid-template-columns:1fr;padding-block:80px}.care-faq>div:last-child{padding-left:0;margin-top:38px}.care-faq h2{font-size:clamp(50px,11vw,72px)}.care-faq summary{font-size:18px}}
+
+/* Unified brand header, accessibility and customer-service pages */
+.skip-to-content{position:absolute;left:15px;top:-100px;z-index:100;background:#202720;color:#fff;padding:12px 18px}
+.skip-to-content:focus{top:10px}
+.brand-lockup{display:inline-flex;align-items:center;gap:10px;min-width:0;white-space:nowrap}
+.brand-lockup img{width:43px;height:53px;max-width:none;object-fit:contain}
+.brand-name{font-family:Georgia,'Times New Roman',serif;font-size:27px;letter-spacing:-.045em;font-weight:400}
+.site-nav nav[aria-label="Primary navigation"]{display:flex;gap:28px}
+.site-nav nav[aria-label="Primary navigation"] a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+.footer-upper nav{display:flex;flex-direction:column;gap:15px}
+.film-activate{height:100%;width:100%;border:0;cursor:pointer;background:#151d18;color:#eceee4;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:38px;min-height:420px}
+.film-activate:hover,.film-activate:focus-visible{background:#1e2e25}
+.film-activate-kicker,.film-activate-disclosure{font-size:11px;letter-spacing:.16em;font-weight:700;text-align:center}
+.film-activate-center{display:flex;flex-direction:column;align-items:center;gap:22px;font-size:13px;letter-spacing:.19em;font-weight:700}
+.film-activate-play{height:79px;width:79px;border:1px solid #b2c1b0;border-radius:50%;display:grid;place-items:center;transition:transform .2s ease}
+.film-activate-play:before{content:'';display:block;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:15px solid #dbe8d8;margin-left:4px}
+.film-activate:hover .film-activate-play{transform:scale(1.08)}
+.service-hero{padding-top:115px;padding-bottom:100px}
+.service-hero h1,.info-page h1,.missing-page h1{font:400 clamp(62px,8vw,130px)/1.06 Georgia,serif;letter-spacing:-.06em;margin:26px 0 30px}
+.service-hero p,.info-page>p,.missing-page p{font-size:17px;line-height:1.8;color:var(--quiet);max-width:710px}
+.service-content{display:grid;grid-template-columns:25% 75%;padding-bottom:130px}
+.service-questions{padding-left:20px}
+.service-questions details{border-top:1px solid var(--line);padding:24px 0}
+.service-questions details:last-child{border-bottom:1px solid var(--line)}
+.service-questions summary{font:400 26px/1.35 Georgia,serif;cursor:pointer}
+.service-questions details p{font-size:15px;line-height:1.8;color:var(--quiet);max-width:730px;margin:20px 0 0}
+.service-questions a,.info-page a{border-bottom:1px solid currentColor}
+.service-actions{background:#d8ded1;padding:90px 0 110px}
+.service-actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px}
+.service-actions h2{font:400 clamp(50px,6vw,92px)/1.07 Georgia,serif;letter-spacing:-.055em;margin:30px 0}
+.info-page,.missing-page{padding-top:105px;padding-bottom:145px}
+.info-page h2{font:400 38px/1.15 Georgia,serif;letter-spacing:-.03em;margin:55px 0 12px}
+.info-page .info-fine{font-size:12px;margin-top:60px}
+.missing-page .missing-actions{display:flex;gap:40px;flex-wrap:wrap;margin-top:48px}
+@media(max-width:1050px){.site-nav nav[aria-label="Primary navigation"]{gap:16px}.brand-name{font-size:23px}}
+@media(max-width:760px){
+  .site-nav nav[aria-label="Primary navigation"]{display:none}
+  .brand-lockup{gap:5px}
+  .brand-lockup img{width:34px;height:42px}
+  .brand-name{font-size:23px}
+  .film-activate{min-height:260px;padding:24px}
+  .film-activate-play{width:66px;height:66px}
+  .film-activate-kicker,.film-activate-disclosure{font-size:9px}
+  .service-hero{padding-block:75px 65px}
+  .service-hero h1,.info-page h1,.missing-page h1{font-size:clamp(51px,11vw,83px)}
+  .service-content{grid-template-columns:1fr;padding-bottom:85px}
+  .service-questions{padding-left:0;margin-top:35px}
+  .service-questions summary{font-size:22px}
+  .service-actions{padding:65px 0}
+  .service-actions-grid{grid-template-columns:1fr;gap:55px}
+  .info-page,.missing-page{padding-block:75px 100px}
+}
+@media(max-width:410px){.brand-name{font-size:20px}.shop-link{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.film-activate-play{transition:none}.film-activate:hover .film-activate-play{transform:none}}

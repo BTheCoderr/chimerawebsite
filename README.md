@@ -42,3 +42,13 @@ To conserve Netlify usage, work locally or on a branch and push one tested batch
 ## Attribution
 
 Preserve both project credits during redesigns and migrations.
+
+## Shared navigation and customer information
+
+The marketing site now uses `components/SiteHeader.tsx` and `SiteFooter.tsx`. Product film is click-to-load in `components/ProductFilm.tsx` so the YouTube frame is not requested until a visitor chooses to watch it.
+
+Additional routes:
+- `/help/`: product selection, compatibility, external-shop and order-support details
+- `/privacy/`: current hosting, embedded video and external-shop data practices
+
+Prices, retailer SKUs, replacement interval, verified performance claims, warranty, and shipping terms require Scott's approval before publication. Current checkout remains external.
