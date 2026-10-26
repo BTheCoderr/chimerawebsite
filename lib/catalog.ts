@@ -33,7 +33,7 @@ const ENV_VARIANTS = {
   carbon12oz: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_CARBON_12OZ || '',
   kit: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_KIT || '',
 };
-const variantId = (value: string): string | null => /^\\d{8,20}$/.test(value) ? value : null;
+const variantId = (value: string): string | null => /^\d{8,20}$/.test(value) ? value : null;
 
 export const EXTERNAL_SELLER_URL = 'https://shop.tiktok.com/us/pdp/1732555288933666944';
 export const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
@@ -114,8 +114,8 @@ export function getProduct(slug: string): CatalogProduct | undefined {
 
 export function getShopifyCheckoutLink(variantId: string | null, quantity = 1): string | null {
   const domain = SHOPIFY_STORE_DOMAIN.trim().toLowerCase();
-  if (!/^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$/.test(domain)) return null;
-  if (!variantId || !/^\\d{8,20}$/.test(variantId)) return null;
+  if (!/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(domain)) return null;
+  if (!variantId || !/^\d{8,20}$/.test(variantId)) return null;
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) return null;
   return 'https://' + domain + '/cart/' + variantId + ':' + quantity;
 }
