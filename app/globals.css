@@ -129,3 +129,18 @@
 }
 @media(max-width:410px){.brand-name{font-size:20px}.shop-link{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.film-activate-play{transition:none}.film-activate:hover .film-activate-play{transform:none}}
+
+/* Tablet navigation: switch to compact menu before five links overcrowd the header. */
+@media(min-width:761px) and (max-width:1120px){
+  .site-nav nav[aria-label="Primary navigation"]{display:none}
+  .mobile-menu{display:block;position:relative;margin-left:auto;font-size:13px;font-weight:700}
+  .mobile-menu summary{cursor:pointer;list-style:none;border-bottom:1px solid #20241e;padding:8px 1px}
+  .mobile-menu summary::-webkit-details-marker{display:none}
+  .mobile-menu[open] .mobile-menu-links{position:absolute;right:0;top:39px;z-index:20;width:230px;display:flex;flex-direction:column;background:#f8f7f1;border:1px solid #c6c7bd;box-shadow:0 12px 30px #232f231c}
+  .mobile-menu-links a{font-size:13px;padding:15px 18px;border-bottom:1px solid #dedfd6}
+  .mobile-menu-links a:last-child{border-bottom:0}
+}
+@media(max-width:760px){
+  .film-container{min-height:260px}
+  .film-container iframe{min-height:260px}
+}
