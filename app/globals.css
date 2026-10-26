@@ -63,3 +63,15 @@
   .collection-heading h2{font-size:clamp(48px,10vw,72px)}
 }
 @media(max-width:380px){.logotype img{width:105px}.shop-link{font-size:10px}.nav-inner{gap:10px}}
+
+/* Launch-readiness refinements */
+.collection-seller-note{font-size:13px;line-height:1.65;color:#596359;max-width:690px;margin:0 0 34px;padding:0 0 20px;border-bottom:1px solid #aeb5a9}
+.care-faq{display:grid;grid-template-columns:25% 75%;padding-block:100px 140px}
+.care-faq>div:last-child{padding-left:20px}
+.care-faq h2{font:400 clamp(56px,6vw,99px)/1.07 Georgia,serif;letter-spacing:-.055em;margin:10px 0 50px}
+.care-faq details{border-top:1px solid var(--line);padding:22px 0}
+.care-faq details:last-child{border-bottom:1px solid var(--line)}
+.care-faq summary{font-size:19px;font-family:Georgia,serif;cursor:pointer;line-height:1.4}
+.care-faq details p{font-size:14px;color:var(--quiet);line-height:1.8;max-width:680px;margin:18px 0 4px}
+.care-faq details p a{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:760px){.care-faq{grid-template-columns:1fr;padding-block:80px}.care-faq>div:last-child{padding-left:0;margin-top:38px}.care-faq h2{font-size:clamp(50px,11vw,72px)}.care-faq summary{font-size:18px}}

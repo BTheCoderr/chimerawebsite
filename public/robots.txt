@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chimerawater.netlify.app/sitemap.xml

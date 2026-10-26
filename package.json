@@ -1,12 +1,13 @@
 {
   "name": "chimerawebsite",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "audit": "node scripts/site-audit.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",

@@ -1,23 +1,44 @@
-# Chimera Website
+# Chimera Water — website
 
-Official development repository for the Chimera plastic-free water filtration product website.
+Official Next.js website for the Chimera reusable ceramic and glass water-filter product.
 
-## Current website package
+**Product invented by Scott Keeley. Website developed by Baheem Ferrell.**
 
-The responsive prototype includes the homepage, product collection, photography, and Setup & Care page. The complete static site package is held separately pending upload of the product image assets.
+## Development
+
+- Next.js App Router, React 19, TypeScript, and Tailwind CSS
+- `npm install` to install dependencies
+- `npm run dev` for local development
+- `npm run typecheck` for TypeScript checks
+- `npm run audit` for static asset, link, and page checks
+- `npm run build` for static production export
 
 ## Deployment
 
-This is a static HTML site and can be deployed to Netlify with:
-- Build command: none
-- Publish directory: `.`
-- Existing staging project: `chimera-staging-2026`
+GitHub repository: `BTheCoderr/chimerawebsite`.
 
-Do not connect checkout or publish unverified filtration claims without the product owner's review. Do not confuse this site with Community IP or Keeley DeAngelo.
+Netlify project: `chimerawater`. GitHub pushes to `main` trigger automatic builds. Netlify settings:
 
-## Product variants
+- Build command: `npm run build`
+- Publish directory: `out`
+- Next.js static export with `trailingSlash: true` in `next.config.mjs`
+- No server functions or private environment variables required for the present brochure/shop-link website
 
-- Complete system
-- Ceramic insert
-- Activated carbon refill, 2 oz
-- Activated carbon refill, 12 oz
+To conserve Netlify usage, work locally or on a branch and push one tested batch to `main`.
+
+## Routes
+
+- `/`: product story, genuine photographs, original YouTube film, product choices, seller link
+- `/care/`: setup instructions, maintenance, compatibility, and buying FAQ
+
+## Product and content approval
+
+- Direct checkout is **not** enabled. Purchases link to an external TikTok Shop seller.
+- Prices, individual SKU links, exact included parts, shipping/returns, filtration testing, and carbon replacement intervals must be approved by Scott before publication.
+- Do not suggest Chimera makes unsafe water drinkable or holds a certification without documentation.
+- Site photography is under `public/images/`. Keep only approved, optimized, public-facing images there.
+- Private draft documents and editable design originals must **not** be placed in `public/` or a public repository. Older uploaded documents were historically committed and may remain accessible in Git history; seek private-storage/legal review if sensitive.
+
+## Attribution
+
+Preserve both project credits during redesigns and migrations.
