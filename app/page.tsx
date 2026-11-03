@@ -36,9 +36,9 @@ export default function Home() {
       </section>
 
       <div className="studio-ticker" aria-label="Product materials">
-        <span>REUSABLE CERAMIC</span><span className="studio-ticker-star">✳</span>
-        <span>BOROSILICATE GLASS</span><span className="studio-ticker-star">✳</span>
-        <span>REPLACEABLE CARBON</span><span className="studio-ticker-star">✳</span>
+        <span>REUSABLE CERAMIC</span><span className="studio-ticker-star" aria-hidden="true">/</span>
+        <span>BOROSILICATE GLASS</span><span className="studio-ticker-star" aria-hidden="true">/</span>
+        <span>REPLACEABLE CARBON</span><span className="studio-ticker-star" aria-hidden="true">/</span>
         <span>THOUGHTFUL BY DESIGN</span>
       </div>
 
