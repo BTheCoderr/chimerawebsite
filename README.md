@@ -51,7 +51,7 @@ Additional routes:
 - `/help/`: product selection, compatibility, external-shop and order-support details
 - `/privacy/`: current hosting, embedded video and external-shop data practices
 
-Prices, retailer SKUs, replacement interval, verified performance claims, warranty, and shipping terms require Scott's approval before publication. Current checkout remains external.
+Prices, retailer SKUs, replacement interval, verified performance claims, warranty, and shipping terms require Scott's approval before publication. Stripe checkout is prepared behind an explicit test-only configuration gate; direct payments are not enabled.
 
 ## Confirmed October 2026 product catalog
 
@@ -93,4 +93,16 @@ These are inventor-provided product descriptions, not independently verified fil
 
 ## Cursor setup for DNS and Stripe
 
-See [docs/CURSOR_DNS_STRIPE_SETUP.md](docs/CURSOR_DNS_STRIPE_SETUP.md). The current site is **not yet connected to Stripe**. A sample [`.env.example`](.env.example) lists variable names only; never add real Stripe secrets to GitHub or `NEXT_PUBLIC_` variables. Updating DNS occurs in Netlify and the domain registrar, not through a normal code commit.
+See [docs/CURSOR_DNS_STRIPE_SETUP.md](docs/CURSOR_DNS_STRIPE_SETUP.md). Stripe serverless checkout and signature-verifying webhook code are now prepared but remain **disabled until the test keys, Price IDs, and shipping approval are configured**. A sample [`.env.example`](.env.example) lists variable names only; never add real Stripe secrets to GitHub or `NEXT_PUBLIC_` variables. Updating DNS occurs in Netlify and the domain registrar, not through a normal code commit.
+
+## Stripe checkout backend, staged in November 2026
+
+The existing Next.js static website stays on Netlify. A server-side Netlify Function initiates Stripe-hosted checkout. No API secrets are bundled into the frontend. See `docs/CURSOR_DNS_STRIPE_SETUP.md` for the complete enablement and test plan.
+
+- `/.netlify/functions/checkout-status` reports enabled/disabled (never reveals credentials).
+- `/.netlify/functions/create-checkout` requires a POST with one of six allowlisted variant codes and quantity 1–10; maps to server-only Price IDs.
+- `/.netlify/functions/stripe-webhook` validates Stripe signatures and emits only minimal test-event IDs to logs. **Not an order fulfillment database.**
+- `/checkout/success/` and `/checkout/cancelled/` are informational redirects; they do not establish payment completion.
+- While waiting for keys, both switches remain false: `NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED=false`, `STRIPE_CHECKOUT_ENABLED=false`. No direct payments are accepted.
+
+Run `npm run test:checkout`, `npm run audit`, `npm run typecheck`, and `npm run build` before merging.

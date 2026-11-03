@@ -18,6 +18,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Audit pages and assets
         run: npm run audit
+      - name: Test Stripe safety and catalog validation
+        run: npm run test:checkout
       - name: Typecheck
         run: npm run typecheck
       - name: Production export
@@ -34,6 +36,8 @@ jobs:
           test -f out/shop/charcoal-2oz/index.html
           test -f out/shop/charcoal-12oz/index.html
           test -f out/shop/chimera-kit/index.html
+          test -f out/checkout/success/index.html
+          test -f out/checkout/cancelled/index.html
           test -f out/robots.txt
           test -f out/sitemap.xml
           test -f out/icon.svg

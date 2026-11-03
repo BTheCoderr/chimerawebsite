@@ -20,7 +20,7 @@ export default function ShopPage() {
           <h1>The things that<br /><em>make it yours.</em></h1>
           <p>Shop Chimera piece by piece or as a complete kit. Choose a ceramic filter in black or white. Every listing shows exactly what is and isn't included.</p>
         </div>
-        <p className="shop-pricing-note">Direct checkout is being connected. Prices and inventory will be shown by the authorized seller when available; none are assumed on this website.</p>
+        <p className="shop-pricing-note">Secure Stripe checkout is being prepared. Until Scott approves product prices, shipping and inventory, the website does not accept direct payments.</p>
       </section>
       <section className="shop-collection page-shell" aria-label="Chimera product collection">
         {PRODUCTS.map((product, index) => (

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-const siteUrl = 'https://chimerawater.netlify.app';
+const siteUrl = 'https://chimerawater.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

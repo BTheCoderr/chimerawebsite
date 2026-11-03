@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "audit": "node scripts/site-audit.mjs"
+    "audit": "node scripts/site-audit.mjs",
+    "test:checkout": "node --test tests/stripe-config.test.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stripe": "^23.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

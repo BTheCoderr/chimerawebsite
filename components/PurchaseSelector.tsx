@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { CatalogProduct } from '@/lib/catalog';
-import { EXTERNAL_SELLER_URL, getShopifyCheckoutLink } from '@/lib/catalog';
+import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
@@ -10,7 +10,29 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const variant = product.variants.find((v) => v.code === selectedCode) ?? product.variants[0];
   const image = variant.image || product.image;
   const imageAlt = variant.imageAlt || product.imageAlt || product.name;
-  const checkout = getShopifyCheckoutLink(variant.shopifyVariantId, quantity);
+  const checkoutEnabled = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED === 'true';
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  async function beginCheckout() {
+    if (!checkoutEnabled || busy) return;
+    setBusy(true);
+    setError('');
+    try {
+      const response = await fetch('/.netlify/functions/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ variantCode: variant.code, quantity }),
+      });
+      const result: { url?: string; error?: string } = await response.json();
+      if (!response.ok || !result.url || !result.url.startsWith('https://checkout.stripe.com/')) {
+        throw new Error(result.error || 'Checkout is not available right now.');
+      }
+      window.location.assign(result.url);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'Checkout is unavailable.');
+      setBusy(false);
+    }
+  }
 
   return <>
     <div className={'product-main-photo' + (!image ? ' product-main-photo--carbon' : '')}>
@@ -44,17 +66,21 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           <span className="product-variant-explain">Carafe and charcoal are not included with the standalone filter.</span>
         </fieldset>}
       <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
-      {checkout ?
+      {checkoutEnabled ?
         <div className="purchase-action">
-          <a className="purchase-button" href={checkout} target="_blank" rel="noopener noreferrer">Continue to secure Shopify checkout <span aria-hidden="true">↗</span></a>
-          <p>Price, shipping, tax and stock are confirmed in Scott’s connected Shopify checkout.</p>
+          <button type="button" className="purchase-button" onClick={beginCheckout} disabled={busy}>
+            {busy ? 'Connecting to Stripe…' : 'Continue to Stripe test checkout'} <span aria-hidden="true">↗</span>
+          </button>
+          {error && <p role="alert" className="checkout-error">{error}</p>}
+          <p>Test checkout only. No real payments are enabled. Stripe confirms prices, taxes, shipping and availability.</p>
         </div> :
         <div className="purchase-action">
-          <div className="shop-unavailable"><strong>Direct checkout is being set up.</strong><p>Product pricing and dedicated Shopify checkout aren't active here yet. No payment will be collected on this page.</p></div>
-          <a href={EXTERNAL_SELLER_URL} className="purchase-button purchase-button--outline" target="_blank" rel="noopener noreferrer">Browse current TikTok Shop listing <span aria-hidden="true">↗</span></a>
-          <p>TikTok Shop may not list this exact product or color. Confirm availability with the seller before ordering.</p>
+          <div className="shop-unavailable"><strong>Direct checkout is being set up.</strong><p>Scott's approved prices and secure Stripe checkout are not active yet. No payment will be collected here.</p></div>
+          <a href={EXTERNAL_SELLER_URL} className="purchase-button purchase-button--outline" target="_blank" rel="noopener noreferrer">Browse existing TikTok Shop listing <span aria-hidden="true">↗</span></a>
+          <p>The existing retailer may not list this exact product or color. Confirm availability with the seller before ordering.</p>
         </div>}
       <div className="product-honesty"><span>Product-specific photography and prices will be updated as Scott confirms them.</span></div>
     </div>
   </>;
 }
+

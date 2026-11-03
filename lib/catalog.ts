@@ -3,7 +3,6 @@ export type CatalogVariant = {
   label: string;
   image?: string;
   imageAlt?: string;
-  shopifyVariantId: string | null;
 };
 
 export type CatalogProduct = {
@@ -21,22 +20,9 @@ export type CatalogProduct = {
   variants: CatalogVariant[];
 };
 
-// These identifiers are configuration fields, not proof that merchant SKUs exist.
-// To enable secure checkout, Scott must create the products in his own Shopify store
-// and supply a myshopify.com domain plus the exact numeric variant IDs.
-// No prices, inventory, availability, or merchant SKUs are invented here.
-const ENV_VARIANTS = {
-  carafe: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_CARAFE || '',
-  filterBlack: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_FILTER_BLACK || '',
-  filterWhite: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_FILTER_WHITE || '',
-  carbon2oz: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_CARBON_2OZ || '',
-  carbon12oz: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_CARBON_12OZ || '',
-  kit: process.env.NEXT_PUBLIC_SHOPIFY_VARIANT_KIT || '',
-};
-const variantId = (value: string): string | null => /^\d{8,20}$/.test(value) ? value : null;
-
+// Product definitions only. Stripe Price IDs live in server-side Netlify Functions.
+// Do not store keys, prices or live inventory in this client-accessible catalog.
 export const EXTERNAL_SELLER_URL = 'https://shop.tiktok.com/us/pdp/1732555288933666944';
-export const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
 
 export const PRODUCTS: CatalogProduct[] = [
   {
@@ -51,7 +37,7 @@ export const PRODUCTS: CatalogProduct[] = [
     includes: ['One glass carafe'],
     excludes: ['Ceramic filter', 'Activated charcoal'],
     additionalNotes: ['Check compatibility before pairing with another filter or coffee brewer.'],
-    variants: [{ code: 'carafe', label: 'Glass carafe', shopifyVariantId: variantId(ENV_VARIANTS.carafe) }],
+    variants: [{ code: 'carafe', label: 'Glass carafe' }],
   },
   {
     slug: 'ceramic-filter',
@@ -66,8 +52,8 @@ export const PRODUCTS: CatalogProduct[] = [
     excludes: ['Glass carafe', 'Activated charcoal'],
     additionalNotes: ['Available in black or white.', 'Confirm compatibility if you plan to use an existing carafe.'],
     variants: [
-      { code: 'filter-black', label: 'Black', image: '/images/Water_Image-02.jpg', imageAlt: 'Black ceramic Chimera filter installed in a glass carafe for demonstration', shopifyVariantId: variantId(ENV_VARIANTS.filterBlack) },
-      { code: 'filter-white', label: 'White', image: '/images/Inventory Product3.jpeg', imageAlt: 'White ceramic Chimera filter installed in a glass carafe for demonstration', shopifyVariantId: variantId(ENV_VARIANTS.filterWhite) },
+      { code: 'filter-black', label: 'Black', image: '/images/Water_Image-02.jpg', imageAlt: 'Black ceramic Chimera filter installed in a glass carafe for demonstration' },
+      { code: 'filter-white', label: 'White', image: '/images/Inventory Product3.jpeg', imageAlt: 'White ceramic Chimera filter installed in a glass carafe for demonstration' },
     ],
   },
   {
@@ -79,7 +65,7 @@ export const PRODUCTS: CatalogProduct[] = [
     includes: ['One 2 oz bag of activated charcoal'],
     excludes: ['Glass carafe', 'Ceramic filter'],
     additionalNotes: ['Original packaging photography is still to be supplied.', 'Use and replace charcoal according to approved product instructions.'],
-    variants: [{ code: 'carbon-2oz', label: '2 oz bag', shopifyVariantId: variantId(ENV_VARIANTS.carbon2oz) }],
+    variants: [{ code: 'carbon-2oz', label: '2 oz bag' }],
   },
   {
     slug: 'charcoal-12oz',
@@ -90,7 +76,7 @@ export const PRODUCTS: CatalogProduct[] = [
     includes: ['One 12 oz bag of activated charcoal'],
     excludes: ['Glass carafe', 'Ceramic filter'],
     additionalNotes: ['Original packaging photography is still to be supplied.', 'Use and replace charcoal according to approved product instructions.'],
-    variants: [{ code: 'carbon-12oz', label: '12 oz bag', shopifyVariantId: variantId(ENV_VARIANTS.carbon12oz) }],
+    variants: [{ code: 'carbon-12oz', label: '12 oz bag' }],
   },
   {
     slug: 'chimera-kit',
@@ -104,18 +90,10 @@ export const PRODUCTS: CatalogProduct[] = [
     includes: ['One glass carafe', 'One ceramic filter', 'One 2 oz bag of activated charcoal'],
     excludes: ['12 oz charcoal refill'],
     additionalNotes: ['Kit filter color has not yet been specified by Scott. Confirm the included color in the approved seller listing.'],
-    variants: [{ code: 'kit', label: 'Chimera kit', shopifyVariantId: variantId(ENV_VARIANTS.kit) }],
+    variants: [{ code: 'kit', label: 'Chimera kit' }],
   },
 ];
 
 export function getProduct(slug: string): CatalogProduct | undefined {
   return PRODUCTS.find((product) => product.slug === slug);
-}
-
-export function getShopifyCheckoutLink(variantId: string | null, quantity = 1): string | null {
-  const domain = SHOPIFY_STORE_DOMAIN.trim().toLowerCase();
-  if (!/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(domain)) return null;
-  if (!variantId || !/^\d{8,20}$/.test(variantId)) return null;
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) return null;
-  return 'https://' + domain + '/cart/' + variantId + ':' + quantity;
 }

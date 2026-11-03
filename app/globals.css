@@ -258,3 +258,8 @@
 .masthead .scott-headline i{font-style:italic}
 @media(max-width:760px){.masthead .scott-headline{font-size:clamp(46px,9vw,69px)}}
 @media(max-width:390px){.masthead .scott-headline{font-size:44px}}
+
+/* Stripe staging remains stylistically integrated with the existing Chimera product pages. */
+.purchase-button[type="button"]{width:100%;border:0;cursor:pointer;font-family:inherit}
+.purchase-button[type="button"]:disabled{cursor:progress;opacity:.7}
+.checkout-error{color:#8e2828;font-weight:700;font-size:13px;margin-top:16px}

@@ -59,8 +59,20 @@ for (const item of items) {
 for (const variant of ['filter-black', 'filter-white', 'carbon-2oz', 'carbon-12oz']) {
   if (!catalog.includes("code: '" + variant + "'")) errors.push('Missing catalog variant: ' + variant);
 }
-if (!catalog.includes('myshopify') || !catalog.includes('getShopifyCheckoutLink')) errors.push('Missing Shopify checkout guard');
+if (catalog.includes('shopifyVariantId') || catalog.includes('getShopifyCheckoutLink')) errors.push('Obsolete Shopify checkout is still referenced');
 if (!read('components/PurchaseSelector.tsx').includes('Direct checkout is being set up.')) errors.push('Missing honest pre-checkout state');
+if (!read('components/PurchaseSelector.tsx').includes('create-checkout')) errors.push('Stripe frontend checkout not wired');
+for (const file of ['netlify/functions/create-checkout.mts', 'netlify/functions/stripe-webhook.mts', 'netlify/functions/checkout-status.mts', 'lib/stripe-config.mjs', 'tests/stripe-config.test.mjs', 'app/checkout/success/page.tsx', 'app/checkout/cancelled/page.tsx']) {
+  if (!fs.existsSync(path.join(root, file))) errors.push('Missing payment-ready file: ' + file);
+}
+if (!read('netlify/functions/create-checkout.mts').includes('isStripeCheckoutReady')) errors.push('Missing server-side checkout gate');
+if (!read('netlify/functions/stripe-webhook.mts').includes('webhooks.constructEvent')) errors.push('Missing webhook signature verification');
+for (const file of ['app/layout.tsx', 'public/sitemap.xml', 'public/robots.txt']) {
+  if (read(file).includes('chimerawater.netlify.app')) errors.push('Old canonical URL remains in ' + file);
+}
+for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
+  if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
+}
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);

@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: 'Frequently asked questions about Chimera products, what is included, carbon refills, shipping, returns and setup.',
   alternates: { canonical: '/help/' },
 };
-const shop = 'https://shop.tiktok.com/us/pdp/1732555288933666944';
 
 export default function HelpPage() {
   return <div className="chimera">
@@ -26,8 +25,8 @@ export default function HelpPage() {
           <details><summary>What's included with the Chimera kit?</summary><p>Scott specifies one glass carafe, one ceramic filter, and one 2 oz bag of activated charcoal. The filter color included in the kit has not yet been specified, so confirm that before ordering.</p></details>
           <details><summary>Can I purchase just the ceramic filter?</summary><p>Yes, the ceramic filter is a standalone catalog item with black and white color options. It does not include a glass carafe or charcoal. Check your existing carafe's compatibility.</p></details>
           <details><summary>Are charcoal refills separate products?</summary><p>Yes. Scott specified individual 2 oz and 12 oz activated charcoal bags. Each has its own <Link href="/shop/">product listing</Link>. Individual purchase links and approved prices are still being connected.</p></details>
-          <details><summary>Can I check out on the Chimera website yet?</summary><p>Individual product pages are ready, but direct checkout is not active until Scott connects an authorized Shopify store, product variant IDs and approved inventory. TikTok Shop is an existing external sales channel, although that listing may not contain every new item.</p></details>
-          <details><summary>Who handles shipping, returns and refunds?</summary><p>The store where you place an order is responsible for its shipping, payment processing, return rules and order support. Review those terms at checkout and contact that seller through your order history.</p></details>
+          <details><summary>Can I check out on the Chimera website yet?</summary><p>All five product pages are ready, but direct checkout is disabled while Stripe test keys, six approved Price IDs, shipping and tax settings are being configured. Once tested, customers will pay on Stripe-hosted checkout without leaving Chimera's product design. A separate TikTok Shop listing may carry different availability.</p></details>
+          <details><summary>Who handles shipping, returns and refunds?</summary><p>Scott will publish shipping and return terms before direct checkout is enabled. Purchases made through the existing external retailer follow that retailer's terms; contact the seller through the marketplace for an existing order.</p></details>
           <details><summary>How often should I replace the carbon?</summary><p>Follow the approved instructions included with your purchased product. Earlier promotional materials and printed instructions contain different replacement intervals; the website does not prescribe a universal interval.</p></details>
           <details><summary>Can Chimera make unsafe water safe to drink?</summary><p>Do not use Chimera alone to treat microbiologically unsafe water. The website makes no unverified claims about specific contaminants or third-party certification.</p></details>
         </div>
