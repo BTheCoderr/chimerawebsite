@@ -14,7 +14,7 @@ export default function Home() {
           <span className="eyeline">A DIFFERENT KIND OF WATER FILTER <span> / </span> 001</span>
           <h1 id="hero-title" className="scott-headline">Carbon Filtered<br />Water, <i>Plastic Free</i></h1>
           <p>Chimera replaces the traditional plastic pitcher and disposable shell with a high-fired, taste-neutral ceramic housing paired with activated carbon. This core is set inside a durable, thermally shock-resistant borosilicate glass carafe.</p>
-          <Link href="/shop/" className="link-line">Explore the Chimera shop <span aria-hidden="true">↗</span></Link>
+          <Link href="/shop/chimera-kit/" className="link-line">Explore the complete Chimera kit <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="masthead-foot"><span>CHIMERA / OBJECTS FOR DAILY LIFE</span><span>SCROLL TO EXPLORE</span></div>
       </section>
@@ -42,7 +42,7 @@ export default function Home() {
       </section>
       <section id="collection" className="collection page-shell">
         <div className="section-label"><span>04</span><span>THE COLLECTION</span></div>
-        <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>Start with the complete Chimera kit, explore carbon refills, or choose an individual carafe or ceramic filter.</p></div>
+        <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>The complete Chimera kit brings together the glass carafe, your black or white ceramic filter, the stopper, and 2 oz carbon. Carbon refills and individual parts are here when you need them.</p></div>
         <div className="home-collection-grid">
           <figure className="home-collection-art">
             <KitPhoto label="Chimera complete carafe and black ceramic filter beneath decorative branches" />
