@@ -84,6 +84,11 @@ if (!purchase.includes('{image && <div className="product-main-photo">') || !pro
 if (!shopPage.includes('START WITH THE COMPLETE KIT') || !shopPage.includes('Explore the complete kit')) errors.push('Kit-first shopping emphasis missing');
 if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
+if (!fs.existsSync(path.join(root, 'app/studio-2026.css'))) errors.push('Editorial storefront styles missing');
+if (!read('app/layout.tsx').includes("import './studio-2026.css'")) errors.push('Editorial storefront stylesheet not imported');
+if (!home.includes('studio-hero') || !home.includes('studio-kit-layout') || !home.includes('studio-colors') || !home.includes('href="/shop/chimera-kit/"')) errors.push('Homepage must lead with the complete kit and use Scott photos');
+if (!shopPage.includes('studio-shop-hero') || !shopPage.includes('studio-refill-list') || !shopPage.includes('studio-parts-grid')) errors.push('Shop must lead with kit, then refills, then individual parts');
+if (!shopPage.includes('refills = PRODUCTS.slice(1, 3)') || !shopPage.includes('parts = PRODUCTS.slice(3)')) errors.push('Shop ordering must follow Scott instructions');
 for (const photo of ['PastedGraphic-1.png', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
   if (!fs.existsSync(path.join(root, 'public/images', photo))) errors.push('Missing Scott-provided product photo: ' + photo);
 }

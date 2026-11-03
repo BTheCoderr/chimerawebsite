@@ -32,7 +32,8 @@ export default async function ProductPage({ params }: Params) {
     <SiteHeader page="shop" />
     <main id="main">
       <div className="page-shell product-crumbs"><Link href="/shop/">Collection</Link><span aria-hidden="true">/</span><span>{product.name}</span></div>
-      <section className={"product-layout page-shell" + (!product.image ? " product-layout--no-image" : "")}>
+      {product.slug === 'chimera-kit' && <div className="page-shell studio-detail-signature"><span>THE CHIMERA KIT</span><span>THE COMPLETE SYSTEM / BLACK OR WHITE CERAMIC</span></div>}
+      <section className={"product-layout page-shell" + (!product.image ? " product-layout--no-image" : "") + (product.slug === 'chimera-kit' ? " studio-kit-detail" : "")}>
         <PurchaseSelector product={product} />
       </section>
       <section className="product-spec page-shell">
@@ -46,6 +47,7 @@ export default async function ProductPage({ params }: Params) {
           {product.additionalNotes?.map((note) => <p className="product-small-note" key={note}>{note}</p>)}
         </div>
       </section>
+      {product.slug !== 'chimera-kit' && <section className="page-shell studio-discover-kit"><div><span className="studio-overline">NEW TO CHIMERA?</span><h2>Start with the <em>whole kit.</em></h2><p>The complete set brings together the glass carafe, your choice of ceramic filter, stopper and 2 oz carbon.</p></div><Link className="studio-button studio-button--solid" href="/shop/chimera-kit/">Explore the Chimera kit <span aria-hidden="true">↗</span></Link></section>}
       <section className="product-related page-shell">
         <div className="section-label"><span>02</span><span>KEEP EXPLORING</span></div>
         <div className="product-related-links">{related.map((item) => <Link key={item.slug} href={'/shop/' + item.slug + '/'}><span>{item.type}</span><b>{item.name}</b><span aria-hidden="true">↗</span></Link>)}</div>

@@ -6,58 +6,96 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { KitPhoto } from '@/components/KitPhoto';
 
 export const metadata: Metadata = {
-  title: 'Shop the Chimera collection',
-  description: 'Start with the complete Chimera kit, featuring a glass carafe, your choice of ceramic filter, stopper and 2 oz carbon. Explore refills and individual parts.',
+  title: 'The Chimera kit & collection',
+  description: 'Discover the complete Chimera kit with glass carafe, choice of black or white ceramic filter, stopper and 2 oz carbon. Explore refill carbon and individual parts.',
   alternates: { canonical: '/shop/' },
 };
+
+const kit = PRODUCTS[0];
+const refills = PRODUCTS.slice(1, 3);
+const parts = PRODUCTS.slice(3);
 
 export default function ShopPage() {
   return <div className="chimera">
     <SiteHeader page="shop" />
     <main id="main">
-      <section className="shop-intro page-shell">
-        <div className="eyeline">CHIMERA / THE COMPLETE KIT FIRST</div>
-        <div className="shop-intro-grid">
-          <h1>One kit.<br /><em>All the essentials.</em></h1>
-          <div className="shop-intro-action">
-            <p>Start with the full Chimera system: a borosilicate glass carafe, your choice of black or white ceramic filter, a stopper and 2 oz of activated carbon. Everything in one thoughtful set.</p>
-            <Link className="shop-kit-cta" href="/shop/chimera-kit/">Explore the complete kit <span aria-hidden="true">↗</span></Link>
+      <section className="studio-shop-hero" aria-labelledby="shop-heading">
+        <div className="studio-shop-hero-media">
+          <div className="studio-shop-media-caption"><span>THE CHIMERA KIT</span><span>01 / THE COLLECTION</span></div>
+          <KitPhoto label="Complete Chimera system assembled with black ceramic filter and glass carafe" />
+          <span className="studio-shop-media-footer">BLACK CERAMIC SHOWN / WHITE AVAILABLE</span>
+        </div>
+        <div className="studio-shop-hero-copy">
+          <span className="studio-overline">THE COMPLETE SET / START HERE</span>
+          <h1 id="shop-heading">The whole<br /><em>idea.</em></h1>
+          <p className="studio-shop-lede">One kit, everything you need to begin.</p>
+          <p>A borosilicate glass carafe with wool grip. Your choice of black or white reusable ceramic filter. A matching stopper. A 2 oz bag of activated carbon. All brought together in one considered system.</p>
+          <Link href="/shop/chimera-kit/" className="studio-button studio-button--cream">Explore the complete kit <span aria-hidden="true">↗</span></Link>
+          <div className="studio-shop-hero-specs">
+            <span>01 / GLASS CARAFE</span>
+            <span>02 / CERAMIC FILTER</span>
+            <span>03 / STOPPER</span>
+            <span>04 / 2 OZ CARBON</span>
           </div>
         </div>
-        <p className="shop-pricing-note">Refills and individual components are also listed below. Direct checkout is being configured; prices and shipping will be shown when approved by Scott.</p>
       </section>
-      <section className="shop-collection page-shell" aria-label="Chimera product collection">
-        {PRODUCTS.map((product, index) => (
-          <article key={product.slug} className={'shop-item shop-item--' + product.slug + (!product.image ? ' shop-item--text-only' : '')}>
-            {product.image && <Link href={'/shop/' + product.slug + '/'} className="shop-item-media" aria-label={'View details for ' + product.name}>
-              {product.slug === 'chimera-kit' ?
-                <KitPhoto label={product.imageAlt ?? product.name} /> :
-                <img src={product.image} alt={product.imageAlt ?? product.name} loading={index < 2 ? 'eager' : 'lazy'} />}
-              <span className="shop-tile-index" aria-hidden="true">{String(index + 1).padStart(2, '0')} / 05</span>
-              <span className="shop-photo-label" aria-hidden="true">
-                {product.slug === 'ceramic-filter' ? 'BLACK FILTER PACK SHOWN · WHITE AVAILABLE' :
-                 product.slug === 'chimera-kit' ? 'THE COMPLETE KIT · BLACK CERAMIC SHOWN' :
-                 'CARAFE ONLY · NO FILTER'}
-              </span>
-            </Link>}
-            <div className="shop-item-details">
-              <span className="eyeline">{String(index + 1).padStart(2, '0')} / {product.type}</span>
-              {product.slug === 'chimera-kit' && <span className="shop-featured-note">START WITH THE COMPLETE KIT</span>}
-              <h2><Link href={'/shop/' + product.slug + '/'}>{product.name}</Link></h2>
-              <p>{product.shortDescription}</p>
-              {product.slug === 'chimera-kit' && <p className="shop-kit-includes">Glass carafe · black or white ceramic filter · ceramic stopper · 2 oz activated carbon</p>}
-              {product.variants.length > 1 && <span className="shop-variant-note">Choose black or white ceramic</span>}
-              <Link className="shop-item-link" href={'/shop/' + product.slug + '/'}>{product.slug === 'chimera-kit' ? 'Explore the complete kit' : product.image ? 'View product details' : 'Explore this refill'} <span aria-hidden="true">↗</span></Link>
-            </div>
-          </article>
-        ))}
+
+      <section className="studio-shop-principles page-shell" aria-label="Why start with the Chimera kit">
+        <div><span>01 / THE OBJECT</span><p>Glass and ceramic you keep.</p></div>
+        <div><span>02 / THE CHOICE</span><p>Black or white ceramic.</p></div>
+        <div><span>03 / THE REFILL</span><p>Replace the carbon as needed.</p></div>
       </section>
-      <section className="shop-lower-note page-shell">
-        <span className="eyeline">THE COMPLETE KIT. THEN WHAT YOU NEED.</span>
-        <h2>Keep what lasts.<br /><em>Refill what doesn’t.</em></h2>
-        <p>The complete kit is the easiest place to begin. Add carbon refills or individual parts whenever you need them.</p>
-        <Link className="link-line" href="/help/">Read buying help <span aria-hidden="true">↗</span></Link>
+
+      <section className="studio-refills page-shell" aria-labelledby="refills-title">
+        <div className="studio-section-head">
+          <span className="studio-section-index">02 / KEEP IT GOING</span>
+          <div><h2 id="refills-title">A new refill.<br /><em>Not a new filter.</em></h2><p>The ceramic and glass are made to be kept. Chimera also offers activated carbon on its own in two quantities.</p></div>
+        </div>
+        <div className="studio-refill-list">
+          {refills.map((product, index) =>
+            <article className="shop-item--text-only studio-refill-row" key={product.slug}>
+              <span className="studio-refill-number">0{index + 2}</span>
+              <div><span className="studio-overline">{product.type}</span><h3>{product.name}</h3><p>{product.shortDescription}</p></div>
+              <Link href={'/shop/' + product.slug + '/'} aria-label={'Explore ' + product.name}>Explore refill <span aria-hidden="true">↗</span></Link>
+            </article>
+          )}
+        </div>
       </section>
+
+      <section className="studio-individual" aria-labelledby="individual-title">
+        <div className="page-shell studio-section-head">
+          <span className="studio-section-index">03 / INDIVIDUAL PARTS</span>
+          <div><h2 id="individual-title">The pieces<br /><em>on their own.</em></h2><p>Already have part of the system? Explore the individual glass carafe or the ceramic filter pack in black or white, with 2 oz carbon included.</p></div>
+        </div>
+        <div className="studio-parts-grid page-shell">
+          {parts.map((product, index) =>
+            <article className={'shop-item shop-item--' + product.slug} key={product.slug}>
+              {product.image && <Link className="shop-item-media studio-part-photo" href={'/shop/' + product.slug + '/'} aria-label={'View ' + product.name}>
+                <img src={product.image} alt={product.imageAlt || product.name} loading="lazy" />
+                <span className="shop-tile-index" aria-hidden="true">0{index + 4} / 05</span>
+                <span className="shop-photo-label">{product.slug === 'glass-carafe' ? 'GLASS CARAFE ONLY' : 'BLACK FILTER PACK SHOWN'}</span>
+              </Link>}
+              <div className="studio-part-info">
+                <span className="studio-overline">{product.type}</span>
+                <h3><Link href={'/shop/' + product.slug + '/'}>{product.name}</Link></h3>
+                <p>{product.shortDescription}</p>
+                {product.variants.length > 1 && <p className="studio-variant-note">Black or white ceramic available</p>}
+                <Link className="studio-text-link" href={'/shop/' + product.slug + '/'}>View product details <span aria-hidden="true">↗</span></Link>
+              </div>
+            </article>
+          )}
+        </div>
+      </section>
+
+      <section className="studio-shop-end">
+        <div className="page-shell studio-shop-end-inner">
+          <span className="studio-section-index">START WITH THE COMPLETE KIT</span>
+          <h2>One considered<br /><em>whole.</em></h2>
+          <p>The glass, the ceramic, the stopper, and the carbon. Begin with the complete system, and keep the individual parts and refills in mind for later.</p>
+          <Link className="studio-button studio-button--solid" href="/shop/chimera-kit/">Explore the complete kit <span aria-hidden="true">↗</span></Link>
+        </div>
+      </section>
+      <div className="page-shell studio-payment-note">Direct checkout is being set up. Prices and shipping will appear here when approved by Scott. In the meantime, explore the products and their included components.</div>
     </main>
     <SiteFooter />
   </div>;

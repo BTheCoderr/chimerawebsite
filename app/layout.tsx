@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import './visual-refinements.css';
+import './studio-2026.css';
 
 const siteUrl = 'https://chimerawater.com';
 
@@ -16,9 +17,9 @@ export const metadata: Metadata = {
     siteName: 'Chimera',
     title: 'Chimera | Carbon Filtered Water, Plastic Free',
     description: 'A taste-neutral ceramic housing with activated carbon, paired with a borosilicate glass carafe.',
-    images: [{ url: '/images/KS Image-02-RS.jpg', alt: 'Chimera ceramic water filter and glass carafe' }],
+    images: [{ url: '/images/Water_Image-02.jpg', alt: 'Chimera ceramic water filter and glass carafe' }],
   },
-  twitter: { card: 'summary_large_image', title: 'Chimera | Carbon Filtered Water, Plastic Free', images: ['/images/KS Image-02-RS.jpg'] },
+  twitter: { card: 'summary_large_image', title: 'Chimera | Carbon Filtered Water, Plastic Free', images: ['/images/Water_Image-02.jpg'] },
   icons: { icon: [{ url: '/icon.svg', type: 'image/svg+xml' }] },
 };
 
