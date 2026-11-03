@@ -75,6 +75,13 @@ for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
 }
 if (!home.includes('home-collection-grid') || !home.includes('KitPhoto')) errors.push('Homepage collection photo layout missing');
 const shopPage = read('app/shop/page.tsx');
+const purchase = read('components/PurchaseSelector.tsx');
+const productPage = read('app/shop/[slug]/page.tsx');
+if (!shopPage.includes('shop-item--text-only') || !shopPage.includes('product.image && <Link')) errors.push('Refill listings must not render a photo/placeholder box');
+if (shopPage.includes('carbon-art') || shopPage.includes('PACK PHOTO PENDING') || shopPage.includes('TYPE ARTWORK')) errors.push('Placeholder artwork or pending photo label remains in collection');
+if (purchase.includes('carbon-art') || purchase.includes('photography has not yet been provided') || purchase.includes('photo-caption">Actual')) errors.push('Placeholder graphic or apology remains on product detail');
+if (!purchase.includes('{image && <div className="product-main-photo">') || !productPage.includes('product-layout--no-image')) errors.push('Photo-less product detail must use a clean, text-only layout');
+if (!shopPage.includes('START WITH THE COMPLETE KIT') || !shopPage.includes('Explore the complete kit')) errors.push('Kit-first shopping emphasis missing');
 if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
 for (const photo of ['PastedGraphic-1.png', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {

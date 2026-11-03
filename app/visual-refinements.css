@@ -78,3 +78,29 @@
 .product-main-photo .kit-photo { width:100%; max-height:700px; }
 @media(min-width:761px) and (max-width:1100px){ .home-collection-art .kit-photo { height:500px; } }
 @media(max-width:760px){ .home-collection-art .kit-photo { height:min(105vw,540px); } }
+
+/* Kit-first selling: real product imagery only. The refills are compact text listings. */
+.shop-intro-action { display:flex; flex-direction:column; align-items:flex-start; gap:22px; }
+.shop-intro-action p { margin:0; }
+.shop-kit-cta { display:inline-flex; align-items:center; justify-content:space-between; gap:32px; background:#243b2b; color:#fff; font-size:12px; font-weight:700; letter-spacing:.04em; padding:18px 23px; min-height:54px; transition:background .2s ease; }
+.shop-kit-cta:hover,.shop-kit-cta:focus-visible { background:#3b5b43; }
+.shop-item--chimera-kit .shop-item-details { position:relative; }
+.shop-featured-note { display:block; margin-top:20px; font-size:10px; letter-spacing:.16em; font-weight:700; color:#47614c; }
+.shop-kit-includes { font-size:13px !important; font-weight:600; letter-spacing:.025em; line-height:1.75 !important; max-width:570px !important; }
+.shop-collection .shop-item--text-only { grid-column:auto; align-self:start; padding:24px 0 36px; border-top:1px solid #9ba99b; border-bottom:1px solid var(--line); }
+.shop-item--text-only .shop-item-details { padding:0; }
+.shop-item--text-only .shop-item-details h2 { font-size:clamp(32px,3.8vw,52px); margin:23px 0 16px; }
+.shop-item--text-only .shop-item-details p { max-width:460px; }
+.shop-item--text-only .shop-item-link { margin-top:12px; }
+.product-layout--no-image { display:block; max-width:920px; }
+.product-layout--no-image .product-information { padding:12px 0 0; }
+.product-layout--no-image .product-information h1 { max-width:820px; }
+.product-layout--no-image .product-description { max-width:710px; }
+.product-layout--no-image .purchase-action { max-width:620px; }
+@media(max-width:760px) {
+ .shop-intro-action { gap:20px; }
+ .shop-kit-cta { width:100%; }
+ .shop-collection .shop-item--text-only { padding:12px 0 28px; }
+ .product-layout--no-image { padding-inline:19px; }
+}
+@media(prefers-reduced-motion:reduce) { .shop-kit-cta { transition:none; } }
