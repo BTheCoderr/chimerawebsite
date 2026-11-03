@@ -25,19 +25,17 @@ export default function ShopPage() {
       </section>
       <section className="shop-collection page-shell" aria-label="Chimera product collection">
         {PRODUCTS.map((product, index) => (
-          <article key={product.slug} className={'shop-item shop-item--' + product.slug}>
-            <Link href={'/shop/' + product.slug + '/'} className={'shop-item-media' + (!product.image ? ' shop-item-media--typographic' : '')} aria-label={'View details for ' + product.name}>
-              {product.slug === 'chimera-kit' ? <KitPhoto label={product.imageAlt ?? product.name} /> : product.image ?
-                <img src={product.image} alt={product.imageAlt ?? product.name} loading={index < 2 ? 'eager' : 'lazy'} /> :
-                <span className="carbon-art" aria-hidden="true"><small>CHIMERA / REPLACEMENT CARBON</small><b>{product.slug.endsWith('2oz') ? '02' : '12'}</b><span>OZ / ACTIVATED CHARCOAL</span></span>}
+          <article key={product.slug} className={'shop-item shop-item--' + product.slug + (!product.image ? ' shop-item--text-only' : '')}>
+            {product.image && <Link href={'/shop/' + product.slug + '/'} className="shop-item-media" aria-label={'View details for ' + product.name}>
+              {product.slug === 'chimera-kit' ? <KitPhoto label={product.imageAlt ?? product.name} /> :
+                <img src={product.image} alt={product.imageAlt ?? product.name} loading={index < 2 ? 'eager' : 'lazy'} />}
               <span className="shop-tile-index" aria-hidden="true">{String(index + 1).padStart(2, '0')} / 05</span>
               <span className="shop-photo-label" aria-hidden="true">
                 {product.slug === 'ceramic-filter' ? 'BLACK FILTER PACK SHOWN · WHITE AVAILABLE' :
                  product.slug === 'chimera-kit' ? 'COMPLETE KIT · BLACK CERAMIC SHOWN' :
-                 product.slug === 'glass-carafe' ? 'CARAFE ONLY · NO FILTER' :
-                 'TYPE ARTWORK · PACK PHOTO PENDING'}
+                 'CARAFE ONLY · NO FILTER'}
               </span>
-            </Link>
+            </Link>}
             <div className="shop-item-details">
               <span className="eyeline">{String(index + 1).padStart(2, '0')} / {product.type}</span>
               <h2><Link href={'/shop/' + product.slug + '/'}>{product.name}</Link></h2>
