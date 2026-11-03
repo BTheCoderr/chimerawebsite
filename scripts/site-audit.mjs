@@ -73,11 +73,11 @@ for (const file of ['app/layout.tsx', 'public/sitemap.xml', 'public/robots.txt']
 for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
   if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
 }
-if (!home.includes('home-collection-grid') || !home.includes('chimera-kit-black.webp')) errors.push('Homepage collection photo layout missing');
+if (!home.includes('home-collection-grid') || !home.includes('KitPhoto')) errors.push('Homepage collection photo layout missing');
 const shopPage = read('app/shop/page.tsx');
 if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
-for (const photo of ['chimera-kit-black.webp', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
+for (const photo of ['PastedGraphic-1.png', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
   if (!fs.existsSync(path.join(root, 'public/images', photo))) errors.push('Missing Scott-provided product photo: ' + photo);
 }
 const actualSequence = [...catalog.matchAll(/slug: '([^']+)'/g)].map(m => m[1]).slice(0,5);
