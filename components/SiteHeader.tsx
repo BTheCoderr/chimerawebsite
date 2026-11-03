@@ -30,8 +30,8 @@ export function SiteHeader({ page = 'home' }: { page?: Page }) {
             {links.map(({href,label}) => <Link key={href} href={href}>{label}</Link>)}
           </div>
         </details>
-        <Link className="shop-link" href="/shop/">
-          View the shop <span aria-hidden="true">↗</span>
+        <Link className="shop-link" href="/shop/chimera-kit/">
+          Explore the kit <span aria-hidden="true">↗</span>
         </Link>
       </div>
     </header>
