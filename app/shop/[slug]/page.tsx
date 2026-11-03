@@ -32,7 +32,7 @@ export default async function ProductPage({ params }: Params) {
     <SiteHeader page="shop" />
     <main id="main">
       <div className="page-shell product-crumbs"><Link href="/shop/">Collection</Link><span aria-hidden="true">/</span><span>{product.name}</span></div>
-      <section className="product-layout page-shell">
+      <section className={"product-layout page-shell" + (!product.image ? " product-layout--no-image" : "")}>
         <PurchaseSelector product={product} />
       </section>
       <section className="product-spec page-shell">
