@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { PRODUCTS } from '@/lib/catalog';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { KitPhoto } from '@/components/KitPhoto';
 
 export const metadata: Metadata = {
   title: 'Shop the Chimera collection',
@@ -26,7 +27,7 @@ export default function ShopPage() {
         {PRODUCTS.map((product, index) => (
           <article key={product.slug} className={'shop-item shop-item--' + product.slug}>
             <Link href={'/shop/' + product.slug + '/'} className={'shop-item-media' + (!product.image ? ' shop-item-media--typographic' : '')} aria-label={'View details for ' + product.name}>
-              {product.image ?
+              {product.slug === 'chimera-kit' ? <KitPhoto label={product.imageAlt ?? product.name} /> : product.image ?
                 <img src={product.image} alt={product.imageAlt ?? product.name} loading={index < 2 ? 'eager' : 'lazy'} /> :
                 <span className="carbon-art" aria-hidden="true"><small>CHIMERA / REPLACEMENT CARBON</small><b>{product.slug.endsWith('2oz') ? '02' : '12'}</b><span>OZ / ACTIVATED CHARCOAL</span></span>}
               <span className="shop-tile-index" aria-hidden="true">{String(index + 1).padStart(2, '0')} / 05</span>
