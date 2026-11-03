@@ -196,3 +196,31 @@
 @media(prefers-reduced-motion:reduce) {
  .studio-button,.studio-color-item img{transition:none;}
 }
+
+/* Carry the kit's premium campaign language into product detail pages. */
+.studio-detail-signature{margin-top:28px;display:flex;gap:24px;justify-content:space-between;align-items:center;border-top:1px solid #afbdaf;padding-top:17px;font-size:10px;letter-spacing:.17em;font-weight:700;color:#5b705e;}
+.product-layout.studio-kit-detail{background:#f2f1e9;width:min(1400px,calc(100% - 80px));max-width:1400px;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:5%;padding:clamp(22px,3vw,50px);margin-top:22px;margin-bottom:50px;}
+.studio-kit-detail .product-main-photo{background:#d9ddd3;min-height:0;}
+.studio-kit-detail .product-main-photo .kit-photo{width:100%;height:clamp(510px,42vw,750px);max-height:750px;}
+.studio-kit-detail .product-main-photo>img{height:clamp(510px,42vw,750px);max-height:750px;}
+.studio-kit-detail .product-information{padding:18px 0 0;}
+.studio-kit-detail .product-information h1{font-size:clamp(53px,6vw,99px);letter-spacing:-.067em;}
+.studio-kit-detail .product-subtitle{max-width:430px;}
+.studio-kit-detail .product-description{max-width:440px;}
+.studio-kit-detail .purchase-action{margin-top:10px;}
+.studio-kit-detail .purchase-button--outline{min-height:54px;}
+.studio-discover-kit{display:flex;align-items:center;justify-content:space-between;gap:35px;background:#dfe5dc;padding:clamp(26px,4vw,60px);margin-bottom:85px;}
+.studio-discover-kit h2{font:400 clamp(37px,4vw,59px)/1.11 Georgia,serif;letter-spacing:-.055em;margin:16px 0 13px;}
+.studio-discover-kit h2 em{font-style:italic;color:#4b654e;}
+.studio-discover-kit p{font-size:14px;line-height:1.75;color:#526653;max-width:540px;margin:0;}
+.studio-discover-kit .studio-button{flex-shrink:0;}
+@media(max-width:760px){
+ .studio-detail-signature{flex-direction:column;align-items:flex-start;gap:7px;font-size:9px;}
+ .product-layout.studio-kit-detail{display:block;width:calc(100% - 30px);padding:14px 14px 28px;}
+ .studio-kit-detail .product-main-photo .kit-photo{height:min(112vw,570px);}
+ .studio-kit-detail .product-main-photo>img{height:min(112vw,570px);}
+ .studio-kit-detail .product-information{padding:35px 7px 0;}
+ .studio-kit-detail .product-information h1{font-size:clamp(50px,12vw,77px);}
+ .studio-discover-kit{display:block;margin-bottom:55px;}
+ .studio-discover-kit .studio-button{margin-top:25px;width:100%;}
+}
