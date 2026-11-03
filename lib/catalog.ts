@@ -50,7 +50,7 @@ export const PRODUCTS: CatalogProduct[] = [
     description: 'The smaller charcoal refill for Chimera. Scott has confirmed this as a separate product in the online store.',
     includes: ['One 2 oz bag of activated charcoal'],
     excludes: ['Glass carafe', 'Ceramic filter'],
-    additionalNotes: ['Original packaging photography is still to be supplied.', 'Use and replace charcoal according to approved product instructions.'],
+    additionalNotes: ['Use and replace charcoal according to approved product instructions.'],
     variants: [{ code: 'carbon-2oz', label: '2 oz bag' }],
   },
   {
@@ -61,7 +61,7 @@ export const PRODUCTS: CatalogProduct[] = [
     description: 'The larger charcoal refill for Chimera. Scott has confirmed this as a separate product in the online store.',
     includes: ['One 12 oz bag of activated charcoal'],
     excludes: ['Glass carafe', 'Ceramic filter'],
-    additionalNotes: ['Original packaging photography is still to be supplied.', 'Use and replace charcoal according to approved product instructions.'],
+    additionalNotes: ['Use and replace charcoal according to approved product instructions.'],
     variants: [{ code: 'carbon-12oz', label: '12 oz bag' }],
   },
   {
