@@ -110,3 +110,9 @@ Run `npm run test:checkout`, `npm run audit`, `npm run typecheck`, and `npm run 
 ## November visual polish
 
 This refinement keeps the editorial identity and Scott's approved copy. The homepage collection now anchors its five-product index with an authentic, unique photo of the carafe and white ceramic filter. Shop tiles show product image-context labels; the kit has a two-column desktop feature treatment. Responsive styles are in `app/visual-refinements.css`. Charcoal packages remain typographic placeholders until authentic photos are approved. No payments or prices were changed.
+
+## Scott's November 3 product updates (awaiting images on this feature branch)
+
+Scott asked for the kit first, then carbon refills, then individual parts. The filter pack includes its selected black or white ceramic housing, stopper and one 2 oz carbon pouch (carafe excluded). The complete kit includes the carafe, selected ceramic filter, stopper and 2 oz carbon. Both kit colors are mapped to one kit Stripe Price ID while keeping color in the checkout session metadata.
+
+Photos must be committed as `public/images/chimera-kit-black.webp`, `chimera-carafe-only.webp`, `chimera-filter-black.webp`, and `chimera-filter-white.webp` before merging the branch. The branch intentionally must not be merged with missing photos. No live prices or payments are enabled.

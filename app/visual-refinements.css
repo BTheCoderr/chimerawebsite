@@ -63,3 +63,10 @@
 @media(prefers-reduced-motion:reduce){
  .shop-item-media img,.variant-option{transition:none!important;transform:none!important}
 }
+
+/* Scott's requested product hierarchy: kit featured first, carbon next, parts last. */
+.shop-collection .shop-item:nth-child(5){grid-column:auto}
+.shop-collection .shop-item:nth-child(5) .shop-item-media{height:460px}
+.shop-collection .shop-item--chimera-kit{grid-column:1/-1}
+@media(max-width:760px){.shop-collection .shop-item:nth-child(5) .shop-item-media{height:clamp(310px,85vw,420px)}}
+@media(max-width:450px){.shop-collection .shop-item:nth-child(5) .shop-item-media{height:clamp(270px,85vw,355px)}}

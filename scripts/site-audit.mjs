@@ -73,10 +73,17 @@ for (const file of ['app/layout.tsx', 'public/sitemap.xml', 'public/robots.txt']
 for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
   if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
 }
-if (!home.includes('home-collection-grid') || !home.includes('Inventory Product3.jpeg')) errors.push('Homepage collection photo layout missing');
+if (!home.includes('home-collection-grid') || !home.includes('chimera-kit-black.webp')) errors.push('Homepage collection photo layout missing');
 const shopPage = read('app/shop/page.tsx');
 if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
+for (const photo of ['chimera-kit-black.webp', 'chimera-carafe-only.webp', 'chimera-filter-black.webp', 'chimera-filter-white.webp']) {
+  if (!fs.existsSync(path.join(root, 'public/images', photo))) errors.push('Missing Scott-provided product photo: ' + photo);
+}
+const actualSequence = [...catalog.matchAll(/slug: '([^']+)'/g)].map(m => m[1]).slice(0,5);
+if (actualSequence.join(',') !== 'chimera-kit,charcoal-2oz,charcoal-12oz,glass-carafe,ceramic-filter') errors.push('Scott catalog order changed');
+if (!catalog.includes("code: 'kit-black'") || !catalog.includes("code: 'kit-white'")) errors.push('Kit ceramic color variants missing');
+if (!catalog.includes('One 2 oz bag of activated carbon')) errors.push('Ceramic filter carbon bundle missing');
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
