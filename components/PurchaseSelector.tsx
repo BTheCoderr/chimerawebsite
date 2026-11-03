@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { CatalogProduct } from '@/lib/catalog';
 import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
+import { KitPhoto } from '@/components/KitPhoto';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
@@ -36,7 +37,8 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
 
   return <>
     <div className={'product-main-photo' + (!image ? ' product-main-photo--carbon' : '')}>
-      {image ?
+      {image && product.slug === 'chimera-kit' && selectedCode === 'kit-black' ?
+        <KitPhoto label={imageAlt} /> : image ?
         <img src={image} alt={imageAlt} /> :
         <div className="carbon-art carbon-art--large" role="img" aria-label={product.name + ', text-only placeholder until package photography is provided'}>
           <small>CHIMERA / ACTIVATED CHARCOAL</small>
