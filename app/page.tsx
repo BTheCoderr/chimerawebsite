@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ProductFilm } from '@/components/ProductFilm';
+import { KitPhoto } from '@/components/KitPhoto';
 
 export default function Home() {
   return <div className="chimera">
@@ -44,7 +45,7 @@ export default function Home() {
         <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>Start with the complete Chimera kit, explore carbon refills, or choose an individual carafe or ceramic filter.</p></div>
         <div className="home-collection-grid">
           <figure className="home-collection-art">
-            <img src="/images/chimera-kit-black.webp" alt="Chimera complete carafe and black ceramic filter beneath decorative branches" loading="lazy" />
+            <KitPhoto label="Chimera complete carafe and black ceramic filter beneath decorative branches" />
             <figcaption>CHIMERA / COMPLETE KIT · BLACK FILTER SHOWN</figcaption>
           </figure>
         <div className="home-shop-index">
