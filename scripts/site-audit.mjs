@@ -77,7 +77,7 @@ if (!home.includes('home-collection-grid') || !home.includes('chimera-kit-black.
 const shopPage = read('app/shop/page.tsx');
 if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
-for (const photo of ['chimera-kit-black.webp', 'chimera-carafe-only.webp', 'chimera-filter-black.webp', 'chimera-filter-white.webp']) {
+for (const photo of ['chimera-kit-black.webp', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
   if (!fs.existsSync(path.join(root, 'public/images', photo))) errors.push('Missing Scott-provided product photo: ' + photo);
 }
 const actualSequence = [...catalog.matchAll(/slug: '([^']+)'/g)].map(m => m[1]).slice(0,5);
