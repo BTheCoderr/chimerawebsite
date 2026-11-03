@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { CatalogProduct } from '@/lib/catalog';
 import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
+import { KitPhoto } from '@/components/KitPhoto';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
@@ -36,14 +37,15 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
 
   return <>
     <div className={'product-main-photo' + (!image ? ' product-main-photo--carbon' : '')}>
-      {image ?
+      {image && product.slug === 'chimera-kit' && selectedCode === 'kit-black' ?
+        <KitPhoto label={imageAlt} /> : image ?
         <img src={image} alt={imageAlt} /> :
         <div className="carbon-art carbon-art--large" role="img" aria-label={product.name + ', text-only placeholder until package photography is provided'}>
           <small>CHIMERA / ACTIVATED CHARCOAL</small>
           <b>{product.slug === 'charcoal-2oz' ? '02' : '12'}</b>
           <span>OZ / REFILL</span>
         </div>}
-      {image && <p className="product-photo-caption">{product.imageContext}</p>}
+      {image && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch and stopper are not pictured.' : product.imageContext}</p>}
       {!image && <p className="product-photo-caption">Actual refill packaging photography has not yet been provided.</p>}
     </div>
     <div className="product-information">
@@ -63,7 +65,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
               onClick={() => setSelectedCode(option.code)}
             ><span aria-hidden="true" className={'variant-swatch variant-swatch--' + option.label.toLowerCase()} />{option.label}</button>
           )}</div>
-          <span className="product-variant-explain">Carafe and charcoal are not included with the standalone filter.</span>
+          <span className="product-variant-explain">{product.slug === 'chimera-kit' ? 'Kit includes the glass carafe, selected ceramic filter, stopper and 2 oz carbon.' : 'Filter pack includes the selected ceramic housing, stopper and 2 oz carbon. Glass carafe sold separately.'}</span>
         </fieldset>}
       <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
       {checkoutEnabled ?

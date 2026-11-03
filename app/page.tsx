@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ProductFilm } from '@/components/ProductFilm';
+import { KitPhoto } from '@/components/KitPhoto';
 
 export default function Home() {
   return <div className="chimera">
@@ -41,19 +42,19 @@ export default function Home() {
       </section>
       <section id="collection" className="collection page-shell">
         <div className="section-label"><span>04</span><span>THE COLLECTION</span></div>
-        <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>Five products. A glass carafe, a filter in black or white, two charcoal sizes, and one complete kit.</p></div>
+        <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>Start with the complete Chimera kit, explore carbon refills, or choose an individual carafe or ceramic filter.</p></div>
         <div className="home-collection-grid">
           <figure className="home-collection-art">
-            <img src="/images/Inventory Product3.jpeg" alt="Chimera glass carafe with white ceramic filter, photographed as an assembled setup" loading="lazy" />
-            <figcaption>CHIMERA / CERAMIC AND GLASS · WHITE FILTER SHOWN</figcaption>
+            <KitPhoto label="Chimera complete carafe and black ceramic filter beneath decorative branches" />
+            <figcaption>CHIMERA / COMPLETE KIT · BLACK FILTER SHOWN</figcaption>
           </figure>
         <div className="home-shop-index">
           {[
-            ['01', 'Glass carafe', 'By itself', 'glass-carafe'],
-            ['02', 'Ceramic filter', 'Black / White', 'ceramic-filter'],
-            ['03', 'Activated charcoal', '2 oz', 'charcoal-2oz'],
-            ['04', 'Activated charcoal', '12 oz', 'charcoal-12oz'],
-            ['05', 'The Chimera kit', 'Carafe + filter + 2 oz charcoal', 'chimera-kit'],
+            ['01', 'The Chimera kit', 'Carafe + black / white ceramic + 2 oz carbon', 'chimera-kit'],
+            ['02', 'Activated charcoal', '2 oz refill', 'charcoal-2oz'],
+            ['03', 'Activated charcoal', '12 oz refill', 'charcoal-12oz'],
+            ['04', 'Glass carafe', 'Carafe only', 'glass-carafe'],
+            ['05', 'Ceramic filter pack', 'Black / white + 2 oz carbon', 'ceramic-filter'],
           ].map(([number, name, option, slug]) =>
             <Link key={slug} href={'/shop/' + slug + '/'} className="home-shop-row">
               <span>{number}</span><strong>{name}</strong><small>{option}</small><span aria-hidden="true">↗</span>

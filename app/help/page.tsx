@@ -16,14 +16,14 @@ export default function HelpPage() {
       <section className="service-hero page-shell">
         <span className="eyeline">CHIMERA / CUSTOMER INFORMATION</span>
         <h1>Good to know<br /><em>before you order.</em></h1>
-        <p>Scott has confirmed five products: the carafe, the ceramic filter in black or white, 2 oz charcoal, 12 oz charcoal, and the complete kit.</p>
+        <p>Explore the complete kit first, followed by 2 oz and 12 oz carbon refills and individual glass and ceramic parts.</p>
       </section>
       <section className="service-content page-shell">
         <div className="section-label"><span>01</span><span>BUYING HELP</span></div>
         <div className="service-questions">
-          <details open><summary>What products are in the online collection?</summary><p>Visit <Link href="/shop/">our collection</Link> for five separate listings: glass carafe only, ceramic filter only (black or white), 2 oz charcoal, 12 oz charcoal, and a kit containing the carafe, ceramic filter and 2 oz charcoal.</p></details>
-          <details><summary>What's included with the Chimera kit?</summary><p>Scott specifies one glass carafe, one ceramic filter, and one 2 oz bag of activated charcoal. The filter color included in the kit has not yet been specified, so confirm that before ordering.</p></details>
-          <details><summary>Can I purchase just the ceramic filter?</summary><p>Yes, the ceramic filter is a standalone catalog item with black and white color options. It does not include a glass carafe or charcoal. Check your existing carafe's compatibility.</p></details>
+          <details open><summary>What products are in the online collection?</summary><p>Visit <Link href="/shop/">our collection</Link> for five separate listings: the complete kit (black or white ceramic), separate 2 oz and 12 oz carbon refills, the glass carafe by itself, and a ceramic filter pack (black or white) with 2 oz carbon.</p></details>
+          <details><summary>What's included with the Chimera kit?</summary><p>Each kit includes the borosilicate glass carafe, your selected black or white ceramic filter, a stopper and one 2 oz bag of activated carbon.</p></details>
+          <details><summary>Can I purchase just the ceramic filter?</summary><p>Yes. Scott's filter pack comes in black or white and includes the ceramic housing, stopper and 2 oz carbon. The glass carafe is sold separately; check existing-carafe compatibility.</p></details>
           <details><summary>Are charcoal refills separate products?</summary><p>Yes. Scott specified individual 2 oz and 12 oz activated charcoal bags. Each has its own <Link href="/shop/">product listing</Link>. Individual purchase links and approved prices are still being connected.</p></details>
           <details><summary>Can I check out on the Chimera website yet?</summary><p>All five product pages are ready, but direct checkout is disabled while Stripe test keys, six approved Price IDs, shipping and tax settings are being configured. Once tested, customers will pay on Stripe-hosted checkout without leaving Chimera's product design. A separate TikTok Shop listing may carry different availability.</p></details>
           <details><summary>Who handles shipping, returns and refunds?</summary><p>Scott will publish shipping and return terms before direct checkout is enabled. Purchases made through the existing external retailer follow that retailer's terms; contact the seller through the marketplace for an existing order.</p></details>

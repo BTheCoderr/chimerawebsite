@@ -110,3 +110,9 @@ Run `npm run test:checkout`, `npm run audit`, `npm run typecheck`, and `npm run 
 ## November visual polish
 
 This refinement keeps the editorial identity and Scott's approved copy. The homepage collection now anchors its five-product index with an authentic, unique photo of the carafe and white ceramic filter. Shop tiles show product image-context labels; the kit has a two-column desktop feature treatment. Responsive styles are in `app/visual-refinements.css`. Charcoal packages remain typographic placeholders until authentic photos are approved. No payments or prices were changed.
+
+## Scott's November 3 product updates (product files on main)
+
+Scott asked for the kit first, then carbon refills, then individual parts. The filter pack includes its selected black or white ceramic housing, stopper and one 2 oz carbon pouch (carafe excluded). The complete kit includes the carafe, selected ceramic filter, stopper and 2 oz carbon. Both kit colors are mapped to one kit Stripe Price ID while keeping color in the checkout session metadata.
+
+All four original photos are on main: `IMG_6069.png`, `Filter_Pack_Black.jpeg`, `Filter_Pack_White.jpeg`, and `PastedGraphic-1.png`. The `KitPhoto` component uses an SVG viewBox to display only the assembled kit photograph from Scott's screenshot, hiding the unrelated old webpage heading; no fifth upload is needed. Confirm the build checks before merging. No live prices or payments are enabled.

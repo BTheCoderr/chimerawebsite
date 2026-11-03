@@ -53,5 +53,12 @@ test('arbitrary variant codes and missing payloads are rejected', () => {
   }
 });
 test('Stripe price IDs must have safe format', () => {
-  assert.equal(parseCheckoutSelection({variantCode:'kit',quantity:1},{...ready, STRIPE_PRICE_KIT:'https://evil.example'}),null);
+  assert.equal(parseCheckoutSelection({variantCode:'kit-black',quantity:1},{...ready, STRIPE_PRICE_KIT:'https://evil.example'}),null);
+});
+
+test('both kit ceramic colors map to Scott\'s one kit price without losing the selection', () => {
+  assert.deepEqual(parseCheckoutSelection({variantCode:'kit-black',quantity:1},ready),
+    {variantCode:'kit-black',quantity:1,priceId:'price_kit123'});
+  assert.deepEqual(parseCheckoutSelection({variantCode:'kit-white',quantity:1},ready),
+    {variantCode:'kit-white',quantity:1,priceId:'price_kit123'});
 });
