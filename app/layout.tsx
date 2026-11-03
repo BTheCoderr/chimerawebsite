@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './visual-refinements.css';
 
 const siteUrl = 'https://chimerawater.com';
 

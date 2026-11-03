@@ -42,6 +42,11 @@ export default function Home() {
       <section id="collection" className="collection page-shell">
         <div className="section-label"><span>04</span><span>THE COLLECTION</span></div>
         <div className="collection-heading"><h2>Choose what<br /><em>belongs to you.</em></h2><p>Five products. A glass carafe, a filter in black or white, two charcoal sizes, and one complete kit.</p></div>
+        <div className="home-collection-grid">
+          <figure className="home-collection-art">
+            <img src="/images/Inventory Product3.jpeg" alt="Chimera glass carafe with white ceramic filter, photographed as an assembled setup" loading="lazy" />
+            <figcaption>CHIMERA / CERAMIC AND GLASS · WHITE FILTER SHOWN</figcaption>
+          </figure>
         <div className="home-shop-index">
           {[
             ['01', 'Glass carafe', 'By itself', 'glass-carafe'],
@@ -54,6 +59,7 @@ export default function Home() {
               <span>{number}</span><strong>{name}</strong><small>{option}</small><span aria-hidden="true">↗</span>
             </Link>
           )}
+        </div>
         </div>
         <Link className="home-shop-all" href="/shop/">Explore the entire collection <span aria-hidden="true">↗</span></Link>
       </section>

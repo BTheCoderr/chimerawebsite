@@ -106,3 +106,7 @@ The existing Next.js static website stays on Netlify. A server-side Netlify Func
 - While waiting for keys, both switches remain false: `NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED=false`, `STRIPE_CHECKOUT_ENABLED=false`. No direct payments are accepted.
 
 Run `npm run test:checkout`, `npm run audit`, `npm run typecheck`, and `npm run build` before merging.
+
+## November visual polish
+
+This refinement keeps the editorial identity and Scott's approved copy. The homepage collection now anchors its five-product index with an authentic, unique photo of the carafe and white ceramic filter. Shop tiles show product image-context labels; the kit has a two-column desktop feature treatment. Responsive styles are in `app/visual-refinements.css`. Charcoal packages remain typographic placeholders until authentic photos are approved. No payments or prices were changed.

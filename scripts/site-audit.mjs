@@ -73,6 +73,10 @@ for (const file of ['app/layout.tsx', 'public/sitemap.xml', 'public/robots.txt']
 for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
   if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
 }
+if (!home.includes('home-collection-grid') || !home.includes('Inventory Product3.jpeg')) errors.push('Homepage collection photo layout missing');
+const shopPage = read('app/shop/page.tsx');
+if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
+if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
