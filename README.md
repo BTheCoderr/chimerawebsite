@@ -90,3 +90,7 @@ Product page shopping cart/multiple-item checkout could be added with Shopify's 
 Homepage language follows Scott's supplied product wording: “Carbon Filtered Water, Plastic Free,” a description of the high-fired ceramic and activated-carbon core in a thermally shock-resistant borosilicate glass carafe, black/white ceramic choice, wool insulated grip, pour-over coffee use, and the updated Glass materials line. The existing “Good design starts with a better question” section is intentionally unchanged.
 
 These are inventor-provided product descriptions, not independently verified filtration tests. Keep contaminant-reduction and certification claims out of the website until supported by appropriate documentation.
+
+## Cursor setup for DNS and Stripe
+
+See [docs/CURSOR_DNS_STRIPE_SETUP.md](docs/CURSOR_DNS_STRIPE_SETUP.md). The current site is **not yet connected to Stripe**. A sample [`.env.example`](.env.example) lists variable names only; never add real Stripe secrets to GitHub or `NEXT_PUBLIC_` variables. Updating DNS occurs in Netlify and the domain registrar, not through a normal code commit.
