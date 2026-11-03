@@ -76,6 +76,12 @@ for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
 if (!home.includes('home-collection-grid') || !home.includes('KitPhoto')) errors.push('Homepage collection photo layout missing');
 const shopPage = read('app/shop/page.tsx');
 if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
+const purchaseSelector = read('components/PurchaseSelector.tsx');
+const productPage = read('app/shop/[slug]/page.tsx');
+if (!shopPage.includes('product.image && <Link') || !shopPage.includes('shop-item--text-only')) errors.push('Shop refill listings must have no image slots');
+if (!purchaseSelector.includes('{image && <div className="product-main-photo">') || !productPage.includes('product-layout--text-only')) errors.push('Refill detail pages must not reserve image space');
+if (/carbon-art|PACK PHOTO PENDING|shop-item-media--typographic/.test(shopPage + purchaseSelector)) errors.push('Unapproved refill placeholder artwork remains');
+if (/Original packaging photography is still to be supplied/.test(catalog)) errors.push('Photo-pending catalog note remains');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
 for (const photo of ['PastedGraphic-1.png', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
   if (!fs.existsSync(path.join(root, 'public/images', photo))) errors.push('Missing Scott-provided product photo: ' + photo);
