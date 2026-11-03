@@ -36,18 +36,12 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   }
 
   return <>
-    <div className={'product-main-photo' + (!image ? ' product-main-photo--carbon' : '')}>
-      {image && product.slug === 'chimera-kit' && selectedCode === 'kit-black' ?
-        <KitPhoto label={imageAlt} /> : image ?
-        <img src={image} alt={imageAlt} /> :
-        <div className="carbon-art carbon-art--large" role="img" aria-label={product.name + ', text-only placeholder until package photography is provided'}>
-          <small>CHIMERA / ACTIVATED CHARCOAL</small>
-          <b>{product.slug === 'charcoal-2oz' ? '02' : '12'}</b>
-          <span>OZ / REFILL</span>
-        </div>}
-      {image && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch and stopper are not pictured.' : product.imageContext}</p>}
-      {!image && <p className="product-photo-caption">Actual refill packaging photography has not yet been provided.</p>}
-    </div>
+    {image && <div className="product-main-photo">
+      {product.slug === 'chimera-kit' && selectedCode === 'kit-black' ?
+        <KitPhoto label={imageAlt} /> :
+        <img src={image} alt={imageAlt} />}
+      {product.imageContext && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch and stopper are not pictured.' : product.imageContext}</p>}
+    </div>}
     <div className="product-information">
       <div className="eyeline">{product.type} / CHIMERA</div>
       <h1>{product.name}</h1>
@@ -81,7 +75,6 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           <a href={EXTERNAL_SELLER_URL} className="purchase-button purchase-button--outline" target="_blank" rel="noopener noreferrer">Browse existing TikTok Shop listing <span aria-hidden="true">↗</span></a>
           <p>The existing retailer may not list this exact product or color. Confirm availability with the seller before ordering.</p>
         </div>}
-      <div className="product-honesty"><span>Product-specific photography and prices will be updated as Scott confirms them.</span></div>
     </div>
   </>;
 }
