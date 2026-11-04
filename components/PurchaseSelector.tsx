@@ -40,7 +40,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
       {product.slug === 'chimera-kit' && selectedCode === 'kit-black' ?
         <KitPhoto label={imageAlt} /> :
         <img src={image} alt={imageAlt} />}
-      {product.imageContext && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch and stopper are not pictured.' : product.imageContext}</p>}
+      {product.imageContext && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.' : product.imageContext}</p>}
     </div>}
     <div className="product-information">
       <div className="eyeline">{product.type} / CHIMERA</div>
@@ -59,7 +59,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
               onClick={() => setSelectedCode(option.code)}
             ><span aria-hidden="true" className={'variant-swatch variant-swatch--' + option.label.toLowerCase()} />{option.label}</button>
           )}</div>
-          <span className="product-variant-explain">{product.slug === 'chimera-kit' ? 'Kit includes the glass carafe, selected ceramic filter, stopper and 2 oz carbon.' : 'Filter pack includes the selected ceramic housing, stopper and 2 oz carbon. Glass carafe sold separately.'}</span>
+          <span className="product-variant-explain">{product.slug === 'chimera-kit' ? 'Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.' : 'Filter pack includes the selected ceramic filter with lid and 2 oz carbon. Glass carafe sold separately.'}</span>
         </fieldset>}
       <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
       {checkoutEnabled ?
