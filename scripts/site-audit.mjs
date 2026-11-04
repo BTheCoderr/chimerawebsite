@@ -96,6 +96,17 @@ const actualSequence = [...catalog.matchAll(/slug: '([^']+)'/g)].map(m => m[1]).
 if (actualSequence.join(',') !== 'chimera-kit,charcoal-2oz,charcoal-12oz,glass-carafe,ceramic-filter') errors.push('Scott catalog order changed');
 if (!catalog.includes("code: 'kit-black'") || !catalog.includes("code: 'kit-white'")) errors.push('Kit ceramic color variants missing');
 if (!catalog.includes('One 2 oz bag of activated carbon')) errors.push('Ceramic filter carbon bundle missing');
+// Scott's November 3 notes: the lid belongs to the ceramic, not to a fourth standalone product component.
+for (const [name, source] of [['homepage', home], ['shop', shopPage], ['catalog', catalog], ['product selector', purchase], ['help', read('app/help/page.tsx')]]) {
+  if (/stopper/i.test(source)) errors.push(name + ': separate stopper terminology must be removed; describe ceramic with lid instead');
+}
+if (!home.includes("['03', 'The carbon'") || home.includes("['04', 'The carbon'")) errors.push('Kit contents must be three-part: glass, ceramic with lid, carbon');
+if (!shopPage.includes('03 / 2 OZ CARBON') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Shop kit breakdown must have only three items');
+if (!catalog.includes('One ceramic filter with lid in the selected color')) errors.push('Catalog must describe ceramic with its lid');
+const productDetailSource = read('app/shop/[slug]/page.tsx');
+if (!productDetailSource.includes("['glass-carafe', 'ceramic-filter', 'charcoal-2oz', 'charcoal-12oz']") || productDetailSource.includes('slice(0, 3)')) {
+  errors.push('Kit related products must show all four individual items in Scott cost order');
+}
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);

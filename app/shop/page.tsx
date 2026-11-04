@@ -7,7 +7,7 @@ import { KitPhoto } from '@/components/KitPhoto';
 
 export const metadata: Metadata = {
   title: 'The Chimera kit & collection',
-  description: 'Discover the complete Chimera kit with glass carafe, choice of black or white ceramic filter, stopper and 2 oz carbon. Explore refill carbon and individual parts.',
+  description: 'Discover the complete Chimera kit with glass carafe, choice of black or white ceramic filter with lid and 2 oz carbon. Explore refill carbon and individual parts.',
   alternates: { canonical: '/shop/' },
 };
 
@@ -29,13 +29,12 @@ export default function ShopPage() {
           <span className="studio-overline">THE COMPLETE SET / START HERE</span>
           <h1 id="shop-heading">The whole<br /><em>idea.</em></h1>
           <p className="studio-shop-lede">One kit, everything you need to begin.</p>
-          <p>A borosilicate glass carafe with wool grip. Your choice of black or white reusable ceramic filter. A matching stopper. A 2 oz bag of activated carbon. All brought together in one considered system.</p>
+          <p>A borosilicate glass carafe with wool grip. Your choice of black or white reusable ceramic filter with a lid to hold the activated carbon. A 2 oz bag of activated carbon. All brought together in one considered system.</p>
           <Link href="/shop/chimera-kit/" className="studio-button studio-button--cream">Explore the complete kit <span aria-hidden="true">↗</span></Link>
           <div className="studio-shop-hero-specs">
             <span>01 / GLASS CARAFE</span>
-            <span>02 / CERAMIC FILTER</span>
-            <span>03 / STOPPER</span>
-            <span>04 / 2 OZ CARBON</span>
+            <span>02 / CERAMIC WITH LID</span>
+            <span>03 / 2 OZ CARBON</span>
           </div>
         </div>
       </section>
@@ -91,7 +90,7 @@ export default function ShopPage() {
         <div className="page-shell studio-shop-end-inner">
           <span className="studio-section-index">START WITH THE COMPLETE KIT</span>
           <h2>One considered<br /><em>whole.</em></h2>
-          <p>The glass, the ceramic, the stopper, and the carbon. Begin with the complete system, and keep the individual parts and refills in mind for later.</p>
+          <p>The glass, the ceramic with its lid, and the carbon. Begin with the complete system, and keep the individual parts and refills in mind for later.</p>
           <Link className="studio-button studio-button--solid" href="/shop/chimera-kit/">Explore the complete kit <span aria-hidden="true">↗</span></Link>
         </div>
       </section>

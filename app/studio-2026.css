@@ -224,3 +224,7 @@
  .studio-discover-kit{display:block;margin-bottom:55px;}
  .studio-discover-kit .studio-button{margin-top:25px;width:100%;}
 }
+
+/* Scott's revised three-part kit: glass, ceramic with its lid, and activated carbon. */
+.studio-shop-hero-specs{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:760px){.studio-shop-hero-specs{grid-template-columns:1fr;gap:13px;}}
