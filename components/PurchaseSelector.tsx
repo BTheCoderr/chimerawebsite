@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import type { CatalogProduct } from '@/lib/catalog';
 import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
-import { KitPhoto } from '@/components/KitPhoto';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
@@ -37,9 +36,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
 
   return <>
     {image && <div className="product-main-photo">
-      {product.slug === 'chimera-kit' && selectedCode === 'kit-black' ?
-        <KitPhoto label={imageAlt} /> :
-        <img src={image} alt={imageAlt} />}
+      <img src={image} alt={imageAlt} />
       {product.imageContext && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.' : product.imageContext}</p>}
     </div>}
     <div className="product-information">
