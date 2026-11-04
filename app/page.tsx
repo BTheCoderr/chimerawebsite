@@ -6,9 +6,8 @@ import { KitPhoto } from '@/components/KitPhoto';
 
 const kitParts = [
   ['01', 'The glass', 'A thermally shock-resistant borosilicate carafe, finished with a wool insulated grip.'],
-  ['02', 'The ceramic', 'Your choice of a reusable black or white ceramic filter housing.'],
-  ['03', 'The stopper', 'A matching ceramic stopper for the filter housing.'],
-  ['04', 'The carbon', 'One 2 oz bag of activated carbon, included with the kit.'],
+  ['02', 'The ceramic', 'Your choice of a reusable black or white ceramic filter with a lid to hold the activated carbon.'],
+  ['03', 'The carbon', 'One 2 oz bag of activated carbon, included with the kit.'],
 ] as const;
 
 export default function Home() {
@@ -59,7 +58,7 @@ export default function Home() {
                 <div className="studio-part" key={number}><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></div>
               )}
               <Link href="/shop/chimera-kit/" className="studio-button studio-button--dark">Explore the full set <span aria-hidden="true">↗</span></Link>
-              <p className="studio-fine-print">Black or white ceramic filter available. Product photograph above shows the carafe alone; the complete kit includes all four listed parts.</p>
+              <p className="studio-fine-print">Black or white ceramic filter available. Product photograph above shows the carafe alone; the complete kit includes all three listed elements.</p>
             </div>
           </div>
         </div>
@@ -78,15 +77,15 @@ export default function Home() {
       <section className="studio-colors" aria-labelledby="colors-title">
         <div className="page-shell studio-colors-heading">
           <div><span className="studio-section-index">03 / MAKE IT YOURS</span><h2 id="colors-title">Two finishes.<br /><em>One better ritual.</em></h2></div>
-          <p>The reusable ceramic filter is available in black or white. Both filter packs include a stopper and 2 oz of carbon, and the complete kit adds the glass carafe.</p>
+          <p>The reusable ceramic filter is available in black or white. Both filter packs include a ceramic lid to hold the activated carbon and a 2 oz carbon pouch. The complete kit adds the glass carafe.</p>
         </div>
         <div className="studio-color-grid page-shell">
           <Link href="/shop/chimera-kit/" className="studio-color-item">
-            <div className="studio-color-image"><img src="/images/Filter_Pack_Black.jpeg" alt="Black ceramic filter housing, stopper and Chimera carbon pouch" loading="lazy" /></div>
+            <div className="studio-color-image"><img src="/images/Filter_Pack_Black.jpeg" alt="Black ceramic filter with its lid and included Chimera carbon pouch" loading="lazy" /></div>
             <div className="studio-color-caption"><span>01 / BLACK CERAMIC</span><strong>Considered in black.</strong><span aria-hidden="true">↗</span></div>
           </Link>
           <Link href="/shop/chimera-kit/" className="studio-color-item">
-            <div className="studio-color-image"><img src="/images/Filter_Pack_White.jpeg" alt="White ceramic filter housing, stopper and Chimera carbon pouch" loading="lazy" /></div>
+            <div className="studio-color-image"><img src="/images/Filter_Pack_White.jpeg" alt="White ceramic filter with its lid and included Chimera carbon pouch" loading="lazy" /></div>
             <div className="studio-color-caption"><span>02 / WHITE CERAMIC</span><strong>Considered in white.</strong><span aria-hidden="true">↗</span></div>
           </Link>
         </div>
@@ -104,7 +103,7 @@ export default function Home() {
         <div className="section-label"><span>04</span><span>MATERIAL INTELLIGENCE</span></div>
         <div className="materials-body"><h2>Keep the object.<br /><em>Refresh the carbon.</em></h2>
           <div className="materials-list">
-            <div><span>01 /</span><div><h3>Ceramic</h3><p>A durable, reusable housing crafted in Ohio to hold the activated carbon.</p></div></div>
+            <div><span>01 /</span><div><h3>Ceramic</h3><p>A durable, reusable housing crafted in Ohio, with a lid to hold the activated carbon.</p></div></div>
             <div><span>02 /</span><div><h3>Activated carbon</h3><p>Replace the carbon inside the chamber, rather than discarding the housing.</p></div></div>
             <div><span>03 /</span><div><h3>Glass</h3><p>A borosilicate carafe holds your filtered water and makes great coffee.</p></div></div>
           </div>
