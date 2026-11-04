@@ -101,7 +101,7 @@ for (const [name, source] of [['homepage', home], ['shop', shopPage], ['catalog'
   if (/stopper/i.test(source)) errors.push(name + ': separate stopper terminology must be removed; describe ceramic with lid instead');
 }
 if (!home.includes("['03', 'The carbon'") || home.includes("['04', 'The carbon'")) errors.push('Kit contents must be three-part: glass, ceramic with lid, carbon');
-if (!shopPage.includes('03 / 2 OZ CARBON') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Shop kit breakdown must have only three items');
+if (!purchase.includes('Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Kit details must describe the correct three components');
 if (!catalog.includes('One ceramic filter with lid in the selected color')) errors.push('Catalog must describe ceramic with its lid');
 if (!catalog.includes("image: '/images/Water_Image-02.jpg'") || !purchase.includes('<img src={image} alt={imageAlt} />')) errors.push('Kit detail must use Scott\'s assembled-kit photograph in the same layout as the carafe');
 if (!shopPage.includes('shop-kit-feature') || !productPage.includes('product-layout page-shell')) errors.push('Kit must use the carafe-style two-column product layout');
