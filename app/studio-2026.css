@@ -228,3 +228,25 @@
 /* Scott's revised three-part kit: glass, ceramic with its lid, and activated carbon. */
 .studio-shop-hero-specs{grid-template-columns:repeat(3,minmax(0,1fr));}
 @media(max-width:760px){.studio-shop-hero-specs{grid-template-columns:1fr;gap:13px;}}
+
+
+/* Scott's Nov 4 request: open the shop with the same photograph-left,
+   product-information-right composition as the carafe product page. */
+.shop-kit-headline{padding-top:36px;padding-bottom:7px;font-size:10px;font-weight:700;letter-spacing:.16em;color:#68766b;}
+.shop-kit-feature{margin-top:12px;padding-top:12px;padding-bottom:35px;align-items:start;}
+.shop-kit-feature .product-main-photo{background:#dce0d6;min-height:0;}
+.shop-kit-feature .product-main-photo img{height:630px;width:100%;object-fit:contain;object-position:center;}
+.shop-kit-feature .product-information{padding-top:30px;}
+.shop-kit-feature .product-information h1{font-size:clamp(58px,5.7vw,100px);}
+.shop-kit-followup{border-top:1px solid #c4cbbf;border-bottom:1px solid #c4cbbf;display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:19px;}
+.shop-kit-followup>span{font-size:10px;font-weight:700;letter-spacing:.15em;color:#5c715f;}
+.shop-kit-followup .studio-text-link{white-space:nowrap;}
+.shop-kit-feature .product-photo-caption{background:#e3e6de;}
+@media(max-width:760px){
+  .shop-kit-headline{padding-top:24px;padding-bottom:6px;}
+  .shop-kit-feature{margin-top:0;padding-top:10px;padding-bottom:25px;}
+  .shop-kit-feature .product-main-photo img{height:auto;max-height:600px;}
+  .shop-kit-feature .product-information{padding-top:0;}
+  .shop-kit-feature .product-information h1{font-size:clamp(54px,11vw,78px);}
+  .shop-kit-followup{align-items:flex-start;flex-direction:column;gap:15px;}
+}

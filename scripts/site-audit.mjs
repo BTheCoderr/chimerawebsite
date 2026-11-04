@@ -82,12 +82,12 @@ if (shopPage.includes('carbon-art') || shopPage.includes('PACK PHOTO PENDING') |
 if (purchase.includes('carbon-art') || purchase.includes('photography has not yet been provided') || purchase.includes('photo-caption">Actual')) errors.push('Placeholder graphic or apology remains on product detail');
 if (!purchase.includes('{image && <div className="product-main-photo">') || !productPage.includes('product-layout--no-image')) errors.push('Photo-less product detail must use a clean, text-only layout');
 if (!shopPage.includes('START WITH THE COMPLETE KIT') || !shopPage.includes('Explore the complete kit')) errors.push('Kit-first shopping emphasis missing');
-if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Product gallery labels missing');
+if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-index')) errors.push('Secondary product gallery labels missing');
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
 if (!fs.existsSync(path.join(root, 'app/studio-2026.css'))) errors.push('Editorial storefront styles missing');
 if (!read('app/layout.tsx').includes("import './studio-2026.css'")) errors.push('Editorial storefront stylesheet not imported');
 if (!home.includes('studio-hero') || !home.includes('studio-kit-layout') || !home.includes('studio-colors') || !home.includes('href="/shop/chimera-kit/"')) errors.push('Homepage must lead with the complete kit and use Scott photos');
-if (!shopPage.includes('studio-shop-hero') || !shopPage.includes('studio-refill-list') || !shopPage.includes('studio-parts-grid')) errors.push('Shop must lead with kit, then refills, then individual parts');
+if (!shopPage.includes('shop-kit-feature') || !shopPage.includes('<PurchaseSelector product={kit} />') || !shopPage.includes('studio-refill-list') || !shopPage.includes('studio-parts-grid')) errors.push('Shop must lead with a real kit product layout, then refills, then individual parts');
 if (!shopPage.includes('refills = PRODUCTS.slice(1, 3)') || !shopPage.includes('parts = PRODUCTS.slice(3)')) errors.push('Shop ordering must follow Scott instructions');
 for (const photo of ['PastedGraphic-1.png', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
   if (!fs.existsSync(path.join(root, 'public/images', photo))) errors.push('Missing Scott-provided product photo: ' + photo);
@@ -101,8 +101,10 @@ for (const [name, source] of [['homepage', home], ['shop', shopPage], ['catalog'
   if (/stopper/i.test(source)) errors.push(name + ': separate stopper terminology must be removed; describe ceramic with lid instead');
 }
 if (!home.includes("['03', 'The carbon'") || home.includes("['04', 'The carbon'")) errors.push('Kit contents must be three-part: glass, ceramic with lid, carbon');
-if (!shopPage.includes('03 / 2 OZ CARBON') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Shop kit breakdown must have only three items');
+if (!purchase.includes('Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Kit details must describe the correct three components');
 if (!catalog.includes('One ceramic filter with lid in the selected color')) errors.push('Catalog must describe ceramic with its lid');
+if (!catalog.includes("image: '/images/Water_Image-02.jpg'") || !purchase.includes('<img src={image} alt={imageAlt} />')) errors.push('Kit detail must use Scott\'s assembled-kit photograph in the same layout as the carafe');
+if (!shopPage.includes('shop-kit-feature') || !productPage.includes('product-layout page-shell')) errors.push('Kit must use the carafe-style two-column product layout');
 const productDetailSource = read('app/shop/[slug]/page.tsx');
 if (!productDetailSource.includes("['glass-carafe', 'ceramic-filter', 'charcoal-2oz', 'charcoal-12oz']") || productDetailSource.includes('slice(0, 3)')) {
   errors.push('Kit related products must show all four individual items in Scott cost order');

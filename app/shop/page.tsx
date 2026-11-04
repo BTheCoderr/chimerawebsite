@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { PRODUCTS } from '@/lib/catalog';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
-import { KitPhoto } from '@/components/KitPhoto';
+import { PurchaseSelector } from '@/components/PurchaseSelector';
 
 export const metadata: Metadata = {
   title: 'The Chimera kit & collection',
@@ -19,25 +19,14 @@ export default function ShopPage() {
   return <div className="chimera">
     <SiteHeader page="shop" />
     <main id="main">
-      <section className="studio-shop-hero" aria-labelledby="shop-heading">
-        <div className="studio-shop-hero-media">
-          <div className="studio-shop-media-caption"><span>THE CHIMERA KIT</span><span>01 / THE COLLECTION</span></div>
-          <KitPhoto label="Complete Chimera system assembled with black ceramic filter and glass carafe" />
-          <span className="studio-shop-media-footer">BLACK CERAMIC SHOWN / WHITE AVAILABLE</span>
-        </div>
-        <div className="studio-shop-hero-copy">
-          <span className="studio-overline">THE COMPLETE SET / START HERE</span>
-          <h1 id="shop-heading">The whole<br /><em>idea.</em></h1>
-          <p className="studio-shop-lede">One kit, everything you need to begin.</p>
-          <p>A borosilicate glass carafe with wool grip. Your choice of black or white reusable ceramic filter with a lid to hold the activated carbon. A 2 oz bag of activated carbon. All brought together in one considered system.</p>
-          <Link href="/shop/chimera-kit/" className="studio-button studio-button--cream">Explore the complete kit <span aria-hidden="true">↗</span></Link>
-          <div className="studio-shop-hero-specs">
-            <span>01 / GLASS CARAFE</span>
-            <span>02 / CERAMIC WITH LID</span>
-            <span>03 / 2 OZ CARBON</span>
-          </div>
-        </div>
+      <div className="page-shell shop-kit-headline"><span>THE COMPLETE KIT / START HERE</span></div>
+      <section className="product-layout page-shell shop-kit-feature" aria-label="The Chimera kit">
+        <PurchaseSelector product={kit} />
       </section>
+      <div className="page-shell shop-kit-followup">
+        <span>START WITH THE COMPLETE KIT</span>
+        <Link href="/shop/chimera-kit/" className="studio-text-link">Explore the complete kit <span aria-hidden="true">↗</span></Link>
+      </div>
 
       <section className="studio-shop-principles page-shell" aria-label="Why start with the Chimera kit">
         <div><span>01 / THE OBJECT</span><p>Glass and ceramic you keep.</p></div>

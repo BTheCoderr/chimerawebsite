@@ -38,8 +38,7 @@ export default async function ProductPage({ params }: Params) {
     <SiteHeader page="shop" />
     <main id="main">
       <div className="page-shell product-crumbs"><Link href="/shop/">Collection</Link><span aria-hidden="true">/</span><span>{product.name}</span></div>
-      {product.slug === 'chimera-kit' && <div className="page-shell studio-detail-signature"><span>THE CHIMERA KIT</span><span>THE COMPLETE SYSTEM / BLACK OR WHITE CERAMIC</span></div>}
-      <section className={"product-layout page-shell" + (!product.image ? " product-layout--no-image" : "") + (product.slug === 'chimera-kit' ? " studio-kit-detail" : "")}>
+      <section className={"product-layout page-shell" + (!product.image ? " product-layout--no-image" : "")}>
         <PurchaseSelector product={product} />
       </section>
       <section className="product-spec page-shell">
