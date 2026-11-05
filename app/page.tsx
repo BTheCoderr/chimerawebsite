@@ -50,15 +50,15 @@ export default function Home() {
           </div>
           <div className="studio-kit-layout">
             <figure className="studio-carafe-feature">
-              <img src="/images/IMG_6069.png" alt="Chimera borosilicate carafe with gray wool insulated grip, photographed on its own" loading="lazy" />
-              <figcaption><span>THE OBJECT / GLASS CARAFE</span><span>01 OF 04</span></figcaption>
+              <img src="/images/IMG_6116.jpeg" alt="Complete Chimera glass carafe assembled with the white ceramic filter and lid beneath a gray wool grip" loading="lazy" />
+              <figcaption><span>THE COMPLETE KIT / WHITE CERAMIC</span><span>01 OF 03</span></figcaption>
             </figure>
             <div className="studio-parts">
               {kitParts.map(([number, title, description]) =>
                 <div className="studio-part" key={number}><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></div>
               )}
               <Link href="/shop/chimera-kit/" className="studio-button studio-button--dark">Explore the full set <span aria-hidden="true">↗</span></Link>
-              <p className="studio-fine-print">Black or white ceramic filter available. Product photograph above shows the carafe alone; the complete kit includes all three listed elements.</p>
+              <p className="studio-fine-print">White ceramic filter shown. Black is also available. The complete kit includes the glass carafe, ceramic filter with lid, and 2 oz activated carbon (carbon pouch not pictured).</p>
             </div>
           </div>
         </div>
