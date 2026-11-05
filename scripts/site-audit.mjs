@@ -10,6 +10,7 @@ const header = read('components/SiteHeader.tsx');
 const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
 const errors = [];
+if (!home.includes('src="/images/IMG_6116.jpeg"') || !home.includes('THE COMPLETE KIT / WHITE CERAMIC')) errors.push('Scott white-filter kit photo must appear in the homepage kit breakdown');
 
 for (const [name, source] of [['homepage', home], ['care', care]]) {
   const images = [...source.matchAll(/(?:src|href)="(\/images\/[^"]+)"/g)].map((m) => m[1]);
