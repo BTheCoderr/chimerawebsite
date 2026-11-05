@@ -10,6 +10,11 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const variant = product.variants.find((v) => v.code === selectedCode) ?? product.variants[0];
   const image = variant.image || product.image;
   const imageAlt = variant.imageAlt || product.imageAlt || product.name;
+  const photoCaption = product.slug === 'chimera-kit'
+    ? (selectedCode === 'kit-white'
+      ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.'
+      : 'Black ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.')
+    : product.imageContext;
   const checkoutEnabled = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED === 'true';
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -37,7 +42,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   return <>
     {image && <div className="product-main-photo">
       <img src={image} alt={imageAlt} />
-      {product.imageContext && <p className="product-photo-caption">{selectedCode === 'kit-white' ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.' : product.imageContext}</p>}
+      {photoCaption && <p className="product-photo-caption">{photoCaption}</p>}
     </div>}
     <div className="product-information">
       <div className="eyeline">{product.type} / CHIMERA</div>
