@@ -10,7 +10,8 @@ const header = read('components/SiteHeader.tsx');
 const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
 const errors = [];
-if (!home.includes('src="/images/IMG_6116.jpeg"') || !home.includes('THE COMPLETE KIT / WHITE CERAMIC')) errors.push('Scott white-filter kit photo must appear in the homepage kit breakdown');
+if (!home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"') || !home.includes('WHITE CERAMIC SHOWN')) errors.push('Scott white-filter kit photo must appear in the homepage Chimera kit hero');
+if (!home.includes('studio-carafe-feature') || !home.includes('src="/images/IMG_6069.png"') || !home.includes('THE OBJECT / GLASS CARAFE')) errors.push('Carafe-only photo must be in the glass feature');
 
 for (const [name, source] of [['homepage', home], ['care', care]]) {
   const images = [...source.matchAll(/(?:src|href)="(\/images\/[^"]+)"/g)].map((m) => m[1]);
@@ -74,7 +75,7 @@ for (const file of ['app/layout.tsx', 'public/sitemap.xml', 'public/robots.txt']
 for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
   if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
 }
-if (!home.includes('home-collection-grid') || !home.includes('KitPhoto')) errors.push('Homepage collection photo layout missing');
+if (!home.includes('home-collection-grid') || !home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"')) errors.push('Homepage collection or kit hero image missing');
 const shopPage = read('app/shop/page.tsx');
 const purchase = read('components/PurchaseSelector.tsx');
 const productPage = read('app/shop/[slug]/page.tsx');
@@ -104,7 +105,9 @@ for (const [name, source] of [['homepage', home], ['shop', shopPage], ['catalog'
 if (!home.includes("['03', 'The carbon'") || home.includes("['04', 'The carbon'")) errors.push('Kit contents must be three-part: glass, ceramic with lid, carbon');
 if (!purchase.includes('Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Kit details must describe the correct three components');
 if (!catalog.includes('One ceramic filter with lid in the selected color')) errors.push('Catalog must describe ceramic with its lid');
-if (!catalog.includes("image: '/images/Water_Image-02.jpg'") || !purchase.includes('<img src={image} alt={imageAlt} />')) errors.push('Kit detail must use Scott\'s assembled-kit photograph in the same layout as the carafe');
+if (!catalog.includes("image: '/images/IMG_6116.jpeg'") || !purchase.includes('<img src={image} alt={imageAlt} />')) errors.push('Kit detail must use the uploaded white-filter image in the same layout as the carafe');
+if (!catalog.includes("{ code: 'kit-white', label: 'White', image: '/images/IMG_6116.jpeg'") || !catalog.includes("{ code: 'kit-black', label: 'Black', image: '/images/Water_Image-02.jpg'")) errors.push('Black and white kit variants must show accurate photos');
+if (catalog.indexOf("code: 'kit-white'") > catalog.indexOf("code: 'kit-black'")) errors.push('Default kit photo must be the new white-filter image');
 if (!shopPage.includes('shop-kit-feature') || !productPage.includes('product-layout page-shell')) errors.push('Kit must use the carafe-style two-column product layout');
 const productDetailSource = read('app/shop/[slug]/page.tsx');
 if (!productDetailSource.includes("['glass-carafe', 'ceramic-filter', 'charcoal-2oz', 'charcoal-12oz']") || productDetailSource.includes('slice(0, 3)')) {

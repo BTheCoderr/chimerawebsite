@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ProductFilm } from '@/components/ProductFilm';
-import { KitPhoto } from '@/components/KitPhoto';
 
 const kitParts = [
   ['01', 'The glass', 'A thermally shock-resistant borosilicate carafe, finished with a wool insulated grip.'],
@@ -27,8 +26,8 @@ export default function Home() {
           <div className="studio-hero-signature"><span>GLASS</span><span>CERAMIC</span><span>ACTIVATED CARBON</span></div>
         </div>
         <div className="studio-hero-stage">
-          <div className="studio-hero-topline"><span>THE CHIMERA KIT</span><span>BLACK CERAMIC SHOWN</span></div>
-          <KitPhoto label="Chimera complete filter kit, black ceramic housing fitted in a glass carafe" />
+          <div className="studio-hero-topline"><span>THE CHIMERA KIT</span><span>WHITE CERAMIC SHOWN</span></div>
+          <img className="kit-photo" src="/images/IMG_6116.jpeg" alt="Complete Chimera kit with white ceramic filter and lid assembled in the glass carafe" />
           <div className="studio-hero-bottomline"><span>001 / THE COMPLETE SYSTEM</span><span>START HERE ↗</span></div>
           <Link href="/shop/chimera-kit/" className="studio-stage-link" aria-label="Explore the complete Chimera kit" />
         </div>
@@ -50,15 +49,15 @@ export default function Home() {
           </div>
           <div className="studio-kit-layout">
             <figure className="studio-carafe-feature">
-              <img src="/images/IMG_6116.jpeg" alt="Complete Chimera glass carafe assembled with the white ceramic filter and lid beneath a gray wool grip" loading="lazy" />
-              <figcaption><span>THE COMPLETE KIT / WHITE CERAMIC</span><span>01 OF 03</span></figcaption>
+              <img src="/images/IMG_6069.png" alt="Chimera borosilicate glass carafe with gray wool grip shown by itself" loading="lazy" />
+              <figcaption><span>THE OBJECT / GLASS CARAFE</span><span>01 / THE GLASS</span></figcaption>
             </figure>
             <div className="studio-parts">
               {kitParts.map(([number, title, description]) =>
                 <div className="studio-part" key={number}><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></div>
               )}
               <Link href="/shop/chimera-kit/" className="studio-button studio-button--dark">Explore the full set <span aria-hidden="true">↗</span></Link>
-              <p className="studio-fine-print">White ceramic filter shown. Black is also available. The complete kit includes the glass carafe, ceramic filter with lid, and 2 oz activated carbon (carbon pouch not pictured).</p>
+              <p className="studio-fine-print">This image shows the glass carafe on its own. The complete kit also includes your choice of ceramic filter with lid and 2 oz activated carbon.</p>
             </div>
           </div>
         </div>
