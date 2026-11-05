@@ -250,3 +250,6 @@
   .shop-kit-feature .product-information h1{font-size:clamp(54px,11vw,78px);}
   .shop-kit-followup{align-items:flex-start;flex-direction:column;gap:15px;}
 }
+
+/* Scott's assembled white ceramic photo, presented at the primary kit placement. */
+.studio-hero-stage img.kit-photo { object-fit: contain; object-position: center; display: block; }
