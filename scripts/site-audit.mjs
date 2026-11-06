@@ -10,6 +10,13 @@ const header = read('components/SiteHeader.tsx');
 const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
 const errors = [];
+
+const ceramicGallery = home.split('<div className="studio-color-grid page-shell">')[1]?.split('</section>')[0] || '';
+const ceramicLinks = ceramicGallery.match(/<Link href="\/shop\/ceramic-filter\/" className="studio-color-item">/g) || [];
+if (ceramicLinks.length !== 2 || ceramicGallery.includes('<Link href="/shop/chimera-kit/" className="studio-color-item">')) {
+  errors.push('Both black and white ceramic gallery photos must link to the ceramic filter product, not the complete kit');
+}
+
 if (!home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"') || !home.includes('WHITE CERAMIC SHOWN')) errors.push('Scott white-filter kit photo must appear in the homepage Chimera kit hero');
 const kitContentsSection = home.slice(home.indexOf('studio-kit-layout'), home.indexOf('studio-kit-layout') + 850);
 if (!kitContentsSection.includes('src="/images/IMG_6116.jpeg"') || !kitContentsSection.includes('THE COMPLETE KIT / WHITE CERAMIC')) {
