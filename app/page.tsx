@@ -79,11 +79,11 @@ export default function Home() {
           <p>The reusable ceramic filter is available in black or white. Both filter packs include a ceramic lid to hold the activated carbon and a 2 oz carbon pouch. The complete kit adds the glass carafe.</p>
         </div>
         <div className="studio-color-grid page-shell">
-          <Link href="/shop/chimera-kit/" className="studio-color-item">
+          <Link href="/shop/ceramic-filter/" className="studio-color-item">
             <div className="studio-color-image"><img src="/images/Filter_Pack_Black.jpeg" alt="Black ceramic filter with its lid and included Chimera carbon pouch" loading="lazy" /></div>
             <div className="studio-color-caption"><span>01 / BLACK CERAMIC</span><strong>Considered in black.</strong><span aria-hidden="true">↗</span></div>
           </Link>
-          <Link href="/shop/chimera-kit/" className="studio-color-item">
+          <Link href="/shop/ceramic-filter/" className="studio-color-item">
             <div className="studio-color-image"><img src="/images/Filter_Pack_White.jpeg" alt="White ceramic filter with its lid and included Chimera carbon pouch" loading="lazy" /></div>
             <div className="studio-color-caption"><span>02 / WHITE CERAMIC</span><strong>Considered in white.</strong><span aria-hidden="true">↗</span></div>
           </Link>
