@@ -11,7 +11,10 @@ const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
 const errors = [];
 if (!home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"') || !home.includes('WHITE CERAMIC SHOWN')) errors.push('Scott white-filter kit photo must appear in the homepage Chimera kit hero');
-if (!home.includes('studio-carafe-feature') || !home.includes('src="/images/IMG_6069.png"') || !home.includes('THE OBJECT / GLASS CARAFE')) errors.push('Carafe-only photo must be in the glass feature');
+const kitContentsSection = home.slice(home.indexOf('studio-kit-layout'), home.indexOf('studio-kit-layout') + 850);
+if (!kitContentsSection.includes('src="/images/IMG_6116.jpeg"') || !kitContentsSection.includes('THE COMPLETE KIT / WHITE CERAMIC')) {
+  errors.push('Scott assembled white-filter photo must appear beside the glass, ceramic and carbon breakdown');
+}
 
 for (const [name, source] of [['homepage', home], ['care', care]]) {
   const images = [...source.matchAll(/(?:src|href)="(\/images\/[^"]+)"/g)].map((m) => m[1]);
@@ -23,7 +26,15 @@ for (const [name, source] of [['homepage', home], ['care', care]]) {
 }
 
 const photos = [...home.matchAll(/src="(\/images\/[^"]+\.(?:jpg|jpeg|webp|png))"/g)].map((m) => m[1]);
-if (photos.length !== new Set(photos).size) errors.push('Homepage repeats a product photo');
+// The same authentic white kit photo intentionally appears both in the primary kit hero
+// and beside the three kit components at Scott's explicit request.
+const photoCounts = new Map();
+for (const photo of photos) photoCounts.set(photo, (photoCounts.get(photo) || 0) + 1);
+for (const [photo, count] of photoCounts) {
+  const allowedCount = photo === '/images/IMG_6116.jpeg' ? 2 : 1;
+  if (count > allowedCount) errors.push('Unintended duplicate homepage photo: ' + photo);
+}
+if ((photoCounts.get('/images/IMG_6116.jpeg') || 0) !== 2) errors.push('Kit photo must appear in both hero and component breakdown');
 for (const fragment of ['id="film"', 'id="collection"', 'ProductFilm', 'home-shop-index', 'chimera-kit', 'charcoal-2oz']) {
   if (!home.includes(fragment)) errors.push('Missing key homepage section: ' + fragment);
 }
