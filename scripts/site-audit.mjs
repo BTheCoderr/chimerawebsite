@@ -61,8 +61,15 @@ function walk(dir) {
 walk(path.join(root, 'public/images'));
 if (!footer.includes('BAHEEM FERRELL') || !footer.includes('SCOTT KEELEY')) errors.push('Official credits missing');
 if (!header.includes('skip-to-content') || !header.includes('mobile-menu')) errors.push('Navigation accessibility incomplete');
-if (!film.includes('<video') || !film.includes('<source src={VIDEO_SRC} type="video/mp4"') || !film.includes('07_Clean_Widescreen_Footage_42s.mp4')) errors.push('First-party Chimera product video missing');
+if (!film.includes('<video') || !film.includes('<source src={VIDEO_SRC} type="video/mp4"') || !film.includes('08_Chimera_Product_Film_With_Sound_58s.mp4')) errors.push('First-party Chimera product video missing');
 if (film.includes('youtube-nocookie.com') || film.includes('<iframe')) errors.push('Old externally embedded product video remains');
+for (const part of ['01', '02', '03']) {
+  if (!fs.existsSync(path.join(root, 'media_src', 'film_with_audio.part' + part + '.b64'))) errors.push('Missing audio-enabled film source part: ' + part);
+}
+if (!read('scripts/assemble-promo-video.mjs').includes('soundtrackVideo') || !read('scripts/assemble-promo-video.mjs').includes('08_Chimera_Product_Film_With_Sound_58s.mp4')) {
+  errors.push('Sound-enabled Chimera film not reconstructed for website build');
+}
+if (film.includes("const VIDEO_SRC = '/media/07_Clean_Widescreen_Footage_42s.mp4'")) errors.push('Silent film still used as website video');
 if (!home.includes('href="/media/01_Coming_Soon_15s.mp4"')) errors.push('15-second coming-soon teaser missing');
 const promoNames = [
   '01_Coming_Soon_15s.mp4', '02_Quick_Reveal_7s.mp4',
