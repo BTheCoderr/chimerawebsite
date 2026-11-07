@@ -253,3 +253,8 @@
 
 /* Scott's assembled white ceramic photo, presented at the primary kit placement. */
 .studio-hero-stage img.kit-photo { object-fit: contain; object-position: center; display: block; }
+
+/* First-party Chimera product film: no externally embedded or tracking player. */
+.film-container--self-hosted { background:#101811; overflow:hidden; }
+.film-container--self-hosted video { display:block; width:100%; height:100%; background:#101811; object-fit:contain; }
+@media (max-width:760px) { .film-container--self-hosted video { width:100%; height:auto; aspect-ratio:16/9; } }
