@@ -61,7 +61,29 @@ function walk(dir) {
 walk(path.join(root, 'public/images'));
 if (!footer.includes('BAHEEM FERRELL') || !footer.includes('SCOTT KEELEY')) errors.push('Official credits missing');
 if (!header.includes('skip-to-content') || !header.includes('mobile-menu')) errors.push('Navigation accessibility incomplete');
-if (!film.includes('youtube-nocookie.com') || !film.includes('setActivated(true)')) errors.push('Click-to-play YouTube embed missing');
+if (!film.includes('<video') || !film.includes('<source src={VIDEO_SRC} type="video/mp4"') || !film.includes('07_Clean_Widescreen_Footage_42s.mp4')) errors.push('First-party Chimera product video missing');
+if (film.includes('youtube-nocookie.com') || film.includes('<iframe')) errors.push('Old externally embedded product video remains');
+if (!home.includes('href="/media/01_Coming_Soon_15s.mp4"')) errors.push('15-second coming-soon teaser missing');
+const promoNames = [
+  '01_Coming_Soon_15s.mp4', '02_Quick_Reveal_7s.mp4',
+  '03_Product_Film_30s.mp4', '04_Filter_Ritual_12s.mp4',
+  '05_Water_To_Coffee_12s.mp4', '06_Materials_11s.mp4',
+];
+const coverNames = promoNames.map((name) => name.replace('.mp4', '_cover.jpg'));
+for (const file of promoNames) {
+  const asset = path.join(root, 'public', 'media', file);
+  if (!fs.existsSync(asset) || fs.statSync(asset).size < 10000) errors.push('Missing promotional video: ' + file);
+}
+for (const cover of coverNames) {
+  if (!fs.existsSync(path.join(root, 'public', 'media', 'covers', cover))) errors.push('Missing promotional cover: ' + cover);
+}
+for (const part of ['01', '02', '03', '04']) {
+  if (!fs.existsSync(path.join(root, 'media_src', 'clean_widescreen.part' + part + '.b64'))) errors.push('Missing widescreen film source part: ' + part);
+}
+if (!fs.existsSync(path.join(root, 'scripts', 'assemble-promo-video.mjs'))) errors.push('Missing widescreen video build step');
+const pkg = JSON.parse(read('package.json'));
+if (!pkg.scripts?.prebuild?.includes('assemble-promo-video.mjs')) errors.push('Widescreen video assembly is not wired to the production build');
+if (read('app/privacy/page.tsx').includes('hosted by YouTube')) errors.push('Outdated video privacy notice');
 const sitemap = read('public/sitemap.xml');
 for (const route of ['/care/', '/help/', '/privacy/', '/shop/', '/shop/glass-carafe/', '/shop/ceramic-filter/', '/shop/charcoal-2oz/', '/shop/charcoal-12oz/', '/shop/chimera-kit/']) {
   if (!sitemap.includes(route)) errors.push('Missing sitemap route: ' + route);

@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Privacy & third-party services',
-  description: 'How Chimera handles browsing, YouTube video, and future Stripe-hosted checkout.',
+  description: 'How Chimera handles browsing, a first-party product video, and future Stripe-hosted checkout.',
   alternates: { canonical: '/privacy/' },
 };
 export default function PrivacyPage() {
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       <h2>Browsing the website</h2>
       <p>The current site offers product information without accounts or on-site card collection. Netlify hosts the site and may process technical request data needed for delivery and security.</p>
       <h2>Watching the product film</h2>
-      <p>The product film is hosted by YouTube. We load the YouTube player only after you press play; watching the film may involve data processing under YouTube's own privacy practices. You may also choose the direct YouTube link.</p>
+      <p>The product film and short teaser are hosted with the Chimera website on Netlify. When you play them, your browser requests those files from the site. No third-party YouTube player is embedded.</p>
       <h2>Purchasing and order support</h2>
       <p>The Shop links lead to Chimera's own product pages. Direct Stripe checkout is disabled pending merchant setup. When enabled, the purchase button will redirect to Stripe-hosted checkout, where Stripe handles payment details and may collect the shipping address needed by the seller. Chimera does not collect card numbers through the website. The optional external TikTok Shop link follows that marketplace's separate policies.</p>
       <h2>Questions</h2>

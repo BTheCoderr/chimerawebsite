@@ -116,3 +116,22 @@ This refinement keeps the editorial identity and Scott's approved copy. The home
 Scott asked for the kit first, then carbon refills, then individual parts. The filter pack includes its selected black or white ceramic housing with lid and one 2 oz carbon pouch (carafe excluded). The complete kit includes the carafe, selected ceramic filter with lid, and 2 oz carbon. The ceramic lid is part of the ceramic filter, not a separate kit component. Both kit colors are mapped to one kit Stripe Price ID while keeping color in the checkout session metadata.
 
 All four original photos are on main: `IMG_6069.png`, `Filter_Pack_Black.jpeg`, `Filter_Pack_White.jpeg`, and `PastedGraphic-1.png`. The `KitPhoto` component uses an SVG viewBox to display only the assembled kit photograph from Scott's screenshot, hiding the unrelated old webpage heading; no fifth upload is needed. Confirm the build checks before merging. No live prices or payments are enabled.
+
+
+## November 2026: Chimera video refresh
+
+The original third-party YouTube embed was replaced by a first-party, user-supplied Chimera product film. The website now serves a 42-second widescreen edit through an accessible native HTML5 player. The old opening and closing promotional sections are excluded. The widescreen cut is silent; add licensed audio only after approval.
+
+Six vertical social clips are committed to `public/media/`:
+- `01_Coming_Soon_15s.mp4`
+- `02_Quick_Reveal_7s.mp4`
+- `03_Product_Film_30s.mp4`
+- `04_Filter_Ritual_12s.mp4`
+- `05_Water_To_Coffee_12s.mp4`
+- `06_Materials_11s.mp4`
+
+Matching share-ready poster images are in `public/media/covers/`. The website links to the 15-second teaser from the product film section. The videos may also be downloaded from the repo for approved social publishing.
+
+The 42-second widescreen film is stored as four Git-safe source segments in `media_src/` because the connected GitHub binary upload has a payload limit. During `npm run build` (or `npm run dev`), the `scripts/assemble-promo-video.mjs` pre-script joins the segments, verifies the exact SHA-256 and byte length, then writes `public/media/07_Clean_Widescreen_Footage_42s.mp4`. Next.js copies it to the Netlify static output. Do not manually edit the source parts.
+
+Until merchant setup is complete, the site's direct Stripe checkout remains disabled. Do not describe the promo clips as an approved purchase launch or make unverified filtration claims.
