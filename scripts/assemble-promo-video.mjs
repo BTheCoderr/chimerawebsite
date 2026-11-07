@@ -20,3 +20,19 @@ if (video.length !== expectedSize || actualHash !== expectedSha256) {
 fs.mkdirSync(path.dirname(output), { recursive: true });
 fs.writeFileSync(output, video);
 console.log('Chimera self-hosted widescreen film ready:', video.length, 'bytes');
+
+const soundtrackParts = ['01', '02', '03'].map((part) =>
+  path.join(root, 'media_src', 'film_with_audio.part' + part + '.b64')
+);
+const soundtrackOutput = path.join(root, 'public', 'media', '08_Chimera_Product_Film_With_Sound_58s.mp4');
+const soundtrackHash = '8f3a1b1dd19189a10e33d782ec9a6fcf8e046deb7e8d0b792e582325c0a742fe';
+const soundtrackSize = 2181027;
+
+const soundtrackEncoded = soundtrackParts.map((p) => fs.readFileSync(p, 'utf8').trim()).join('');
+const soundtrackVideo = Buffer.from(soundtrackEncoded, 'base64');
+const soundtrackActualHash = createHash('sha256').update(soundtrackVideo).digest('hex');
+if (soundtrackVideo.length !== soundtrackSize || soundtrackActualHash !== soundtrackHash) {
+  throw new Error('Sound-enabled Chimera product film failed integrity verification');
+}
+fs.writeFileSync(soundtrackOutput, soundtrackVideo);
+console.log('Chimera audio-enabled product film ready:', soundtrackVideo.length, 'bytes');
