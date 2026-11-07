@@ -8,7 +8,9 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "audit": "node scripts/site-audit.mjs",
-    "test:checkout": "node --test tests/stripe-config.test.mjs"
+    "test:checkout": "node --test tests/stripe-config.test.mjs",
+    "prebuild": "node scripts/assemble-promo-video.mjs",
+    "predev": "node scripts/assemble-promo-video.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
