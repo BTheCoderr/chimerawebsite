@@ -135,3 +135,9 @@ Matching share-ready poster images are in `public/media/covers/`. The website li
 The 42-second widescreen film is stored as four Git-safe source segments in `media_src/` because the connected GitHub binary upload has a payload limit. During `npm run build` (or `npm run dev`), the `scripts/assemble-promo-video.mjs` pre-script joins the segments, verifies the exact SHA-256 and byte length, then writes `public/media/07_Clean_Widescreen_Footage_42s.mp4`. Next.js copies it to the Netlify static output. Do not manually edit the source parts.
 
 Until merchant setup is complete, the site's direct Stripe checkout remains disabled. Do not describe the promo clips as an approved purchase launch or make unverified filtration claims.
+
+### Sound-enabled film correction (November 7, 2026)
+
+The live homepage uses `public/media/08_Chimera_Product_Film_With_Sound_58s.mp4` from the supplied `Plastic-Free-Water.mp4`. This 58.2-second cut contains synchronized AAC stereo audio; unlike the previous 42-second silent montage, the actual soundtrack is preserved. It was encoded as H.264/AAC for the website and retains the supplied video's full visual sequence.
+
+`media_src/film_with_audio.part01.b64` through `part03.b64` are Git-safe source segments. The existing `npm run prebuild` script joins them, verifies the 2,181,027-byte file against SHA-256 `8f3a1b1dd19189a10e33d782ec9a6fcf8e046deb7e8d0b792e582325c0a742fe`, and writes the static MP4. The original silent cut and six vertical social clips remain available but are **not** used as the primary homepage video.
