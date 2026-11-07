@@ -117,7 +117,7 @@ export default function Home() {
       <section id="film" className="film-block">
         <div className="page-shell film-head"><div className="section-label"><span>05</span><span>IN MOTION</span></div><div><h2>See the idea<br /><em>come to life.</em></h2><p>From the ceramic chamber to the final pour. See the glass, ceramic, and carbon in action in Chimera’s updated product film.</p></div></div>
         <div className="page-shell"><ProductFilm /></div>
-        <div className="page-shell film-credit"><span>CHIMERA / 42-SECOND PRODUCT FILM</span><a href="/media/01_Coming_Soon_15s.mp4">Watch 15-second teaser ↗</a></div>
+        <div className="page-shell film-credit"><span>CHIMERA / PRODUCT FILM WITH SOUND</span><a href="/media/01_Coming_Soon_15s.mp4">Watch 15-second teaser ↗</a></div>
       </section>
 
       <section id="collection" className="collection page-shell studio-collection">
