@@ -11,16 +11,43 @@ const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
 const errors = [];
 
-const ceramicGallery = home.split('<div className="studio-color-grid page-shell">')[1]?.split('</section>')[0] || '';
-const ceramicLinks = ceramicGallery.match(/<Link href="\/shop\/ceramic-filter\/" className="studio-color-item">/g) || [];
-if (ceramicLinks.length !== 2 || ceramicGallery.includes('<Link href="/shop/chimera-kit/" className="studio-color-item">')) {
-  errors.push('Both black and white ceramic gallery photos must link to the ceramic filter product, not the complete kit');
+// Concept B uses a gallery-led homepage with actual Scott product photography.
+for (const fragment of [
+  'className="cb-hero"', 'className="cb-black-panel"', 'className="cb-feature-grid"',
+  'className="cb-materials-section"', 'className="cb-comparison-section"',
+  'className="cb-founder-section"', 'className="cb-buy-section"',
+  'HomeKitChoice', 'ProductFilm', 'href="/shop/chimera-kit/"',
+]) {
+  if (!home.includes(fragment)) errors.push('Missing Concept B homepage feature: ' + fragment);
 }
-
-if (!home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"') || !home.includes('WHITE CERAMIC SHOWN')) errors.push('Scott white-filter kit photo must appear in the homepage Chimera kit hero');
-const kitContentsSection = home.slice(home.indexOf('studio-kit-layout'), home.indexOf('studio-kit-layout') + 850);
-if (!kitContentsSection.includes('src="/images/IMG_6116.jpeg"') || !kitContentsSection.includes('THE COMPLETE KIT / WHITE CERAMIC')) {
-  errors.push('Scott assembled white-filter photo must appear beside the glass, ceramic and carbon breakdown');
+if (!home.includes('src="/images/IMG_6116.jpeg"') || !home.includes('WHITE CERAMIC SHOWN')) {
+  errors.push('Concept B white ceramic kit hero photograph missing');
+}
+if (!home.includes('src="/images/Water_Image-02.jpg"') || !home.includes('Now in black.')) {
+  errors.push('Concept B black ceramic feature missing');
+}
+if (!home.includes('href="/shop/ceramic-filter/"')) {
+  errors.push('Concept B ceramic filter link missing');
+}
+const homeKitSelector = read('components/HomeKitChoice.tsx');
+if (!homeKitSelector.includes("useState<Finish>('white')") ||
+    !homeKitSelector.includes('/images/IMG_6116.jpeg') ||
+    !homeKitSelector.includes('/images/Water_Image-02.jpg') ||
+    !homeKitSelector.includes('aria-pressed')) {
+  errors.push('Accessible white/black kit finish gallery missing');
+}
+if (!home.includes('Typical cartridge pitcher*') || !home.includes('Typical designs vary')) {
+  errors.push('Comparison must be qualified and not claim unverified statistics');
+}
+if (!home.includes('Direct checkout') && !homeKitSelector.includes('Direct checkout')) {
+  errors.push('Unapproved purchase options may not be presented as live');
+}
+for (const claim of ['1,800', '40 gallons', '$3 refill', 'From [PRICE]']) {
+  if (home.includes(claim)) errors.push('Unapproved Concept B placeholder or claim: ' + claim);
+}
+if (!fs.existsSync(path.join(root, 'app/concept-b.css')) ||
+    !read('app/layout.tsx').includes("import './concept-b.css'")) {
+  errors.push('Concept B design system stylesheet is missing');
 }
 
 for (const [name, source] of [['homepage', home], ['care', care]]) {
@@ -33,16 +60,16 @@ for (const [name, source] of [['homepage', home], ['care', care]]) {
 }
 
 const photos = [...home.matchAll(/src="(\/images\/[^"]+\.(?:jpg|jpeg|webp|png))"/g)].map((m) => m[1]);
-// The same authentic white kit photo intentionally appears both in the primary kit hero
-// and beside the three kit components at Scott's explicit request.
-const photoCounts = new Map();
-for (const photo of photos) photoCounts.set(photo, (photoCounts.get(photo) || 0) + 1);
-for (const [photo, count] of photoCounts) {
-  const allowedCount = photo === '/images/IMG_6116.jpeg' ? 2 : 1;
-  if (count > allowedCount) errors.push('Unintended duplicate homepage photo: ' + photo);
+for (const src of photos) {
+  if (!fs.existsSync(path.join(root, 'public', src.slice(1)))) {
+    errors.push('Missing homepage photo: ' + src);
+  }
 }
-if ((photoCounts.get('/images/IMG_6116.jpeg') || 0) !== 2) errors.push('Kit photo must appear in both hero and component breakdown');
-for (const fragment of ['id="film"', 'id="collection"', 'ProductFilm', 'home-shop-index', 'chimera-kit', 'charcoal-2oz']) {
+if (photos.length !== new Set(photos).size) {
+  errors.push('Concept B homepage repeats a product photo unnecessarily');
+}
+
+for (const fragment of ['id="film"', 'id="collection"', 'ProductFilm', 'HomeKitChoice', 'chimera-kit', 'charcoal-2oz']) {
   if (!home.includes(fragment)) errors.push('Missing key homepage section: ' + fragment);
 }
 for (const file of ['public/robots.txt', 'public/sitemap.xml', 'app/icon.svg', 'app/help/page.tsx', 'app/privacy/page.tsx', 'app/not-found.tsx', 'app/shop/page.tsx', 'app/shop/[slug]/page.tsx', 'components/PurchaseSelector.tsx', 'lib/catalog.ts']) {
@@ -96,8 +123,11 @@ for (const route of ['/care/', '/help/', '/privacy/', '/shop/', '/shop/glass-car
   if (!sitemap.includes(route)) errors.push('Missing sitemap route: ' + route);
 }
 const catalog = read('lib/catalog.ts');
-for (const approvedLine of ['Carbon Filtered', 'Plastic Free', 'high-fired, taste-neutral ceramic', 'thermally shock-resistant borosilicate', 'wool insulated grip', 'Better tasting coffee comes from better tasting water.', 'A borosilicate carafe holds your filtered water and makes great coffee.']) {
-  if (!home.includes(approvedLine)) errors.push('Missing Scott copy: ' + approvedLine);
+for (const approvedLine of [
+  'Carbon Filtered', 'Plastic Free', 'High-fired', 'Borosilicate glass',
+  'wool insulated grip', 'activated carbon',
+]) {
+  if (!home.toLowerCase().includes(approvedLine.toLowerCase())) errors.push('Missing approved Chimera copy: ' + approvedLine);
 }
 if (!home.includes('Good design starts with a <em>better question.</em>')) errors.push('Original philosophy section changed');
 if (!metadata.includes('Carbon Filtered Water, Plastic Free')) errors.push('Homepage metadata not updated');
@@ -122,7 +152,7 @@ for (const file of ['app/layout.tsx', 'public/sitemap.xml', 'public/robots.txt']
 for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
   if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
 }
-if (!home.includes('home-collection-grid') || !home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"')) errors.push('Homepage collection or kit hero image missing');
+if (!home.includes('cb-buy-section') || !home.includes('HomeKitChoice')) errors.push('Concept B kit-first product section missing');
 const shopPage = read('app/shop/page.tsx');
 const purchase = read('components/PurchaseSelector.tsx');
 const productPage = read('app/shop/[slug]/page.tsx');
@@ -135,7 +165,7 @@ if (!shopPage.includes('shop-photo-label') || !shopPage.includes('shop-tile-inde
 if (!fs.existsSync(path.join(root, 'app/visual-refinements.css'))) errors.push('Visual refinement styles missing');
 if (!fs.existsSync(path.join(root, 'app/studio-2026.css'))) errors.push('Editorial storefront styles missing');
 if (!read('app/layout.tsx').includes("import './studio-2026.css'")) errors.push('Editorial storefront stylesheet not imported');
-if (!home.includes('studio-hero') || !home.includes('studio-kit-layout') || !home.includes('studio-colors') || !home.includes('href="/shop/chimera-kit/"')) errors.push('Homepage must lead with the complete kit and use Scott photos');
+if (!home.includes('cb-hero') || !home.includes('cb-materials-section') || !home.includes('cb-black-panel') || !home.includes('href="/shop/chimera-kit/"')) errors.push('Concept B homepage must lead with Scott kit photography');
 if (!shopPage.includes('shop-kit-feature') || !shopPage.includes('<PurchaseSelector product={kit} />') || !shopPage.includes('studio-refill-list') || !shopPage.includes('studio-parts-grid')) errors.push('Shop must lead with a real kit product layout, then refills, then individual parts');
 if (!shopPage.includes('refills = PRODUCTS.slice(1, 3)') || !shopPage.includes('parts = PRODUCTS.slice(3)')) errors.push('Shop ordering must follow Scott instructions');
 for (const photo of ['PastedGraphic-1.png', 'IMG_6069.png', 'Filter_Pack_Black.jpeg', 'Filter_Pack_White.jpeg']) {
@@ -149,7 +179,7 @@ if (!catalog.includes('One 2 oz bag of activated carbon')) errors.push('Ceramic 
 for (const [name, source] of [['homepage', home], ['shop', shopPage], ['catalog', catalog], ['product selector', purchase], ['help', read('app/help/page.tsx')]]) {
   if (/stopper/i.test(source)) errors.push(name + ': separate stopper terminology must be removed; describe ceramic with lid instead');
 }
-if (!home.includes("['03', 'The carbon'") || home.includes("['04', 'The carbon'")) errors.push('Kit contents must be three-part: glass, ceramic with lid, carbon');
+if (!home.includes("title: 'Activated carbon'") || !home.includes("title: 'High-fired ceramic'") || !home.includes("title: 'Borosilicate glass'")) errors.push('Three material descriptions missing in Concept B');
 if (!purchase.includes('Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.') || shopPage.includes('04 / 2 OZ CARBON')) errors.push('Kit details must describe the correct three components');
 if (!catalog.includes('One ceramic filter with lid in the selected color')) errors.push('Catalog must describe ceramic with its lid');
 if (!catalog.includes("image: '/images/IMG_6116.jpeg'") || !purchase.includes('<img src={image} alt={imageAlt} />')) errors.push('Kit detail must use the uploaded white-filter image in the same layout as the carafe');
@@ -164,4 +194,4 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log('Chimera static audit passed: pages, unique photos, credits and public assets.');
+console.log('Chimera Concept B static audit passed: product gallery, image assets, truthful copy and checkout safeguards.');
