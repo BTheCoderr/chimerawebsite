@@ -42,3 +42,18 @@ Scott reports that each link asks for a shipping address and billing/payment inf
 **Before go-live:** Scott should verify the product and color, final price, shipping method/charge and eligible countries for one kit and one filter, confirm tax settings, define lead time, returns/refunds and who buys shipping labels, and review how paid orders appear in Stripe. The standalone glass carafe still has no checkout link. Obtain explicit approval for live checkout and the Concept B homepage before merging the draft PR.
 
 The live production website remains unchanged.
+
+## Ready-to-activate checkout wiring (Nov 19, 2026)
+
+The Concept B product pages now support a six-item, color-specific Stripe Payment Link checkout flow, **without turning on live checkout**.
+
+- Browser: the `PurchaseSelector` shows a checkout button only when `NEXT_PUBLIC_CHIMERA_PAYMENT_LINKS_ENABLED=true` was present when the website was built. Its default is disabled. The user-selected variant determines the request.
+- Server: `/.netlify/functions/product-payment-link` accepts a POST with only `variantCode`, verifies the request, and uses the existing seller-approved URL registry.
+- Authorization: the server rejects all requests unless **all three** Netlify runtime environment variables are explicitly set to `true`: `CHIMERA_MERCHANT_APPROVED`, `CHIMERA_SHIPPING_CONFIRMED`, and `CHIMERA_GO_LIVE_APPROVED`.
+- Destination: after the approvals, the server returns the exact corresponding Stripe Payment Link; the browser then navigates to Stripe. No Stripe secret key is needed for Payment Links.
+- Quantity: Chimera does not pass quantities through these hosted links. Scott must confirm the quantity rules in his Stripe Dashboard. Do not offer a local quantity selector that cannot affect the Stripe order.
+- Missing product: the carafe-only listing remains unavailable for direct payment because Scott has not supplied a link.
+
+**Activation steps, only after Scott explicitly approves real purchases:** confirm shipping prices and allowed destinations, tax collection and registration, product amounts and colors, inventory, fulfillment and return instructions; confirm live Stripe links can be opened and their checkout summaries inspected without submitting a purchase; obtain explicit authorization from the site owner; set all three server flags and the one public build flag; redeploy the approved branch; then verify one product of every variant, with totals and shipping visible before payment. A separate end-to-end purchased-order verification requires merchant coordination. Never activate any of these flags just to test an unapproved checkout.
+
+The existing secret-key Checkout Session handler remains separate and disabled unless its own test-only guard is satisfied. Do not confuse `NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED` with the new Payment Links flag. The live website is unchanged while the draft PR is under review.
