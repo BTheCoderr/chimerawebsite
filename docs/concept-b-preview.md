@@ -21,18 +21,26 @@ This branch implements the user-supplied `Chimera-Concept-B-Apple(2).png` as a r
 Scott may review the Netlify deploy preview on the pull request branch. Do not merge into `main` until the user approves this direction and photo presentation. The current live site remains unchanged.
 
 
-## Scott's Stripe Payment Links (November 18, 2026)
+## Scott's updated Stripe Payment Links (November 18, 2026)
 
-The Concept B preview now displays **test-only Stripe checkout links** from Scott's email on the matching product pages:
+Scott's subsequent `update` email replaced the single shared kit test link with **two distinct kit payment links**, one for each ceramic finish.
 
-- Complete Chimera kit: one test URL for both white and black ceramic selections
-- White ceramic filter with carbon: separate white test URL
-- Black ceramic filter with carbon: separate black test URL
+| Product variant | Link mode (by URL) | What the preview does |
+|---|---|---|
+| Kit black | Appears live | Staged in server-only registry; checkout inactive |
+| Kit white | Appears live | Staged in server-only registry; checkout inactive |
+| Ceramic filter white + 2 oz carbon | Test | Exposes only the matching Stripe test link |
+| Ceramic filter black + 2 oz carbon | Test | Exposes only the matching Stripe test link |
+| 2 oz carbon refill | Appears live | Staged; checkout inactive |
+| 12 oz carbon refill | Appears live | Staged; checkout inactive |
+| Carafe only | No supplied link | No checkout link |
 
-The selection is correctly mapped on the site, but the kit's single Stripe link **does not automatically receive the chosen color**. Scott should configure a color-selection field or separate white/black kit links before a live launch. The selected quantity also is not passed by these static Payment Links; Stripe must allow quantity selection if required.
+The exact email URLs are maintained in `lib/stripe-seller-links.server.mjs` and checked in `tests/stripe-seller-links.test.mjs`. They are seller-facing shareable payment links, **not API keys**. Their prefixes alone do not independently verify whether Stripe has configured shipping or tax collection correctly; Stripe checkout webpages could not be externally inspected.
 
-Scott's two carbon-refill links do **not** have the `test_` prefix and may accept real payments. They are intentionally **not copied into public client code or activated on the preview** until product pricing, shipping, policies, and merchant readiness are reviewed. The glass-carafe-only product has no supplied payment link.
+For safety, the live URL registry is not imported into public React components. `getApprovedPaymentLink()` fails closed for live links unless `merchantApproved`, `shippingConfirmed`, and `goLiveApproved` are all explicitly true; no production function currently calls it to redirect shoppers. The earlier kit test button was removed from the preview because Scott replaced its link.
 
-For production, request real (non-test) Payment Links for the kit and both ceramic filter colors, confirm the live carbon links in Scott's Stripe Dashboard, request a glass-carafe link (if the carafe is for sale independently), and confirm stock, pricing, tax, shipping and returns. Do not enable `NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED` or set secret keys based on Payment Links alone.
+The Concept B homepage's white/black kit chooser now carries `?finish=white` or `?finish=black` into the product page, whose selected photo and finish update accordingly. In a later approved checkout release, the same code can select the corresponding live Payment Link.
 
-The current production homepage and payments are unchanged.
+**Before launch:** Scott must confirm delivery zones, shipping rate(s), fulfillment workflow, tax settings, actual products and prices on the live Stripe checkout pages, and policy/return terms. The ceramic links still need live replacements; the standalone carafe needs a link if it will be sold directly. Then wire the approved links through a server-side redirect and verify a real end-to-end order. Do not infer acceptance of real payments from the presence of these URLs.
+
+The draft PR remains unmerged; the current production website and its payment settings are unchanged.
