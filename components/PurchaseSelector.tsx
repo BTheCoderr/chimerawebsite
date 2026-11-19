@@ -6,7 +6,6 @@ import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
-  const [quantity, setQuantity] = useState(1);
   const variant = product.variants.find((v) => v.code === selectedCode) ?? product.variants[0];
   const image = variant.image || product.image;
   const imageAlt = variant.imageAlt || product.imageAlt || product.name;
@@ -15,10 +14,9 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
       ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.'
       : 'Black ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.')
     : product.imageContext;
-  const checkoutEnabled = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED === 'true';
-  // Every seller-supplied Stripe Payment Link now appears to be live.
-  // Keep all six inactive on this review preview until merchant sign-off
-  // for shipping rates, tax, product accuracy, and fulfillment is complete.
+  const checkoutEnabled = process.env.NEXT_PUBLIC_CHIMERA_PAYMENT_LINKS_ENABLED === 'true';
+  // The server separately requires explicit merchant, shipping, and launch
+  // approvals before it resolves any of Scott's live Payment Links.
   const pendingLiveLink = ['kit-black', 'kit-white', 'filter-black', 'filter-white', 'carbon-2oz', 'carbon-12oz'].includes(selectedCode);
   useEffect(() => {
     const finish = new URLSearchParams(window.location.search).get('finish');
@@ -29,17 +27,19 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   async function beginCheckout() {
-    if (!checkoutEnabled || busy) return;
+    if (!checkoutEnabled || !pendingLiveLink || busy) return;
     setBusy(true);
     setError('');
     try {
-      const response = await fetch('/.netlify/functions/create-checkout', {
+      const response = await fetch('/.netlify/functions/product-payment-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ variantCode: variant.code, quantity }),
+        body: JSON.stringify({ variantCode: variant.code }),
       });
       const result: { url?: string; error?: string } = await response.json();
-      if (!response.ok || !result.url || !result.url.startsWith('https://checkout.stripe.com/')) {
+      if (!response.ok || !result.url ||
+          !result.url.startsWith('https://buy.stripe.com/') ||
+          result.url.includes('/test_')) {
         throw new Error(result.error || 'Checkout is not available right now.');
       }
       window.location.assign(result.url);
@@ -73,14 +73,13 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           )}</div>
           <span className="product-variant-explain">{product.slug === 'chimera-kit' ? 'Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.' : 'Filter pack includes the selected ceramic filter with lid and 2 oz carbon. Glass carafe sold separately.'}</span>
         </fieldset>}
-      {checkoutEnabled && <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>}
-      {checkoutEnabled ?
+      {checkoutEnabled && pendingLiveLink ?
         <div className="purchase-action">
           <button type="button" className="purchase-button" onClick={beginCheckout} disabled={busy}>
-            {busy ? 'Connecting to Stripe…' : 'Continue to Stripe test checkout'} <span aria-hidden="true">↗</span>
+            {busy ? 'Connecting to Stripe…' : 'Continue to secure Stripe checkout'} <span aria-hidden="true">↗</span>
           </button>
           {error && <p role="alert" className="checkout-error">{error}</p>}
-          <p>Test checkout only. No real payments are enabled. Stripe confirms prices, taxes, shipping and availability.</p>
+          <p>Review your item, final price, shipping charge, tax and payment details in Stripe before placing an order. Quantity options depend on the seller's Stripe settings.</p>
         </div> : pendingLiveLink ?
         <div className="purchase-action">
           <div className="shop-unavailable"><strong>Checkout links received — final setup in progress.</strong><p>Scott has provided an updated Stripe payment link for this selection. Checkout stays inactive until the delivery charges, taxes, and fulfillment arrangements are confirmed.</p></div>
