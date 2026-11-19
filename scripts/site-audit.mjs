@@ -11,6 +11,35 @@ const footer = read('components/SiteFooter.tsx');
 const film = read('components/ProductFilm.tsx');
 const errors = [];
 
+const testLinks = read('lib/stripe-test-links.ts');
+const purchaseSelector = read('components/PurchaseSelector.tsx');
+const expectedTestLinks = {
+  'kit-white': 'https://buy.stripe.com/test_7sY3cv7YG8W75SR6PM97G09',
+  'kit-black': 'https://buy.stripe.com/test_7sY3cv7YG8W75SR6PM97G09',
+  'filter-white': 'https://buy.stripe.com/test_3cI28r5Qy0pB953fmi97G07',
+  'filter-black': 'https://buy.stripe.com/test_5kQ14na6O5JV1CBa1Y97G0a',
+};
+for (const [variant, url] of Object.entries(expectedTestLinks)) {
+  if (!testLinks.includes("'" + variant + "': '" + url + "'")) {
+    errors.push('Missing seller-provided Stripe test link for ' + variant);
+  }
+}
+if (testLinks.includes('https://buy.stripe.com/dRm') ||
+    testLinks.includes("'carbon-2oz'") || testLinks.includes("'carbon-12oz'") ||
+    testLinks.includes("'carafe'")) {
+  errors.push('Unreviewed live Stripe Payment Link or missing product mapping exposed in test checkout');
+}
+if (!purchaseSelector.includes('getStripeTestPaymentLink(selectedCode)') ||
+    !purchaseSelector.includes('Stripe test checkout only.') ||
+    !purchaseSelector.includes('Scott provided one test link for both ceramic finishes')) {
+  errors.push('Test payment UI must disclose test mode and kit finish limitations');
+}
+if (!purchaseSelector.includes('Direct checkout is being set up.') ||
+    !purchaseSelector.includes('NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED')) {
+  errors.push('Direct live checkout must remain gated');
+}
+
+
 // Concept B uses a gallery-led homepage with actual Scott product photography.
 for (const fragment of [
   'className="cb-hero"', 'className="cb-black-panel"', 'className="cb-feature-grid"',
