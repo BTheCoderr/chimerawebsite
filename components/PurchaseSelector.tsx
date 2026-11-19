@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import type { CatalogProduct } from '@/lib/catalog';
 import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
-import { getStripeTestPaymentLink } from '@/lib/stripe-test-links';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
@@ -17,10 +16,10 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
       : 'Black ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.')
     : product.imageContext;
   const checkoutEnabled = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED === 'true';
-  const testPaymentLink = getStripeTestPaymentLink(selectedCode);
-  // Seller-supplied live links are staged server-side and never offered on this
-  // preview while shipping, tax and fulfillment checks remain open.
-  const pendingLiveLink = ['kit-black', 'kit-white', 'carbon-2oz', 'carbon-12oz'].includes(selectedCode);
+  // Every seller-supplied Stripe Payment Link now appears to be live.
+  // Keep all six inactive on this review preview until merchant sign-off
+  // for shipping rates, tax, product accuracy, and fulfillment is complete.
+  const pendingLiveLink = ['kit-black', 'kit-white', 'filter-black', 'filter-white', 'carbon-2oz', 'carbon-12oz'].includes(selectedCode);
   useEffect(() => {
     const finish = new URLSearchParams(window.location.search).get('finish');
     if (product.slug === 'chimera-kit' && (finish === 'black' || finish === 'white')) {
@@ -82,15 +81,10 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           </button>
           {error && <p role="alert" className="checkout-error">{error}</p>}
           <p>Test checkout only. No real payments are enabled. Stripe confirms prices, taxes, shipping and availability.</p>
-        </div> : testPaymentLink ?
-        <div className="purchase-action">
-          <div className="shop-unavailable"><strong>Stripe test checkout only.</strong><p>This link is for testing Scott's checkout setup. Test payments do not collect real money. The customer-facing store is not ready to accept orders for this product.</p></div>
-          <a href={testPaymentLink} className="purchase-button purchase-button--outline" target="_blank" rel="noopener noreferrer">Open Stripe test checkout <span aria-hidden="true">↗</span></a>
-          <p>Review product, price, quantity, shipping and tax in Stripe test mode. The selected filter color uses its own matching test link.</p>
         </div> : pendingLiveLink ?
         <div className="purchase-action">
-          <div className="shop-unavailable"><strong>Checkout links received — final setup in progress.</strong><p>Scott provided a separate {variant.label} payment link for this product. Payment remains unavailable here until he confirms shipping, taxes, and fulfillment.</p></div>
-          <p>The selected product is {product.name}{product.variants.length > 1 ? ' — ' + variant.label : ''}. No real orders or payments are enabled on this preview.</p>
+          <div className="shop-unavailable"><strong>Checkout links received — final setup in progress.</strong><p>Scott has provided an updated Stripe payment link for this selection. Checkout stays inactive until the delivery charges, taxes, and fulfillment arrangements are confirmed.</p></div>
+          <p>The selected product is {product.name}{product.variants.length > 1 ? ' — ' + variant.label : ''}. The seller's updated payment link is recorded, but this preview cannot collect payments.</p>
         </div> :
         <div className="purchase-action">
           <div className="shop-unavailable"><strong>Direct checkout is being set up.</strong><p>Scott's approved prices and secure Stripe checkout are not active yet. No payment will be collected here.</p></div>
