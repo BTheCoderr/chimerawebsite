@@ -41,7 +41,7 @@ export function HomeKitChoice() {
         ))}
       </div>
       <p className="cb-choice-note">Preview shows the complete kit with your chosen ceramic finish. Both options include the glass carafe, ceramic filter with lid and 2 oz activated carbon.</p>
-      <Link className="cb-mint-button cb-buy-link" href="/shop/chimera-kit/">Explore the complete kit <span aria-hidden="true">↗</span></Link>
+      <Link className="cb-mint-button cb-buy-link" href={"/shop/chimera-kit/?finish=" + finish}>Explore the {selected.name.toLowerCase()} kit <span aria-hidden="true">↗</span></Link>
       <Link className="cb-secondary-link" href="/shop/">View refills &amp; individual parts <span aria-hidden="true">↗</span></Link>
       <p className="cb-availability">Direct checkout and pricing are being finalized. No payment will be collected on this preview.</p>
     </div>
