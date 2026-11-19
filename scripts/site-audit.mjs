@@ -12,33 +12,51 @@ const film = read('components/ProductFilm.tsx');
 const errors = [];
 
 const testLinks = read('lib/stripe-test-links.ts');
+const liveSellerLinks = read('lib/stripe-seller-links.server.mjs');
 const purchaseSelector = read('components/PurchaseSelector.tsx');
 const expectedTestLinks = {
-  'kit-white': 'https://buy.stripe.com/test_7sY3cv7YG8W75SR6PM97G09',
-  'kit-black': 'https://buy.stripe.com/test_7sY3cv7YG8W75SR6PM97G09',
   'filter-white': 'https://buy.stripe.com/test_3cI28r5Qy0pB953fmi97G07',
   'filter-black': 'https://buy.stripe.com/test_5kQ14na6O5JV1CBa1Y97G0a',
 };
+const expectedLiveLinks = {
+  'kit-black': 'https://buy.stripe.com/fZubJ11si7EY1LudDudjO0d',
+  'kit-white': 'https://buy.stripe.com/cNi14n2wm1gAducdDudjO0e',
+  'carbon-2oz': 'https://buy.stripe.com/dRmeVd4Eu0cw75OczqdjO0c',
+  'carbon-12oz': 'https://buy.stripe.com/dRm28r0oe0cw75O8jadjO0b',
+};
 for (const [variant, url] of Object.entries(expectedTestLinks)) {
-  if (!testLinks.includes("'" + variant + "': '" + url + "'")) {
-    errors.push('Missing seller-provided Stripe test link for ' + variant);
-  }
+  if (!testLinks.includes("'" + variant + "': '" + url + "'")) errors.push('Wrong Stripe test link for ' + variant);
 }
-if (testLinks.includes('https://buy.stripe.com/dRm') ||
+for (const [variant, url] of Object.entries(expectedLiveLinks)) {
+  if (!liveSellerLinks.includes("'" + variant + "': { mode: 'live', url: '" + url + "' }")) errors.push('Missing or wrong staged live Stripe link for ' + variant);
+}
+if (testLinks.includes("'kit-white'") || testLinks.includes("'kit-black'") ||
     testLinks.includes("'carbon-2oz'") || testLinks.includes("'carbon-12oz'") ||
-    testLinks.includes("'carafe'")) {
-  errors.push('Unreviewed live Stripe Payment Link or missing product mapping exposed in test checkout');
+    testLinks.includes('https://buy.stripe.com/dRm')) {
+  errors.push('Live merchant links must not enter the client-side test link registry');
+}
+if (!liveSellerLinks.includes('merchantApproved && shippingConfirmed && goLiveApproved')) {
+  errors.push('Live merchant links must require merchant, shipping, and launch approval');
+}
+if (purchaseSelector.includes('https://buy.stripe.com/') ||
+    read('components/HomeKitChoice.tsx').includes('https://buy.stripe.com/')) {
+  errors.push('Live Stripe links must not be hardcoded into client UI');
 }
 if (!purchaseSelector.includes('getStripeTestPaymentLink(selectedCode)') ||
     !purchaseSelector.includes('Stripe test checkout only.') ||
-    !purchaseSelector.includes('Scott provided one test link for both ceramic finishes')) {
-  errors.push('Test payment UI must disclose test mode and kit finish limitations');
+    !purchaseSelector.includes('pendingLiveLink') ||
+    !purchaseSelector.includes('Checkout links received — final setup in progress.') ||
+    !purchaseSelector.includes("new URLSearchParams(window.location.search)")) {
+  errors.push('Checkout preview must use correct color and disclose which links are live but inactive');
+}
+if (!read('components/HomeKitChoice.tsx').includes('href={"/shop/chimera-kit/?finish=" + finish}')) {
+  errors.push('Home kit finish selector must preserve the selected color');
 }
 if (!purchaseSelector.includes('Direct checkout is being set up.') ||
     !purchaseSelector.includes('NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED')) {
-  errors.push('Direct live checkout must remain gated');
+  errors.push('Unapproved live checkout must remain gated');
 }
-
+if (!read('package.json').includes('tests/stripe-seller-links.test.mjs')) errors.push('Stripe seller link tests are not wired into CI');
 
 // Concept B uses a gallery-led homepage with actual Scott product photography.
 for (const fragment of [
