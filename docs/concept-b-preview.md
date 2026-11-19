@@ -21,26 +21,24 @@ This branch implements the user-supplied `Chimera-Concept-B-Apple(2).png` as a r
 Scott may review the Netlify deploy preview on the pull request branch. Do not merge into `main` until the user approves this direction and photo presentation. The current live site remains unchanged.
 
 
-## Scott's updated Stripe Payment Links (November 18, 2026)
+## Stripe checkout links — November 18, 2026, 8:56 PM EST
 
-Scott's subsequent `update` email replaced the single shared kit test link with **two distinct kit payment links**, one for each ceramic finish.
+Scott's latest **"Updated Links"** email supersedes both of his earlier link sets. He provided six fresh `buy.stripe.com` URLs, one for each stocked kit/ceramic finish and carbon refill.
 
-| Product variant | Link mode (by URL) | What the preview does |
+| Product | New URL mode, inferred from prefix | Concept B preview behavior |
 |---|---|---|
-| Kit black | Appears live | Staged in server-only registry; checkout inactive |
-| Kit white | Appears live | Staged in server-only registry; checkout inactive |
-| Ceramic filter white + 2 oz carbon | Test | Exposes only the matching Stripe test link |
-| Ceramic filter black + 2 oz carbon | Test | Exposes only the matching Stripe test link |
-| 2 oz carbon refill | Appears live | Staged; checkout inactive |
-| 12 oz carbon refill | Appears live | Staged; checkout inactive |
-| Carafe only | No supplied link | No checkout link |
+| Chimera Kit, black | Appears live | Mapped server-side; not clickable |
+| Chimera Kit, white | Appears live | Mapped server-side; not clickable |
+| Ceramic filter + carbon, white | Appears live | Mapped server-side; not clickable |
+| Ceramic filter + carbon, black | Appears live | Mapped server-side; not clickable |
+| Activated carbon, 2 oz | Appears live | Mapped server-side; not clickable |
+| Activated carbon, 12 oz | Appears live | Mapped server-side; not clickable |
+| Standalone carafe | No link supplied | No checkout |
 
-The exact email URLs are maintained in `lib/stripe-seller-links.server.mjs` and checked in `tests/stripe-seller-links.test.mjs`. They are seller-facing shareable payment links, **not API keys**. Their prefixes alone do not independently verify whether Stripe has configured shipping or tax collection correctly; Stripe checkout webpages could not be externally inspected.
+The exact new links are in `lib/stripe-seller-links.server.mjs`. That file is not imported by React client components, and the earlier public test-link helper has been deleted. `getApprovedPaymentLink()` returns `null` for all six unless three explicit booleans — `merchantApproved`, `shippingConfirmed`, and `goLiveApproved` — are all `true`; no checkout redirect is currently wired to it. Automated tests verify exact link identity, finish separation, and fail-closed behavior.
 
-For safety, the live URL registry is not imported into public React components. `getApprovedPaymentLink()` fails closed for live links unless `merchantApproved`, `shippingConfirmed`, and `goLiveApproved` are all explicitly true; no production function currently calls it to redirect shoppers. The earlier kit test button was removed from the preview because Scott replaced its link.
+Scott reports that each link asks for a shipping address and billing/payment information, but the hosted Stripe checkout pages could not be directly inspected from our tools. **Collecting an address alone does not confirm a shipping charge, allowed delivery region, tax treatment, label generation, or actual fulfillment.** There is no completed test charge and we should not simulate a live purchase.
 
-The Concept B homepage's white/black kit chooser now carries `?finish=white` or `?finish=black` into the product page, whose selected photo and finish update accordingly. In a later approved checkout release, the same code can select the corresponding live Payment Link.
+**Before go-live:** Scott should verify the product and color, final price, shipping method/charge and eligible countries for one kit and one filter, confirm tax settings, define lead time, returns/refunds and who buys shipping labels, and review how paid orders appear in Stripe. The standalone glass carafe still has no checkout link. Obtain explicit approval for live checkout and the Concept B homepage before merging the draft PR.
 
-**Before launch:** Scott must confirm delivery zones, shipping rate(s), fulfillment workflow, tax settings, actual products and prices on the live Stripe checkout pages, and policy/return terms. The ceramic links still need live replacements; the standalone carafe needs a link if it will be sold directly. Then wire the approved links through a server-side redirect and verify a real end-to-end order. Do not infer acceptance of real payments from the presence of these URLs.
-
-The draft PR remains unmerged; the current production website and its payment settings are unchanged.
+The live production website remains unchanged.
