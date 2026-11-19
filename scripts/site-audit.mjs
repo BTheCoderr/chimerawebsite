@@ -32,11 +32,11 @@ for (const [variant,url] of Object.entries(expectedLinks)) {
 if (!sellerLinks.includes('merchantApproved === true && shippingConfirmed === true && goLiveApproved === true')) {
   errors.push('Live payment links require explicit merchant, shipping, and launch approval');
 }
-if (purchaseSelector.includes('https://buy.stripe.com/') ||
-    read('components/HomeKitChoice.tsx').includes('https://buy.stripe.com/') ||
+if (Object.values(expectedLinks).some((url) => purchaseSelector.includes(url) ||
+    read('components/HomeKitChoice.tsx').includes(url)) ||
     purchaseSelector.includes('getStripeTestPaymentLink') ||
     purchaseSelector.includes('Stripe test checkout only.')) {
-  errors.push('Unreviewed Stripe link or superseded test checkout exposed in customer UI');
+  errors.push('Unreviewed specific Stripe link or superseded test checkout exposed in customer UI');
 }
 if (!purchaseSelector.includes('pendingLiveLink') ||
     !purchaseSelector.includes("'filter-white'") ||
