@@ -49,8 +49,26 @@ if (!read('components/HomeKitChoice.tsx').includes('href={"/shop/chimera-kit/?fi
   errors.push('Homepage kit selector must preserve chosen ceramic color');
 }
 if (!purchaseSelector.includes('Direct checkout is being set up.') ||
-    !purchaseSelector.includes('NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED')) {
-  errors.push('Unapproved live checkout must stay disabled');
+    !purchaseSelector.includes("NEXT_PUBLIC_CHIMERA_PAYMENT_LINKS_ENABLED === 'true'") ||
+    !purchaseSelector.includes('product-payment-link') ||
+    !purchaseSelector.includes('Continue to secure Stripe checkout')) {
+  errors.push('Purchase buttons must use the approved, disabled-by-default Payment Link flow');
+}
+const paymentLinkEndpoint = read('netlify/functions/product-payment-link.mts');
+for(const guard of [
+  "CHIMERA_MERCHANT_APPROVED === 'true'",
+  "CHIMERA_SHIPPING_CONFIRMED === 'true'",
+  "CHIMERA_GO_LIVE_APPROVED === 'true'",
+  'getApprovedPaymentLink(variantCode, approvals)',
+  "request.method !== 'POST'",
+  "origin !== new URL(request.url).origin",
+  "url.includes('/test_')",
+]) {
+  if (!paymentLinkEndpoint.includes(guard)) errors.push('Missing Payment Link endpoint guard: ' + guard);
+}
+if (purchaseSelector.includes("fetch('/.netlify/functions/create-checkout'") ||
+    purchaseSelector.includes('STRIPE_SECRET_KEY')) {
+  errors.push('Client should use seller-provided payment links, not the old session API');
 }
 if (!read('package.json').includes('tests/stripe-seller-links.test.mjs')) {
   errors.push('Latest Stripe link mapping tests must run in CI');
@@ -185,8 +203,8 @@ for (const variant of ['filter-black', 'filter-white', 'carbon-2oz', 'carbon-12o
 }
 if (catalog.includes('shopifyVariantId') || catalog.includes('getShopifyCheckoutLink')) errors.push('Obsolete Shopify checkout is still referenced');
 if (!read('components/PurchaseSelector.tsx').includes('Direct checkout is being set up.')) errors.push('Missing honest pre-checkout state');
-if (!read('components/PurchaseSelector.tsx').includes('create-checkout')) errors.push('Stripe frontend checkout not wired');
-for (const file of ['netlify/functions/create-checkout.mts', 'netlify/functions/stripe-webhook.mts', 'netlify/functions/checkout-status.mts', 'lib/stripe-config.mjs', 'tests/stripe-config.test.mjs', 'app/checkout/success/page.tsx', 'app/checkout/cancelled/page.tsx']) {
+if (!read('components/PurchaseSelector.tsx').includes('product-payment-link')) errors.push('Stripe Payment Link frontend checkout not wired');
+for (const file of ['netlify/functions/create-checkout.mts', 'netlify/functions/product-payment-link.mts', 'netlify/functions/stripe-webhook.mts', 'netlify/functions/checkout-status.mts', 'lib/stripe-config.mjs', 'tests/stripe-config.test.mjs', 'app/checkout/success/page.tsx', 'app/checkout/cancelled/page.tsx']) {
   if (!fs.existsSync(path.join(root, file))) errors.push('Missing payment-ready file: ' + file);
 }
 if (!read('netlify/functions/create-checkout.mts').includes('isStripeCheckoutReady')) errors.push('Missing server-side checkout gate');
