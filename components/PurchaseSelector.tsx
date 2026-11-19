@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { CatalogProduct } from '@/lib/catalog';
 import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
+import { getStripeTestPaymentLink } from '@/lib/stripe-test-links';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
@@ -16,6 +17,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
       : 'Black ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.')
     : product.imageContext;
   const checkoutEnabled = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED === 'true';
+  const testPaymentLink = getStripeTestPaymentLink(selectedCode);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   async function beginCheckout() {
@@ -63,7 +65,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           )}</div>
           <span className="product-variant-explain">{product.slug === 'chimera-kit' ? 'Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.' : 'Filter pack includes the selected ceramic filter with lid and 2 oz carbon. Glass carafe sold separately.'}</span>
         </fieldset>}
-      <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+      {checkoutEnabled && <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>}
       {checkoutEnabled ?
         <div className="purchase-action">
           <button type="button" className="purchase-button" onClick={beginCheckout} disabled={busy}>
@@ -71,6 +73,11 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           </button>
           {error && <p role="alert" className="checkout-error">{error}</p>}
           <p>Test checkout only. No real payments are enabled. Stripe confirms prices, taxes, shipping and availability.</p>
+        </div> : testPaymentLink ?
+        <div className="purchase-action">
+          <div className="shop-unavailable"><strong>Stripe test checkout only.</strong><p>This link is for testing Scott's checkout setup. Test payments do not collect real money. The customer-facing store is not ready to accept orders for this product.</p></div>
+          <a href={testPaymentLink} className="purchase-button purchase-button--outline" target="_blank" rel="noopener noreferrer">Open Stripe test checkout <span aria-hidden="true">↗</span></a>
+          <p>Review the product, price, quantity, shipping and tax directly on Stripe before any future live launch. {product.slug === 'chimera-kit' && 'Scott provided one test link for both ceramic finishes, so the selected color is not automatically passed to Stripe. Confirm how a customer will specify it before activating sales.'}</p>
         </div> :
         <div className="purchase-action">
           <div className="shop-unavailable"><strong>Direct checkout is being set up.</strong><p>Scott's approved prices and secure Stripe checkout are not active yet. No payment will be collected here.</p></div>
