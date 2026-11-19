@@ -2,37 +2,42 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SELLER_PAYMENT_LINKS, getApprovedPaymentLink } from '../lib/stripe-seller-links.server.mjs';
 
-test('Scott provided distinct live payment links for black and white complete kits', () => {
-  assert.equal(SELLER_PAYMENT_LINKS['kit-black'].url, 'https://buy.stripe.com/fZubJ11si7EY1LudDudjO0d');
-  assert.equal(SELLER_PAYMENT_LINKS['kit-white'].url, 'https://buy.stripe.com/cNi14n2wm1gAducdDudjO0e');
+const updatedLinks = {
+  'kit-black': 'https://buy.stripe.com/fZueVd4Eugbubm4aridjO0n',
+  'kit-white': 'https://buy.stripe.com/5kQcN50oe3oIbm49nedjO0r',
+  'filter-white': 'https://buy.stripe.com/aFa00j1si2kE4XGfLCdjO0q',
+  'filter-black': 'https://buy.stripe.com/3cI14nc6W4sM4XG8jadjO0p',
+  'carbon-2oz': 'https://buy.stripe.com/9B6bJ12wmf7q75ObvmdjO0m',
+  'carbon-12oz': 'https://buy.stripe.com/9B69AT0oef7q3TC1UMdjO0o',
+};
+
+test('the six newest Scott URLs map to the correct colors, kits and refills', () => {
+  assert.deepEqual(Object.keys(SELLER_PAYMENT_LINKS).sort(), Object.keys(updatedLinks).sort());
+  for(const [variant,url] of Object.entries(updatedLinks)) {
+    assert.deepEqual(SELLER_PAYMENT_LINKS[variant],{mode:'live',url},variant);
+    assert.equal(url.startsWith('https://buy.stripe.com/'),true);
+    assert.equal(url.includes('/test_'),false);
+  }
   assert.notEqual(SELLER_PAYMENT_LINKS['kit-black'].url, SELLER_PAYMENT_LINKS['kit-white'].url);
+  assert.notEqual(SELLER_PAYMENT_LINKS['filter-black'].url, SELLER_PAYMENT_LINKS['filter-white'].url);
 });
-test('ceramic filter links remain in Stripe test mode, matched to selected color', () => {
-  assert.deepEqual(SELLER_PAYMENT_LINKS['filter-white'], {mode:'test',url:'https://buy.stripe.com/test_3cI28r5Qy0pB953fmi97G07'});
-  assert.deepEqual(SELLER_PAYMENT_LINKS['filter-black'], {mode:'test',url:'https://buy.stripe.com/test_5kQ14na6O5JV1CBa1Y97G0a'});
-});
-test('Scott provided individual carbon refill links, but no standalone carafe link', () => {
-  assert.equal(SELLER_PAYMENT_LINKS['carbon-2oz'].url, 'https://buy.stripe.com/dRmeVd4Eu0cw75OczqdjO0c');
-  assert.equal(SELLER_PAYMENT_LINKS['carbon-12oz'].url, 'https://buy.stripe.com/dRm28r0oe0cw75O8jadjO0b');
-  assert.equal(getApprovedPaymentLink('carafe'),null);
-});
-test('live links stay disabled without explicit merchant, shipping and launch approvals', () => {
-  for (const variant of ['kit-black','kit-white','carbon-2oz','carbon-12oz']) {
-    assert.equal(getApprovedPaymentLink(variant),null);
-    assert.equal(getApprovedPaymentLink(variant,{merchantApproved:true}),null);
-    assert.equal(getApprovedPaymentLink(variant,{merchantApproved:true,shippingConfirmed:true}),null);
-    assert.equal(getApprovedPaymentLink(variant,{merchantApproved:true,goLiveApproved:true}),null);
-    assert.equal(getApprovedPaymentLink(variant,{merchantApproved:true,shippingConfirmed:true,goLiveApproved:true}),SELLER_PAYMENT_LINKS[variant].url);
+
+test('no direct checkout is available without all three explicit business approvals', () => {
+  for (const variant of Object.keys(updatedLinks)) {
+    for (const flags of [
+      {}, {merchantApproved:true}, {shippingConfirmed:true}, {goLiveApproved:true},
+      {merchantApproved:true,shippingConfirmed:true}, {merchantApproved:true,goLiveApproved:true},
+      {shippingConfirmed:true,goLiveApproved:true},
+      {merchantApproved:'true',shippingConfirmed:true,goLiveApproved:true},
+    ]) assert.equal(getApprovedPaymentLink(variant,flags),null,variant);
+    assert.equal(getApprovedPaymentLink(variant,{
+      merchantApproved:true,shippingConfirmed:true,goLiveApproved:true,
+    }),updatedLinks[variant]);
   }
 });
-test('unknown and prototype-like variant values never resolve to a payment link', () => {
-  for(const variant of ['__proto__','constructor','toString','price_fake','',null]){
+
+test('unknown and prototype-like variants never resolve to payment links', () => {
+  for(const variant of ['__proto__','constructor','toString','price_fake','carafe','',null]) {
     assert.equal(getApprovedPaymentLink(variant),null);
-  }
-});
-test('all live links are valid-looking Stripe Payment Links and test links remain prefixed test_', () => {
-  for(const [variant,data] of Object.entries(SELLER_PAYMENT_LINKS)){
-    assert.equal(data.url.startsWith('https://buy.stripe.com/'),true,variant);
-    assert.equal(data.url.includes('/test_'),data.mode==='test',variant);
   }
 });
