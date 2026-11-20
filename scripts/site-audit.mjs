@@ -109,8 +109,30 @@ for (const variant of ['filter-black', 'filter-white', 'carbon-2oz', 'carbon-12o
   if (!catalog.includes("code: '" + variant + "'")) errors.push('Missing catalog variant: ' + variant);
 }
 if (catalog.includes('shopifyVariantId') || catalog.includes('getShopifyCheckoutLink')) errors.push('Obsolete Shopify checkout is still referenced');
-if (!read('components/PurchaseSelector.tsx').includes('Direct checkout is being set up.')) errors.push('Missing honest pre-checkout state');
-if (!read('components/PurchaseSelector.tsx').includes('create-checkout')) errors.push('Stripe frontend checkout not wired');
+const stripeLinks = read('lib/stripe-payment-links.ts');
+const purchaseComponent = read('components/PurchaseSelector.tsx');
+if (!purchaseComponent.includes('Glass carafe-only checkout is not yet available.')) errors.push('Carafe without Stripe link must not be purchasable');
+if (!purchaseComponent.includes('getStripePaymentLink(selectedCode)') ||
+    !purchaseComponent.includes('href={paymentLink}') ||
+    !purchaseComponent.includes('Checkout with Stripe')) errors.push('Color-aware Stripe Payment Link checkout is not wired');
+if (purchaseComponent.includes('Direct checkout is being set up.') || purchaseComponent.includes('Continue to Stripe test checkout')) {
+  errors.push('Old disabled checkout message remains for supported products');
+}
+const stripeLinksExpected = {
+  'kit-black': 'https://buy.stripe.com/fZueVd4Eugbubm4aridjO0n',
+  'kit-white': 'https://buy.stripe.com/5kQcN50oe3oIbm49nedjO0r',
+  'filter-white': 'https://buy.stripe.com/aFa00j1si2kE4XGfLCdjO0q',
+  'filter-black': 'https://buy.stripe.com/3cI14nc6W4sM4XG8jadjO0p',
+  'carbon-2oz': 'https://buy.stripe.com/9B6bJ12wmf7q75ObvmdjO0m',
+  'carbon-12oz': 'https://buy.stripe.com/9B69AT0oef7q3TC1UMdjO0o',
+};
+for (const [code, url] of Object.entries(stripeLinksExpected)) {
+  if (!stripeLinks.includes("'" + code + "': '" + url + "'")) errors.push('Missing latest Stripe destination for ' + code);
+}
+if (stripeLinks.includes("'carafe':") || !stripeLinks.includes('Object.prototype.hasOwnProperty')) {
+  errors.push('Unapproved carafe payment or unsafe checkout lookup');
+}
+if (!read('package.json').includes('tests/stripe-payment-links.test.mjs')) errors.push('Stripe link mapping tests are not in CI');
 for (const file of ['netlify/functions/create-checkout.mts', 'netlify/functions/stripe-webhook.mts', 'netlify/functions/checkout-status.mts', 'lib/stripe-config.mjs', 'tests/stripe-config.test.mjs', 'app/checkout/success/page.tsx', 'app/checkout/cancelled/page.tsx']) {
   if (!fs.existsSync(path.join(root, file))) errors.push('Missing payment-ready file: ' + file);
 }
@@ -123,6 +145,10 @@ for (const file of ['app/privacy/page.tsx', 'app/help/page.tsx']) {
   if (read(file).includes('Shopify')) errors.push('Old Shopify wording remains in ' + file);
 }
 if (!home.includes('home-collection-grid') || !home.includes('className="kit-photo" src="/images/IMG_6116.jpeg"')) errors.push('Homepage collection or kit hero image missing');
+const shopCopy = read('app/shop/page.tsx');
+if (shopCopy.includes('Direct checkout is being set up.') || !shopCopy.includes('Secure Stripe checkout is available')) {
+  errors.push('Shop page still has outdated checkout status message');
+}
 const shopPage = read('app/shop/page.tsx');
 const purchase = read('components/PurchaseSelector.tsx');
 const productPage = read('app/shop/[slug]/page.tsx');
