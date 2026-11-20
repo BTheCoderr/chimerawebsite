@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import type { CatalogProduct } from '@/lib/catalog';
-import { EXTERNAL_SELLER_URL } from '@/lib/catalog';
+import { getStripePaymentLink } from '@/lib/stripe-payment-links';
 
 export function PurchaseSelector({ product }: { product: CatalogProduct }) {
   const [selectedCode, setSelectedCode] = useState(product.variants[0].code);
-  const [quantity, setQuantity] = useState(1);
   const variant = product.variants.find((v) => v.code === selectedCode) ?? product.variants[0];
   const image = variant.image || product.image;
   const imageAlt = variant.imageAlt || product.imageAlt || product.name;
@@ -15,29 +15,7 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
       ? 'White ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.'
       : 'Black ceramic kit shown assembled. The included 2 oz carbon pouch is not pictured.')
     : product.imageContext;
-  const checkoutEnabled = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_ENABLED === 'true';
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  async function beginCheckout() {
-    if (!checkoutEnabled || busy) return;
-    setBusy(true);
-    setError('');
-    try {
-      const response = await fetch('/.netlify/functions/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ variantCode: variant.code, quantity }),
-      });
-      const result: { url?: string; error?: string } = await response.json();
-      if (!response.ok || !result.url || !result.url.startsWith('https://checkout.stripe.com/')) {
-        throw new Error(result.error || 'Checkout is not available right now.');
-      }
-      window.location.assign(result.url);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Checkout is unavailable.');
-      setBusy(false);
-    }
-  }
+  const paymentLink = getStripePaymentLink(selectedCode);
 
   return <>
     {image && <div className="product-main-photo">
@@ -63,20 +41,23 @@ export function PurchaseSelector({ product }: { product: CatalogProduct }) {
           )}</div>
           <span className="product-variant-explain">{product.slug === 'chimera-kit' ? 'Kit includes the glass carafe, selected ceramic filter with lid and 2 oz carbon.' : 'Filter pack includes the selected ceramic filter with lid and 2 oz carbon. Glass carafe sold separately.'}</span>
         </fieldset>}
-      <div className="product-quantity"><label htmlFor="quantity">Quantity</label><select id="quantity" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>{Array.from({length: 10}, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
-      {checkoutEnabled ?
+      {paymentLink ? (
         <div className="purchase-action">
-          <button type="button" className="purchase-button" onClick={beginCheckout} disabled={busy}>
-            {busy ? 'Connecting to Stripe…' : 'Continue to Stripe test checkout'} <span aria-hidden="true">↗</span>
-          </button>
-          {error && <p role="alert" className="checkout-error">{error}</p>}
-          <p>Test checkout only. No real payments are enabled. Stripe confirms prices, taxes, shipping and availability.</p>
-        </div> :
+          <a
+            href={paymentLink}
+            className="purchase-button"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Checkout with Stripe for ${product.name}, ${variant.label}`}
+          >Checkout with Stripe <span aria-hidden="true">↗</span></a>
+          <p>Secure checkout opens on Stripe. Review the selected product, price, any shipping charges, taxes and final total before paying. Shipping options and quantity selection depend on Scott's Stripe settings.</p>
+        </div>
+      ) : (
         <div className="purchase-action">
-          <div className="shop-unavailable"><strong>Direct checkout is being set up.</strong><p>Scott's approved prices and secure Stripe checkout are not active yet. No payment will be collected here.</p></div>
-          <a href={EXTERNAL_SELLER_URL} className="purchase-button purchase-button--outline" target="_blank" rel="noopener noreferrer">Browse existing TikTok Shop listing <span aria-hidden="true">↗</span></a>
-          <p>The existing retailer may not list this exact product or color. Confirm availability with the seller before ordering.</p>
-        </div>}
+          <div className="shop-unavailable"><strong>Glass carafe-only checkout is not yet available.</strong><p>Scott has not provided a standalone glass carafe payment link. You can explore the complete kit in the meantime.</p></div>
+          <Link href="/shop/chimera-kit/" className="purchase-button purchase-button--outline">Explore the complete Chimera kit <span aria-hidden="true">↗</span></Link>
+        </div>
+      )}
     </div>
   </>;
 }
