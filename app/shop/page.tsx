@@ -83,7 +83,7 @@ export default function ShopPage() {
           <Link className="studio-button studio-button--solid" href="/shop/chimera-kit/">Explore the complete kit <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
-      <div className="page-shell studio-payment-note">Direct checkout is being set up. Prices and shipping will appear here when approved by Scott. In the meantime, explore the products and their included components.</div>
+      <div className="page-shell studio-payment-note">Secure Stripe checkout is available for Chimera kits, ceramic filters and carbon refills. Select your ceramic finish before proceeding; review the final price, shipping and taxes directly in Stripe. The glass carafe alone is not yet available for direct checkout.</div>
     </main>
     <SiteFooter />
   </div>;
