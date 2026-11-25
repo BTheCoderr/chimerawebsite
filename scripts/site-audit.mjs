@@ -61,6 +61,21 @@ function walk(dir) {
 walk(path.join(root, 'public/images'));
 if (!footer.includes('BAHEEM FERRELL') || !footer.includes('SCOTT KEELEY')) errors.push('Official credits missing');
 if (!header.includes('skip-to-content') || !header.includes('mobile-menu')) errors.push('Navigation accessibility incomplete');
+
+const contactStyles = read('app/contact-strip.css');
+if (!header.includes('Contact · Chimera Water') ||
+    !header.includes('62 Baxter Street, Charlestown, RI 02813') ||
+    !header.includes('href="mailto:scott@keeleydeangelo.com"') ||
+    !header.includes('className="site-contact-strip"') ||
+    !header.includes('<address') ||
+    !metadata.includes("import './contact-strip.css'")) {
+  errors.push('Requested Chimera business contact address/email must appear in the top site header');
+}
+if (!contactStyles.includes('.site-contact-inner') ||
+    !contactStyles.includes('@media(max-width:760px)') ||
+    !contactStyles.includes('.site-contact-details')) {
+  errors.push('Responsive desktop/mobile contact header styles are missing');
+}
 if (!film.includes('<video') || !film.includes('<source src={VIDEO_SRC} type="video/mp4"') || !film.includes('08_Chimera_Product_Film_With_Sound_58s.mp4')) errors.push('First-party Chimera product video missing');
 if (film.includes('youtube-nocookie.com') || film.includes('<iframe')) errors.push('Old externally embedded product video remains');
 for (const part of ['01', '02', '03']) {

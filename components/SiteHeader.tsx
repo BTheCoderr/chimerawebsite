@@ -13,6 +13,15 @@ export function SiteHeader({ page = 'home' }: { page?: Page }) {
   return <>
     <a className="skip-to-content" href="#main">Skip to content</a>
     <header className="site-nav">
+      <div className="site-contact-strip">
+        <div className="site-contact-inner">
+          <span className="site-contact-label">Contact · Chimera Water</span>
+          <address className="site-contact-details" aria-label="Chimera Water contact information">
+            <span>62 Baxter Street, Charlestown, RI 02813</span>
+            <a href="mailto:scott@keeleydeangelo.com">scott@keeleydeangelo.com</a>
+          </address>
+        </div>
+      </div>
       <div className="nav-inner">
         <Link href="/" className="brand-lockup" aria-label="Chimera home">
           <img src="/images/Logo-Lines.svg" alt="" width={43} height={53} />
