@@ -1,0 +1,60 @@
+/* Chimera Water contact page: intentional use of space directly below navigation. */
+.contact-page{
+  padding-top:clamp(64px,9vw,122px);
+  padding-bottom:clamp(95px,12vw,175px);
+}
+.contact-page h1{
+  font:400 clamp(58px,8vw,120px)/1.04 Georgia,'Times New Roman',serif;
+  letter-spacing:-.06em;
+  margin:24px 0 26px;
+}
+.contact-page h1 em{font-weight:400;color:#5d765d}
+.contact-intro{
+  max-width:680px;
+  font-size:clamp(16px,1.6vw,20px);
+  line-height:1.7;
+  color:#566258;
+  margin:0 0 clamp(45px,6vw,85px);
+}
+.contact-information{
+  border-top:1px solid #abb5aa;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(24px,5vw,90px);
+  padding-top:32px;
+}
+.contact-info-item{min-width:0}
+.contact-info-item>.eyeline{display:block;margin-bottom:18px}
+.contact-info-item>a{
+  font:400 clamp(18px,2.1vw,30px)/1.35 Georgia,'Times New Roman',serif;
+  overflow-wrap:anywhere;
+  text-decoration:underline;
+  text-underline-offset:5px;
+}
+.contact-info-item>a:hover,.contact-help-link a:hover{opacity:.7}
+.contact-info-item address{
+  font:400 clamp(20px,2.4vw,33px)/1.5 Georgia,'Times New Roman',serif;
+  font-style:normal;
+}
+.contact-help-link{
+  margin-top:clamp(52px,7vw,100px);
+  padding-top:22px;
+  border-top:1px solid #abb5aa;
+  color:#586658;
+  font-size:14px;
+  line-height:1.75;
+}
+.contact-help-link a{
+  color:#263f2d;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+@media(max-width:760px){
+  .contact-page{padding-top:58px;padding-bottom:90px}
+  .contact-page h1{font-size:clamp(57px,11vw,77px)}
+  .contact-information{grid-template-columns:1fr;gap:36px}
+  .contact-info-item>.eyeline{margin-bottom:12px}
+  .contact-info-item>a{font-size:clamp(21px,5vw,27px)}
+  .contact-info-item address{font-size:clamp(23px,5vw,30px)}
+}
