@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-type Page = 'home' | 'care' | 'help' | 'privacy' | 'shop';
+type Page = 'home' | 'care' | 'contact' | 'help' | 'privacy' | 'shop';
 
 export function SiteHeader({ page = 'home' }: { page?: Page }) {
   const links = [
@@ -8,20 +8,12 @@ export function SiteHeader({ page = 'home' }: { page?: Page }) {
     { href: '/#film', label: 'The film' },
     { href: '/shop/', label: 'Shop' },
     { href: '/care/', label: 'Care' },
+    { href: '/contact/', label: 'Contact' },
     { href: '/help/', label: 'Help' },
   ];
   return <>
     <a className="skip-to-content" href="#main">Skip to content</a>
     <header className="site-nav">
-      <div className="site-contact-strip">
-        <div className="site-contact-inner">
-          <span className="site-contact-label">Contact · Chimera Water</span>
-          <address className="site-contact-details" aria-label="Chimera Water contact information">
-            <span>62 Baxter Street, Charlestown, RI 02813</span>
-            <a href="mailto:scott@keeleydeangelo.com">scott@keeleydeangelo.com</a>
-          </address>
-        </div>
-      </div>
       <div className="nav-inner">
         <Link href="/" className="brand-lockup" aria-label="Chimera home">
           <img src="/images/Logo-Lines.svg" alt="" width={43} height={53} />
@@ -30,7 +22,7 @@ export function SiteHeader({ page = 'home' }: { page?: Page }) {
         <nav aria-label="Primary navigation">
           {links.map(({href,label}) => <Link
             key={href} href={href}
-            aria-current={page === 'care' && label === 'Care' || page === 'help' && label === 'Help' || page === 'shop' && label === 'Shop' ? 'page' : undefined}
+            aria-current={page === 'care' && label === 'Care' || page === 'contact' && label === 'Contact' || page === 'help' && label === 'Help' || page === 'shop' && label === 'Shop' ? 'page' : undefined}
           >{label}</Link>)}
         </nav>
         <details className="mobile-menu">

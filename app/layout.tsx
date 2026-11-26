@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './visual-refinements.css';
 import './studio-2026.css';
-import './contact-strip.css';
+import './contact-page.css';
 
 const siteUrl = 'https://chimerawater.com';
 

@@ -45,7 +45,7 @@ if ((photoCounts.get('/images/IMG_6116.jpeg') || 0) !== 2) errors.push('Kit phot
 for (const fragment of ['id="film"', 'id="collection"', 'ProductFilm', 'home-shop-index', 'chimera-kit', 'charcoal-2oz']) {
   if (!home.includes(fragment)) errors.push('Missing key homepage section: ' + fragment);
 }
-for (const file of ['public/robots.txt', 'public/sitemap.xml', 'app/icon.svg', 'app/help/page.tsx', 'app/privacy/page.tsx', 'app/not-found.tsx', 'app/shop/page.tsx', 'app/shop/[slug]/page.tsx', 'components/PurchaseSelector.tsx', 'lib/catalog.ts']) {
+for (const file of ['public/robots.txt', 'public/sitemap.xml', 'app/icon.svg', 'app/help/page.tsx', 'app/contact/page.tsx', 'app/privacy/page.tsx', 'app/not-found.tsx', 'app/shop/page.tsx', 'app/shop/[slug]/page.tsx', 'components/PurchaseSelector.tsx', 'lib/catalog.ts']) {
   if (!fs.existsSync(path.join(root, file))) errors.push('Missing metadata asset: ' + file);
 }
 
@@ -62,20 +62,33 @@ walk(path.join(root, 'public/images'));
 if (!footer.includes('BAHEEM FERRELL') || !footer.includes('SCOTT KEELEY')) errors.push('Official credits missing');
 if (!header.includes('skip-to-content') || !header.includes('mobile-menu')) errors.push('Navigation accessibility incomplete');
 
-const contactStyles = read('app/contact-strip.css');
-if (!header.includes('Contact · Chimera Water') ||
-    !header.includes('62 Baxter Street, Charlestown, RI 02813') ||
-    !header.includes('href="mailto:scott@keeleydeangelo.com"') ||
-    !header.includes('className="site-contact-strip"') ||
-    !header.includes('<address') ||
-    !metadata.includes("import './contact-strip.css'")) {
-  errors.push('Requested Chimera business contact address/email must appear in the top site header');
+const contactStyles = read('app/contact-page.css');
+const contactPage = read('app/contact/page.tsx');
+if (!header.includes("{ href: '/care/', label: 'Care' },\n    { href: '/contact/', label: 'Contact' },\n    { href: '/help/', label: 'Help' }") ||
+    !header.includes("page === 'contact' && label === 'Contact'") ||
+    header.includes('site-contact-strip')) {
+  errors.push('Contact must sit between Care and Help in desktop/mobile nav, without top strip');
 }
-if (!contactStyles.includes('.site-contact-inner') ||
+if (!contactPage.includes('<SiteHeader page="contact" />') ||
+    !contactPage.includes('<main id="main">') ||
+    !contactPage.includes('Chimera Water') ||
+    !contactPage.includes('62 Baxter Street') ||
+    !contactPage.includes('Charlestown, RI 02813') ||
+    !contactPage.includes('mailto:scott@keeleydeangelo.com')) {
+  errors.push('Contact page must show Scott business address and tappable email below header');
+}
+if (!contactStyles.includes('.contact-page') ||
+    !contactStyles.includes('.contact-information') ||
     !contactStyles.includes('@media(max-width:760px)') ||
-    !contactStyles.includes('.site-contact-details')) {
-  errors.push('Responsive desktop/mobile contact header styles are missing');
+    !metadata.includes("import './contact-page.css'")) {
+  errors.push('Responsive contact page styles must load on all devices');
 }
+if (!footer.includes('href="/contact/"') ||
+    !read('public/sitemap.xml').includes('https://chimerawater.com/contact/')) {
+  errors.push('Contact must be reachable from footer and sitemap');
+}
+if (fs.existsSync(path.join(root, 'app/contact-strip.css'))) errors.push('Old top contact-strip CSS remains');
+
 if (!film.includes('<video') || !film.includes('<source src={VIDEO_SRC} type="video/mp4"') || !film.includes('08_Chimera_Product_Film_With_Sound_58s.mp4')) errors.push('First-party Chimera product video missing');
 if (film.includes('youtube-nocookie.com') || film.includes('<iframe')) errors.push('Old externally embedded product video remains');
 for (const part of ['01', '02', '03']) {
@@ -107,7 +120,7 @@ const pkg = JSON.parse(read('package.json'));
 if (!pkg.scripts?.prebuild?.includes('assemble-promo-video.mjs')) errors.push('Widescreen video assembly is not wired to the production build');
 if (read('app/privacy/page.tsx').includes('hosted by YouTube')) errors.push('Outdated video privacy notice');
 const sitemap = read('public/sitemap.xml');
-for (const route of ['/care/', '/help/', '/privacy/', '/shop/', '/shop/glass-carafe/', '/shop/ceramic-filter/', '/shop/charcoal-2oz/', '/shop/charcoal-12oz/', '/shop/chimera-kit/']) {
+for (const route of ['/care/', '/contact/', '/help/', '/privacy/', '/shop/', '/shop/glass-carafe/', '/shop/ceramic-filter/', '/shop/charcoal-2oz/', '/shop/charcoal-12oz/', '/shop/chimera-kit/']) {
   if (!sitemap.includes(route)) errors.push('Missing sitemap route: ' + route);
 }
 const catalog = read('lib/catalog.ts');
