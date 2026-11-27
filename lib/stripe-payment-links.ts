@@ -1,5 +1,9 @@
 import { getVerifiedBlackFridayLink } from './stripe-black-friday';
 
+// Black Friday 2026 release switch. Set false and redeploy to restore the
+// untouched regular-price links. Netlify production env writes are unavailable.
+export const BLACK_FRIDAY_ACTIVE = true;
+
 // Public Stripe Payment Links Scott Keeley supplied on November 18, 2026.
 // These are customer-facing checkout URLs, not secret API keys.
 // Each variant must resolve to its own exact seller-provided destination.
@@ -15,12 +19,9 @@ export const STRIPE_PAYMENT_LINKS: Readonly<Record<string, string>> = Object.fre
 export function getStripePaymentLink(variantCode: string): string | null {
   if (!Object.prototype.hasOwnProperty.call(STRIPE_PAYMENT_LINKS, variantCode)) return null;
   const regularLink = STRIPE_PAYMENT_LINKS[variantCode];
-  // Black Friday is OFF by default, and every staged URL requires a positive
-  // merchant verification before the sale can override a regular checkout.
-  // Unverified/missing sale links ALWAYS retain the original product link.
-  const saleLink = process.env.NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED === 'true'
-    ? getVerifiedBlackFridayLink(variantCode)
-    : null;
+  // Only Scott-confirmed sale links override a matching regular checkout.
+  // The two carbon refills always retain their original links.
+  const saleLink = BLACK_FRIDAY_ACTIVE ? getVerifiedBlackFridayLink(variantCode) : null;
   const link = saleLink ?? regularLink;
   return link.startsWith('https://buy.stripe.com/') && !link.includes('/test_')
     ? link
