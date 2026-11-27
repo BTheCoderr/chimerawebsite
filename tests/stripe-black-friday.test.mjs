@@ -35,11 +35,12 @@ test('the four Friday links match the corrected seller email; no carbon URLs inv
   assert.doesNotMatch(sale,/['"]carbon-12oz['"]\s*:/);
 });
 
-test('Black Friday links require merchant confirmation and the production launch flag', () => {
+test('Black Friday links require merchant confirmation and the reversible source release switch', () => {
   const statuses=[...sale.matchAll(/verifiedByMerchant:\s*(true|false)/g)].map(m=>m[1]);
   assert.deepEqual(statuses,['true','true','true','true']);
   assert.match(sale,/if \(item\.verifiedByMerchant !== true\) return null/);
-  assert.match(standard,/NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED === 'true'/);
+  assert.match(standard,/export const BLACK_FRIDAY_ACTIVE = true/);
+  assert.match(standard,/const saleLink = BLACK_FRIDAY_ACTIVE \? getVerifiedBlackFridayLink\(variantCode\) : null/);
   assert.match(standard,/getVerifiedBlackFridayLink\(variantCode\)/);
   assert.match(standard,/const link = saleLink \?\? regularLink/);
   assert.match(selector,/getStripePaymentLink\(selectedCode\)/);
