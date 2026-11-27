@@ -6,7 +6,9 @@
 // The source document calls the kits "Filter and Kit Black" and "Filter Kit White".
 // The copy here preserves those labels; do not infer the Stripe checkout contents
 // are correct until Scott checks each hosted checkout product, quantity and price.
-export const BLACK_FRIDAY_PAYMENT_LINKS = Object.freeze({
+type BlackFridayLink = { sourceLabel: string; url: string; verifiedByMerchant: boolean };
+
+export const BLACK_FRIDAY_PAYMENT_LINKS: Readonly<Record<string, BlackFridayLink>> = Object.freeze({
   'kit-black': {
     sourceLabel: 'Filter and Kit Black',
     url: 'https://buy.stripe.com/7sYbJ10oecZiai0dDudjO0s',
@@ -27,11 +29,11 @@ export const BLACK_FRIDAY_PAYMENT_LINKS = Object.freeze({
     url: 'https://buy.stripe.com/fZucN5gnc0cwducfLCdjO0w',
     verifiedByMerchant: false,
   },
-} as const);
+});
 
 export function getVerifiedBlackFridayLink(variantCode: string): string | null {
   if (!Object.prototype.hasOwnProperty.call(BLACK_FRIDAY_PAYMENT_LINKS, variantCode)) return null;
-  const item = BLACK_FRIDAY_PAYMENT_LINKS[variantCode as keyof typeof BLACK_FRIDAY_PAYMENT_LINKS];
+  const item = BLACK_FRIDAY_PAYMENT_LINKS[variantCode];
   if (item.verifiedByMerchant !== true) return null;
   if (!item.url.startsWith('https://buy.stripe.com/') || item.url.includes('/test_')) return null;
   return item.url;
