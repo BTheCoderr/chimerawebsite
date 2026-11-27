@@ -164,21 +164,21 @@ if (!read('package.json').includes('tests/stripe-payment-links.test.mjs')) error
 
 const blackFridayLinks = read('lib/stripe-black-friday.ts');
 for (const [variant, url] of Object.entries({
-  'kit-black': 'https://buy.stripe.com/7sYbJ10oecZiai0dDudjO0s',
-  'kit-white': 'https://buy.stripe.com/4gMdR90oe8J20HqbvmdjO0u',
-  'filter-white': 'https://buy.stripe.com/14A7sL3Aqf7q2PygPGdjO0v',
-  'filter-black': 'https://buy.stripe.com/fZucN5gnc0cwducfLCdjO0w',
+  'kit-black': 'https://buy.stripe.com/8x2dR9gnccZi89S1UMdjO0z',
+  'kit-white': 'https://buy.stripe.com/cNi28r2wm6AU89S0QIdjO0y',
+  'filter-white': 'https://buy.stripe.com/8x27sL8UK1gAduc42UdjO0A',
+  'filter-black': 'https://buy.stripe.com/4gM9AT1sif7q1Lu2YQdjO0B',
 })) {
   if (!blackFridayLinks.includes("'" + variant + "': {") ||
       !blackFridayLinks.includes("url: '" + url + "'")) {
     errors.push('Missing one of Scott Black Friday source URLs: ' + variant);
   }
 }
-if (blackFridayLinks.includes("verifiedByMerchant: true") ||
+if ((blackFridayLinks.match(/verifiedByMerchant: true/g) || []).length !== 4 ||
     !blackFridayLinks.includes('if (item.verifiedByMerchant !== true) return null') ||
     !stripeLinks.includes("NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED === 'true'") ||
     !stripeLinks.includes('const link = saleLink ?? regularLink')) {
-  errors.push('Unverified Black Friday links must not displace the existing live links');
+  errors.push('Black Friday must require merchant-confirmed links plus an explicit production launch flag');
 }
 if (!read('package.json').includes('tests/stripe-black-friday.test.mjs')) errors.push('Black Friday payment link tests are not in CI');
 
