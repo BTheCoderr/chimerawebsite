@@ -15,10 +15,10 @@ const regularLinks = {
   'carbon-12oz': 'https://buy.stripe.com/9B69AT0oef7q3TC1UMdjO0o',
 };
 const holidayLinks = {
-  'kit-black': 'https://buy.stripe.com/7sYbJ10oecZiai0dDudjO0s',
-  'kit-white': 'https://buy.stripe.com/4gMdR90oe8J20HqbvmdjO0u',
-  'filter-white': 'https://buy.stripe.com/14A7sL3Aqf7q2PygPGdjO0v',
-  'filter-black': 'https://buy.stripe.com/fZucN5gnc0cwducfLCdjO0w',
+  'kit-black': 'https://buy.stripe.com/8x2dR9gnccZi89S1UMdjO0z',
+  'kit-white': 'https://buy.stripe.com/cNi28r2wm6AU89S0QIdjO0y',
+  'filter-white': 'https://buy.stripe.com/8x27sL8UK1gAduc42UdjO0A',
+  'filter-black': 'https://buy.stripe.com/4gM9AT1sif7q1Lu2YQdjO0B',
 };
 
 test('all six regular payment links are preserved unchanged for restoring prices', () => {
@@ -27,7 +27,7 @@ test('all six regular payment links are preserved unchanged for restoring prices
   }
 });
 
-test('the four Friday links match the supplied document; no carbon URLs invented', () => {
+test('the four Friday links match Scott's corrected latest email; no carbon URLs invented', () => {
   for(const [variant,url] of Object.entries(holidayLinks)) {
     assert.match(sale, new RegExp("'" + variant + "': \\{[\\s\\S]*?url: '" + url.replaceAll('.', '\\.') + "'"));
   }
@@ -35,9 +35,9 @@ test('the four Friday links match the supplied document; no carbon URLs invented
   assert.doesNotMatch(sale,/['"]carbon-12oz['"]\s*:/);
 });
 
-test('no unverified Black Friday URL can replace the ordinary customer checkout', () => {
+test('Black Friday links require Scott's confirmation and the production launch flag', () => {
   const statuses=[...sale.matchAll(/verifiedByMerchant:\s*(true|false)/g)].map(m=>m[1]);
-  assert.deepEqual(statuses,['false','false','false','false']);
+  assert.deepEqual(statuses,['true','true','true','true']);
   assert.match(sale,/if \(item\.verifiedByMerchant !== true\) return null/);
   assert.match(standard,/NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED === 'true'/);
   assert.match(standard,/getVerifiedBlackFridayLink\(variantCode\)/);
@@ -51,3 +51,13 @@ test('the complete-kit variants must be distinct from ceramic-only options', () 
   assert.match(sale,/sourceLabel: 'Filter and Kit Black'/);
   assert.match(sale,/sourceLabel: 'Filter Kit White'/);
 });
+
+test('the superseded faulty Black Friday links cannot accidentally return', () => {
+  for (const old of [
+    '7sYbJ10oecZiai0dDudjO0s',
+    '4gMdR90oe8J20HqbvmdjO0u',
+    '14A7sL3Aqf7q2PygPGdjO0v',
+    'fZucN5gnc0cwducfLCdjO0w',
+  ]) assert.equal(sale.includes(old), false, old);
+});
+
