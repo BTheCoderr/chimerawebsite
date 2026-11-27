@@ -17,13 +17,17 @@ Scott reports checking these links. They are marked `verifiedByMerchant: true` o
 
 - The normal six links in `lib/stripe-payment-links.ts` are unchanged and retained for restoration.
 - The four corrected Black Friday links are in `lib/stripe-black-friday.ts`, mapped to their exact product/color codes.
-- A Black Friday link replaces its normal checkout only when `NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED=true` was configured in Netlify's **production build environment**. Otherwise it falls back to the ordinary link.
+- A Black Friday link replaces its normal checkout while the explicit source toggle `BLACK_FRIDAY_ACTIVE = true` is set in `lib/stripe-payment-links.ts`. Scott-confirmed links are still required for every promotional product. A link without an approved promotional mapping falls back to the regular link.
 - Neither 2 oz nor 12 oz carbon refills has a provided sale link; they continue to use their standard Payment Links.
 - Glass carafe alone still has no checkout link. No discounted prices are hardcoded or invented on the site; Stripe owns the final amount shown at checkout.
 - The older faulty promotional URLs have been removed from the promotion mapping and barred by regression tests.
 
 ## Follow-through and rollback
 
-Scott did not provide a sale end date/time. Confirm when the promotion should end. **To restore original prices:** change `NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED` to `false` or remove it in the Netlify production environment, then trigger a new production build/deploy. This is a Next.js build-time variable, so editing the setting by itself does not alter a previously deployed static build. Verify the resulting deployment against all four original Stripe destinations.
+Scott did not provide a sale end date/time. Confirm when the promotion should end. **To restore original prices:** change `BLACK_FRIDAY_ACTIVE` from `true` to `false` in `lib/stripe-payment-links.ts`, commit, merge, and confirm a new production deployment. Netlify rejected changes to this site's environment settings (403), so source-controlled rollback is the supported mechanism until account permissions are resolved. Verify the resulting deployment against all four original Stripe destinations.
 
 Customer-impact caveat: Collecting a shipping address in Stripe does not establish a shipping price, fulfillment process or correctness of the Stripe Product/Price. Scott is responsible for verifying the live checkout product, final price, shipping, tax and order fulfillment details.
+
+## Activation note
+
+Scott's four corrected links were sourced from his latest email and he stated he checked them himself. The website's sale switch is set to `true` for this release. Our environment could not independently inspect the hosted Stripe product/price totals. The change becomes customer-facing only after the PR passes CI, is merged to `main`, and Netlify successfully publishes the new production build. **Do not assume the sale has ended on any calendar date until Scott confirms it.**
