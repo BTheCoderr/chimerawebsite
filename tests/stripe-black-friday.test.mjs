@@ -27,7 +27,7 @@ test('all six regular payment links are preserved unchanged for restoring prices
   }
 });
 
-test('the four Friday links match Scott's corrected latest email; no carbon URLs invented', () => {
+test('the four Friday links match the corrected seller email; no carbon URLs invented', () => {
   for(const [variant,url] of Object.entries(holidayLinks)) {
     assert.match(sale, new RegExp("'" + variant + "': \\{[\\s\\S]*?url: '" + url.replaceAll('.', '\\.') + "'"));
   }
