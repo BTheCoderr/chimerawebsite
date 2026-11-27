@@ -176,7 +176,7 @@ for (const [variant, url] of Object.entries({
 }
 if ((blackFridayLinks.match(/verifiedByMerchant: true/g) || []).length !== 4 ||
     !blackFridayLinks.includes('if (item.verifiedByMerchant !== true) return null') ||
-    !stripeLinks.includes("NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED === 'true'") ||
+    !stripeLinks.includes("export const BLACK_FRIDAY_ACTIVE = true") ||
     !stripeLinks.includes('const link = saleLink ?? regularLink')) {
   errors.push('Black Friday must require merchant-confirmed links plus an explicit production launch flag');
 }
