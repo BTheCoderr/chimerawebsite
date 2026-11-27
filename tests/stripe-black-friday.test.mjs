@@ -35,7 +35,7 @@ test('the four Friday links match the corrected seller email; no carbon URLs inv
   assert.doesNotMatch(sale,/['"]carbon-12oz['"]\s*:/);
 });
 
-test('Black Friday links require Scott's confirmation and the production launch flag', () => {
+test('Black Friday links require merchant confirmation and the production launch flag', () => {
   const statuses=[...sale.matchAll(/verifiedByMerchant:\s*(true|false)/g)].map(m=>m[1]);
   assert.deepEqual(statuses,['true','true','true','true']);
   assert.match(sale,/if \(item\.verifiedByMerchant !== true\) return null/);
