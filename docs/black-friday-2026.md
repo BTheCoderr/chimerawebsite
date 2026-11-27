@@ -1,29 +1,29 @@
-# Chimera Water — Black Friday 2026 checkout review
+# Chimera Water — Black Friday 2026 checkout release
 
-Source: Scott Keeley's Nov 27, 2026 email, subject "black friday pricing", with the attachment **Black Friday Pricing.docx**. These four Payment Links are the URLs in that attached file; the file did **not** include sale prices, a sale end time, or links for either charcoal refill.
+## Source and replacement links
 
-## The four new links
+Scott's Nov 27 2026 **1:05 PM Eastern** email, subject "links", replaces all four URLs from his **11:41 AM** "Black Friday Pricing.docx" attachment. The earlier links were reported as buggy (a complete-kit checkout displayed a ceramic-only product). Scott subsequently confirmed by text: "The links above are the same as the most recent email and I checked them all and they work."
 
-| Catalog variant | Exact label in Scott's document | Stripe Payment Link | Verification |
-| --- | --- | --- | --- |
-| `kit-black` | Filter and Kit Black | https://buy.stripe.com/7sYbJ10oecZiai0dDudjO0s | **NOT APPROVED**: Scott reports whole kit may display ceramic-only |
-| `kit-white` | Filter Kit White | https://buy.stripe.com/4gMdR90oe8J20HqbvmdjO0u | **NOT APPROVED** |
-| `filter-white` | Ceramic Filter White | https://buy.stripe.com/14A7sL3Aqf7q2PygPGdjO0v | **NOT APPROVED** |
-| `filter-black` | Ceramic Filter Black | https://buy.stripe.com/fZucN5gnc0cwducfLCdjO0w | **NOT APPROVED** |
+| Variant | Scott's label | Latest Black Friday Payment Link |
+| --- | --- | --- |
+| `kit-black` | Filter and Kit Black | https://buy.stripe.com/8x2dR9gnccZi89S1UMdjO0z |
+| `kit-white` | Filter Kit White | https://buy.stripe.com/cNi28r2wm6AU89S0QIdjO0y |
+| `filter-white` | Ceramic Filter White | https://buy.stripe.com/8x27sL8UK1gAduc42UdjO0A |
+| `filter-black` | Ceramic Filter Black | https://buy.stripe.com/4gM9AT1sif7q1Lu2YQdjO0B |
 
-The checkout pages are not accessible from our web verification environment. **Do not claim** that any link correctly identifies its product or price just because its URL was provided or contains a live-mode prefix. The website cannot change the line item built into a Stripe Payment Link.
+Scott reports checking these links. They are marked `verifiedByMerchant: true` on that basis, **not** because we independently inspected Stripe. Automated browsing could not read the hosted Stripe checkout pages, so product names, actual amounts, shipping and tax remain outside our independent verification.
 
-## What needs to happen before the sale goes live
+## Release behavior
 
-1. In Scott's Stripe Dashboard, open each new Payment Link and inspect the *actual Product and Price attached to the link*, not merely the link's display name. The **complete kit** must represent the carafe, chosen black/white ceramic filter and 2 oz carbon; the ceramic-only item must not be sold as the full kit. If he accidentally selected the ceramic-filter Price for a kit link, create/correct the full-kit Price and Payment Link. Do not reuse the problematic link until corrected.
-2. Confirm the actual currency amount for each sale option, regular price comparison (if displayed), shipping destinations/cost, tax, and customer-facing product name on Stripe. A checkout asking for a shipping address is not evidence of a shipping rate or that fulfillment is arranged.
-3. Confirm promotion start and end in Eastern time, and whether carbon refills remain regular-price. There are no Black Friday charcoal links in the file.
-4. For each of four sale links, mark `verifiedByMerchant: true` **only after** a screenshot, owner confirmation, or direct verified Stripe-account inspection establishes that the correct product and price are attached.
-5. Turn on `NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED=true` for the approved site only, build and deploy, and manually verify the four correct product/color destinations from the shop page before announcing. Do **not** set it merely to test whether a link works.
-6. At the agreed end of the sale, remove the environment switch and redeploy. The old URLs in `lib/stripe-payment-links.ts` never change; the original six regular-price options return automatically. If an expiry is agreed, schedule the reversion with an appropriate approved mechanism, not an unsupported assumption.
+- The normal six links in `lib/stripe-payment-links.ts` are unchanged and retained for restoration.
+- The four corrected Black Friday links are in `lib/stripe-black-friday.ts`, mapped to their exact product/color codes.
+- A Black Friday link replaces its normal checkout only when `NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED=true` was configured in Netlify's **production build environment**. Otherwise it falls back to the ordinary link.
+- Neither 2 oz nor 12 oz carbon refills has a provided sale link; they continue to use their standard Payment Links.
+- Glass carafe alone still has no checkout link. No discounted prices are hardcoded or invented on the site; Stripe owns the final amount shown at checkout.
+- The older faulty promotional URLs have been removed from the promotion mapping and barred by regression tests.
 
-## Current state of this branch
+## Follow-through and rollback
 
-**Staged; no promotion active.** `lib/stripe-black-friday.ts` contains all four supplied URLs, each with `verifiedByMerchant: false`. `getStripePaymentLink` only chooses a merchant-verified sale URL when the new environment switch is explicitly `true`. It otherwise uses the original regular-price link, preserving customer checkout and all carbon refill links. No Netlify environment variables, live links, or other production settings have been changed.
+Scott did not provide a sale end date/time. Confirm when the promotion should end. **To restore original prices:** change `NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED` to `false` or remove it in the Netlify production environment, then trigger a new production build/deploy. This is a Next.js build-time variable, so editing the setting by itself does not alter a previously deployed static build. Verify the resulting deployment against all four original Stripe destinations.
 
-**Important:** The main production homepage and existing Stripe checkout links remain unchanged by this draft until an explicit sale launch is approved.
+Customer-impact caveat: Collecting a shipping address in Stripe does not establish a shipping price, fulfillment process or correctness of the Stripe Product/Price. Scott is responsible for verifying the live checkout product, final price, shipping, tax and order fulfillment details.
