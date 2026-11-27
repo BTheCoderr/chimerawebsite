@@ -1,3 +1,5 @@
+import { getVerifiedBlackFridayLink } from './stripe-black-friday';
+
 // Public Stripe Payment Links Scott Keeley supplied on November 18, 2026.
 // These are customer-facing checkout URLs, not secret API keys.
 // Each variant must resolve to its own exact seller-provided destination.
@@ -12,7 +14,14 @@ export const STRIPE_PAYMENT_LINKS: Readonly<Record<string, string>> = Object.fre
 
 export function getStripePaymentLink(variantCode: string): string | null {
   if (!Object.prototype.hasOwnProperty.call(STRIPE_PAYMENT_LINKS, variantCode)) return null;
-  const link = STRIPE_PAYMENT_LINKS[variantCode];
+  const regularLink = STRIPE_PAYMENT_LINKS[variantCode];
+  // Black Friday is OFF by default, and every staged URL requires a positive
+  // merchant verification before the sale can override a regular checkout.
+  // Unverified/missing sale links ALWAYS retain the original product link.
+  const saleLink = process.env.NEXT_PUBLIC_CHIMERA_BLACK_FRIDAY_ENABLED === 'true'
+    ? getVerifiedBlackFridayLink(variantCode)
+    : null;
+  const link = saleLink ?? regularLink;
   return link.startsWith('https://buy.stripe.com/') && !link.includes('/test_')
     ? link
     : null;
