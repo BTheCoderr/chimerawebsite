@@ -1,33 +1,31 @@
-// Four links supplied in Scott's "Black Friday Pricing.docx" on Nov 27, 2026.
-// Preserve the regular product payment links in stripe-payment-links.ts.
-// IMPORTANT: Scott reports that at least one supposed full-kit link displayed
-// only the ceramic filter in Stripe. These links are NOT approved for customers.
-//
-// The source document calls the kits "Filter and Kit Black" and "Filter Kit White".
-// The copy here preserves those labels; do not infer the Stripe checkout contents
-// are correct until Scott checks each hosted checkout product, quantity and price.
+// REPLACEMENT Black Friday links supplied in Scott Keeley's Nov 27, 2026 email
+// "links" (1:05 PM ET), superseding the faulty 11:41 AM DOCX links.
+// Scott then confirmed by text that he checked all four and they work.
+// Original regular-price links remain in stripe-payment-links.ts for rollback.
+// We cannot independently inspect Stripe's live product, price or shipping details.
+// Source labels are retained exactly as Scott supplied them.
 type BlackFridayLink = { sourceLabel: string; url: string; verifiedByMerchant: boolean };
 
 export const BLACK_FRIDAY_PAYMENT_LINKS: Readonly<Record<string, BlackFridayLink>> = Object.freeze({
   'kit-black': {
     sourceLabel: 'Filter and Kit Black',
-    url: 'https://buy.stripe.com/7sYbJ10oecZiai0dDudjO0s',
-    verifiedByMerchant: false,
+    url: 'https://buy.stripe.com/8x2dR9gnccZi89S1UMdjO0z',
+    verifiedByMerchant: true,
   },
   'kit-white': {
     sourceLabel: 'Filter Kit White',
-    url: 'https://buy.stripe.com/4gMdR90oe8J20HqbvmdjO0u',
-    verifiedByMerchant: false,
+    url: 'https://buy.stripe.com/cNi28r2wm6AU89S0QIdjO0y',
+    verifiedByMerchant: true,
   },
   'filter-white': {
     sourceLabel: 'Ceramic Filter White',
-    url: 'https://buy.stripe.com/14A7sL3Aqf7q2PygPGdjO0v',
-    verifiedByMerchant: false,
+    url: 'https://buy.stripe.com/8x27sL8UK1gAduc42UdjO0A',
+    verifiedByMerchant: true,
   },
   'filter-black': {
     sourceLabel: 'Ceramic Filter Black',
-    url: 'https://buy.stripe.com/fZucN5gnc0cwducfLCdjO0w',
-    verifiedByMerchant: false,
+    url: 'https://buy.stripe.com/4gM9AT1sif7q1Lu2YQdjO0B',
+    verifiedByMerchant: true,
   },
 });
 
